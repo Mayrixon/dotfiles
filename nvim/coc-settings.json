@@ -1,0 +1,58 @@
+{
+  "coc.preferences.colorSupport": true,
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.jumpCommand": "tab drop",
+  "codeLens.enable": true,
+  "explorer.quitOnOpen": true,
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    },
+    "clangd": {
+      "command": "clangd",
+      "args": ["--background-index"],
+      "rootPatterns": [
+        "compile_flags.txt",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml"],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      }
+    }
+  },
+  "python.formatting.provider": "yapf",
+  "python.jediEnabled": false,
+  "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+  "rust-analyzer.lruCapacity": 1000,
+  "cSpell.language": "en-GB,en,en-US",
+  "cSpell.enabledLanguageIds": [
+    "csharp",
+    "go",
+    "javascript",
+    "javascriptreact",
+    "latex",
+    "markdown",
+    "php",
+    "plaintext",
+    "rust",
+    "tex",
+    "typescript",
+    "typescriptreact",
+    "yml"
+  ]
+}
