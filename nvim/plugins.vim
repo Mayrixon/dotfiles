@@ -37,8 +37,9 @@ Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets'
 
-Plug 'sheerun/vim-polyglot'
 Plug 'lervag/vimtex'
+
+Plug 'cespare/vim-toml'
 Plug 'ron-rs/ron.vim'
 
 Plug 'SidOfc/mkdx'
@@ -55,3 +56,4 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'chrisbra/Colorizer'
 Plug 'mbbill/undotree'
 Plug 'kien/ctrlp.vim'
+Plug 'AndrewRadev/linediff.vim'
