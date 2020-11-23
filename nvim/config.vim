@@ -165,10 +165,6 @@ let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
 let g:NERDSpaceDelims = 1
 " }}}
 
-" polyglot {{{
-let g:polyglot_disabled = ['markdown', 'latex']
-" }}}
-
 " vimtex {{{
 let g:vimtex_format_enabled=1
 let g:vimtex_fold_enabled=1
@@ -182,7 +178,7 @@ endif
 
 " vim-gutentags {{{
 " Stop recursive searching when found following folders
-" let g:gutentags_enabled = 0
+let g:gutentags_enabled = 0
 let g:gutentags_project_root = ['.root', '.svn', '.git', '.project', '.vim']
 
 let g:gutentags_ctags_tagfile = '.tags'
@@ -215,6 +211,7 @@ let g:VM_mouse_mappings = 1
 
 " Vista {{{
 let g:vista_sidebar_position = 'vertical botright'
+let g:vista_default_executive = 'coc'
 let g:vista_echo_cursor_strategy = 'floating_win'
 " }}}
 
