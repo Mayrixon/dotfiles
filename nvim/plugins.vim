@@ -31,7 +31,9 @@ Plug 'liuchengxu/vista.vim', {'on': ['Vista', 'Vista!', 'Vista!!']}
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'junegunn/gv.vim'
+Plug 'sodapopcan/vim-twiggy'
+Plug 'christoomey/vim-conflicted'
 
 " Auto-everything
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
