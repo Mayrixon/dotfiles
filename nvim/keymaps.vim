@@ -17,14 +17,37 @@ let g:which_key_use_floating_win = 1
 
 set timeoutlen=500
 let g:leader_key_map   = {
-  \ 'a':     '<Plug>(coc-codeaction-selected)',
-  \ 's':    ['StripWhitespace', 'strip-whitespace'],
+  \ 'a':  'code-action-selected',
+  \ 'ac': 'code-action',
+  \ 's':  ['StripWhitespace',         'strip-whitespace'],
   \ }
 let g:leader_key_map.c = { 'name': '+nerdcommenter' }
+let g:leader_key_map.f = {
+  \ 'name': '+fzf',
+  \ 'b':    [':Buffers',  'buffers'],
+  \ 'c':    [':Commits',  'commits'],
+  \ 'C':    [':BCommits', 'buffer-commits'],
+  \ 'f':    [':Files',    'files'],
+  \ 'ft':   [':Filetypes', 'file-types'],
+  \ 'gg':   [':GFiles',   'git-files-ls-files'],
+  \ 'g?':   [':GFiles?',  'git-files-status'],
+  \ 'hh':   [':History',  'file-history'],
+  \ 'h:':   [':History:', 'command-history'],
+  \ 'h/':   [':History/', 'search-history'],
+  \ 'l':    [':Lines',    'lines-loaded-buffers'],
+  \ 'L':    [':Blines',   'lines-current-buffer'],
+  \ 'm':    [':Marks',    'Marks'],
+  \ 'M':    ['Maps',      'nmaps'],
+  \ 'r':    [':Rg',       'ripgrep'],
+  \ 't':    [':Tags',     'tags-project'],
+  \ 'T':    [':BTags',    'tags-buffer'],
+  \ 'w':    [':Windows',  'windows'],
+  \ }
 let g:leader_key_map.g = {
   \ 'name': '+utilities',
   \ 'a':    ['LiveEasyAlign',  'live-align'],
   \ 'c':    ['ColorToggle',    'highlight-colors'],
+  \ 'g':    ['Twiggy',         'twiggy'],
   \ 's':    ['Sleuth',         'detect-indent'],
   \ 'u':    ['UndotreeToggle', 'undo-tree'],
   \ }
@@ -35,6 +58,15 @@ let g:leader_key_map.h = {
   \ 'u':    'undo-hunk',
   \}
 let g:leader_key_map.l = { 'name': '+coclist' }
+let g:leader_key_map.t = {
+  \ 'name': '+tabs',
+  \ 'c':    [':tabc',     'close-tab'],
+  \ 'e':    [':tabe',     'new-tab'],
+  \ 'g':    [':tabe|:G',  'fugitive'],
+  \ 'G':    [':tabe|:GV', 'git-log'],
+  \ 'n':    [':tabn',     'next-tab'],
+  \ 'p':    [':tabp',     'previous-tab'],
+  \ }
 let g:leader_key_map.w = {
   \ 'name': '+windows',
   \ 'w':    ['<c-w>w',    'other-window']          ,
@@ -53,7 +85,6 @@ let g:leader_key_map.w = {
   \ '=':    ['<c-w>=',    'balance-window']        ,
   \ 's':    ['<c-w>s',    'split-window-below']    ,
   \ 'v':    ['<c-w>v',    'split-window-below']    ,
-  \ '?':    ['windows',   'fzf-window']            ,
   \ }
 let g:leader_key_map.z = {
   \ 'name': '+zen-mode',
@@ -79,6 +110,13 @@ autocmd FileType markdown let g:localleader_key_map.l = {
   \     'l':    ['MarkdownPreview',     'preview'],
   \     'k':    ['MarkdownPreviewStop', 'stop-preview'],
   \     }
+  \ }
+autocmd FileType rust let g:localleader_key_map.l = {
+  \ 'name': '+rust-analyzer',
+  \ 'm':    [':CocCommand rust-analyzer.expandMacro',   'expand-macro'],
+  \ 'p':    [':CocCommand rust-analyzer.parentModule',  'parent-module'],
+  \ 's':    [':CocCommand rust-analyzer.ssr',           'structural-search-replace'],
+  \ 'c':    [':CocCommand rust-analyzer.openCargoToml', 'open-cargo-toml'],
   \ }
 
 nmap <space>e :CocCommand explorer<CR>

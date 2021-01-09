@@ -6,7 +6,7 @@ let g:coc_global_extensions = [
   \ 'coc-markdownlint',
   \ 'coc-marketplace',
   \ 'coc-prettier',
-  \ 'coc-python',
+  \ 'coc-pyright',
   \ 'coc-rust-analyzer',
   \ 'coc-snippets',
   \ 'coc-spell-checker',
@@ -71,12 +71,12 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <localleader>F  <Plug>(coc-format-selected)
+nmap <localleader>F  <Plug>(coc-format-selected)
 
 " Remap for format the whole buffer
-xmap <leader>F  <Plug>(coc-format)
-nmap <leader>F  <Plug>(coc-format)
+xmap <localleader>f  <Plug>(coc-format)
+nmap <localleader>f  <Plug>(coc-format)
 
 augroup mygroup
   autocmd!
@@ -149,8 +149,6 @@ nnoremap <silent><nowait> <leader>lg  :<C-u>CocList<CR>
 nnoremap <silent><nowait> <leader>lj  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <leader>lk  :<C-u>CocPrev<CR>
-" Match lines of current buffer by regexp
-nnoremap <silent><nowait> <leader>ll  :<C-u>CocList lines<CR>
 " Find symbol of current document
 nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<CR>
 " Resume latest coc list

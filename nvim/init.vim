@@ -23,3 +23,4 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  '\'<CR>
 vnoremap <silent> <localleader> :<c-u>WhichKeyVisual  '\'<CR>
 
 let g:vimtex_compiler_progname = 'nvr'
+

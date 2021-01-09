@@ -5,7 +5,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
-
 Plug 'Yggdroot/indentLine'
 
 " Appearance
@@ -33,7 +32,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'sodapopcan/vim-twiggy'
-Plug 'christoomey/vim-conflicted'
 
 " Auto-everything
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -43,6 +41,8 @@ Plug 'lervag/vimtex'
 
 Plug 'cespare/vim-toml'
 Plug 'ron-rs/ron.vim'
+
+Plug 'wlangstroth/vim-racket'
 
 Plug 'SidOfc/mkdx'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -57,5 +57,6 @@ Plug 'skywind3000/vim-terminal-help'
 Plug 'liuchengxu/vim-which-key'
 Plug 'chrisbra/Colorizer'
 Plug 'mbbill/undotree'
-Plug 'kien/ctrlp.vim'
 Plug 'AndrewRadev/linediff.vim'
+Plug 'junegunn/fzf.vim'
+

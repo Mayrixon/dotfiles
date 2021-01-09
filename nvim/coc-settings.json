@@ -1,7 +1,7 @@
 {
   "coc.preferences.colorSupport": true,
   "coc.preferences.hoverTarget": "float",
-  "coc.preferences.jumpCommand": "tab drop",
+  "coc.preferences.jumpCommand": "tabe",
   "codeLens.enable": true,
   "explorer.quitOnOpen": true,
   "languageserver": {
@@ -23,21 +23,35 @@
       ],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     },
-    "haskell": {
-      "command": "hie-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml"],
-      "filetypes": ["hs", "lhs", "haskell"],
+    "cmake": {
+      "command": "cmake-language-server",
+      "filetypes": ["cmake"],
+      "rootPatterns": ["build/"],
       "initializationOptions": {
-        "languageServerHaskell": {
-          "hlintOn": true
-        }
+        "buildDirectory": "build"
       }
+    },
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml",
+        "hie.yaml"
+      ],
+      "filetypes": ["haskell", "lhaskell"]
+    },
+    "racket": {
+      "command": "racket",
+      "args": ["--lib", "racket-langserver"],
+      "filetypes": ["scheme"]
     }
   },
+  "json.format.enable": true,
   "python.formatting.provider": "yapf",
-  "python.jediEnabled": false,
-  "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+  "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
   "rust-analyzer.lruCapacity": 1000,
   "cSpell.language": "en-GB,en,en-US",
   "cSpell.enabledLanguageIds": [
