@@ -36,19 +36,19 @@ Plug 'sodapopcan/vim-twiggy'
 " Auto-everything
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets'
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
+
+" Languages
 
 Plug 'lervag/vimtex'
-
 Plug 'cespare/vim-toml'
 Plug 'ron-rs/ron.vim'
-
+Plug 'tikhomirov/vim-glsl'
 Plug 'wlangstroth/vim-racket'
-
 Plug 'SidOfc/mkdx'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
-Plug 'Konfekt/FastFold'
-Plug 'tmhedberg/SimpylFold'
 
 " Build and debug
 Plug 'skywind3000/vim-terminal-help'
