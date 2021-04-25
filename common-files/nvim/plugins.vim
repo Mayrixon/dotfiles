@@ -60,3 +60,5 @@ Plug 'mbbill/undotree'
 Plug 'AndrewRadev/linediff.vim'
 Plug 'junegunn/fzf.vim'
 
+Plug 'junegunn/vim-peekaboo'
+Plug 'lambdalisue/suda.vim'
