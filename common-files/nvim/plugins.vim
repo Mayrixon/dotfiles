@@ -5,7 +5,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
-Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Appearance
 Plug 'morhetz/gruvbox'

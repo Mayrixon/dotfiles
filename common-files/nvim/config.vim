@@ -31,12 +31,6 @@ set concealcursor=nc
 let g:NERDSpaceDelims = 1
 " }}}
 
-" indentLine {{{
-" let g:indentLine_fileTypeExclude = ['tex', 'markdown']
-let g:indentLine_setConceal = 0
-" autocmd FileType tex setlocal conceallevel=0
-" autocmd FileType markdown setlocal conceallevel=0
-" }}}
 
 let g:tex_flavor = 'latex'
 " }}}
@@ -169,6 +163,10 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
 let g:gutentags_auto_add_gtags_cscope = 0
+" }}}
+
+" vim-indent-guides {{{
+let g:indent_guides_enable_on_vim_startup = 1
 " }}}
 
 " vim-visual-multi {{{
