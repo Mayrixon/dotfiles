@@ -71,6 +71,10 @@ end
 time("try_loadstring definition", false)
 time("Defining packer_plugins", true)
 _G.packer_plugins = {
+  ["gruvbox-material"] = {
+    loaded = true,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/gruvbox-material"
+  },
   ["gruvbox.nvim"] = {
     loaded = true,
     path = "/home/zhen/.local/share/nvim/site/pack/packer/start/gruvbox.nvim"
@@ -96,12 +100,23 @@ _G.packer_plugins = {
     path = "/home/zhen/.local/share/nvim/site/pack/packer/start/nlua.nvim"
   },
   ["nvim-compe"] = {
-    loaded = true,
-    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/nvim-compe"
+    config = { "require('plugin-config.compe')" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/opt/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/zhen/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+  },
+  ["nvim-treesitter"] = {
+    config = { "require('plugin-config.treesitter')" },
+    loaded = true,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
   ["packer.nvim"] = {
     loaded = false,
@@ -120,9 +135,24 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/zhen/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
+  undotree = {
+    commands = { "UndotreeToggle" },
+    config = { "vim.g.undotree_SetFocusWhenToggle = 1" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/opt/undotree"
+  },
   ["vim-fugitive"] = {
     loaded = true,
     path = "/home/zhen/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+  },
+  ["vim-markdown"] = {
+    loaded = true,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/vim-markdown"
+  },
+  ["vim-peekaboo"] = {
+    loaded = true,
+    path = "/home/zhen/.local/share/nvim/site/pack/packer/start/vim-peekaboo"
   },
   ["vim-vsnip"] = {
     loaded = true,
@@ -135,6 +165,23 @@ _G.packer_plugins = {
 }
 
 time("Defining packer_plugins", false)
+-- Config for: nvim-treesitter
+time("Config for nvim-treesitter", true)
+require('plugin-config.treesitter')
+time("Config for nvim-treesitter", false)
+
+-- Command lazy-loads
+time("Defining lazy-load commands", true)
+vim.cmd [[command! -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+time("Defining lazy-load commands", false)
+
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Event lazy-loads
+time("Defining lazy-load event autocommands", true)
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-compe'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+time("Defining lazy-load event autocommands", false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 END

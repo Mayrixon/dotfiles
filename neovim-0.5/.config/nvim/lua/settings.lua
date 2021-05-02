@@ -3,6 +3,14 @@ local utils = require('utils')
 local cmd = vim.cmd
 local indent = 4
 
+-- Map leader and local leader keys
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
+
+-- Remote providers
+vim.g.loaded_python_provider = 0
+vim.g.python3_host_prog = '/usr/bin/python3'
+
 cmd 'syntax enable'
 cmd 'filetype plugin indent on'
 utils.opt('b', 'expandtab', true)

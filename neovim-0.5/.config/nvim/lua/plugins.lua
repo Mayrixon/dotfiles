@@ -6,6 +6,7 @@ return require('packer').startup(function()
 
   -- Color sheme
   use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+  use { 'sainnhe/gruvbox-material' }
 
   -- Fuzzy finder
   use {
@@ -15,8 +16,14 @@ return require('packer').startup(function()
 
   -- LSP and completion
   -- TODO: cleanup the setting files
+  -- TODO: find and turn off the function that auto highlight the
+  -- word under the cursor after around 5 seconds
   use { 'neovim/nvim-lspconfig' }
-  use { 'hrsh7th/nvim-compe' }
+  use {
+      'hrsh7th/nvim-compe',
+      config = [[require('plugin-config.compe')]],
+      event = 'InsertEnter *'
+  }
   use { 'glepnir/lspsaga.nvim' }
   use { 'onsails/lspkind-nvim' }
   use { 'nvim-lua/lsp-status.nvim' }
@@ -37,6 +44,10 @@ return require('packer').startup(function()
   -- TODO: update according to previous settings
   use { "folke/which-key.nvim" }
 
+
+-- use { 'kyazdani42/nvim-web-devicons' }
+  use { 'kyazdani42/nvim-tree.lua' }
+
   -- Markdown
   -- https://github.com/npxbr/glow.nvim
   -- https://github.com/iamcco/markdown-preview.nvim
@@ -48,8 +59,27 @@ return require('packer').startup(function()
   -- goyo, limelight
   -- typewriter scrolling: set scrolloff=999
   --
-  -- Tree sitter
+  -- Highlight
   -- https://github.com/p00f/nvim-ts-rainbow
-  --
+  -- TODO: clean up 'config.treesitter'
+  use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate',
+      config = [[require('plugin-config.treesitter')]]
+  }
 
+  -- Registers
+  use { 'junegunn/vim-peekaboo' }
+
+  -- Undo tree
+  use {
+    'mbbill/undotree',
+    cmd = 'UndotreeToggle',
+    config = [[vim.g.undotree_SetFocusWhenToggle = 1]]
+  }
+
+  -- Markdown
+  -- TODO: double check markdown plugins after treesitter PR#872
+  -- TODO: add config file in folder plugin
+  use { 'plasticboy/vim-markdown' }
 end)
