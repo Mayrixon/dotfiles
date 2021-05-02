@@ -2,10 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-sleuth'
 
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'easymotion/vim-easymotion'
 Plug 'nathanaelkane/vim-indent-guides'
 
 " Appearance
