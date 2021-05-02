@@ -16,3 +16,5 @@
     - [ ] Set up servers
 - [ ] Fuzzy finder
 - [ ] Add old plugins and configs
+    - [ ] Setup configs
+    - [ ] Plugins
