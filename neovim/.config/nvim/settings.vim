@@ -24,10 +24,6 @@ set list                   " Show non-printable characters.
 set conceallevel=1
 set concealcursor=nc
 
-let g:tex_flavor = 'latex'
-" }}}
-
-
 set signcolumn=yes
 
 " set colorcolumn=80
