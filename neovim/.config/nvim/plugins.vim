@@ -1,3 +1,5 @@
+call plug#begin('~/.local/share/nvim/plugged')
+
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 
@@ -62,3 +64,5 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'junegunn/vim-peekaboo'
 Plug 'lambdalisue/suda.vim'
+
+call plug#end()

@@ -1,1 +1,8 @@
-runtime! init-common.vim
+runtime settings.vim
+
+runtime plugins.vim
+
+runtime config.vim
+
+runtime keymaps.vim
+

@@ -1,6 +1,5 @@
 {
   "coc.preferences.colorSupport": true,
-  "coc.preferences.hoverTarget": "float",
   "coc.preferences.jumpCommand": "tabe",
   "codeLens.enable": true,
   "explorer.quitOnOpen": true,

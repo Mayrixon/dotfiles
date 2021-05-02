@@ -12,10 +12,6 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 
-let g:which_key_run_map_on_popup = 1
-let g:which_key_use_floating_win = 1
-
-set timeoutlen=500
 let g:leader_key_map   = {
   \ 'a':  'code-action-selected',
   \ 'ac': 'code-action',
@@ -121,3 +117,10 @@ autocmd FileType rust let g:localleader_key_map.l = {
 
 nmap <space>e :CocCommand explorer<CR>
 
+call which_key#register('<Space>', "g:leader_key_map")
+call which_key#register('\', "g:localleader_key_map")
+
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  '\'<CR>
+vnoremap <silent> <localleader> :<c-u>WhichKeyVisual  '\'<CR>
