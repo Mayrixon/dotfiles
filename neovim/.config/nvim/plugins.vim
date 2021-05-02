@@ -1,6 +1,5 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-sleuth'
 
 Plug 'scrooloose/nerdcommenter'
