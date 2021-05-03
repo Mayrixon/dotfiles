@@ -24,3 +24,5 @@ endif
 let g:vimtex_compiler_progname = 'nvr'
 
 let g:tex_flavor = 'latex'
+
+autocmd FileType tex let g:localleader_key_map.l = { 'name': '+vimtex' }

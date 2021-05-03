@@ -157,3 +157,14 @@ nnoremap <silent><nowait> <leader>lp  :<C-u>CocListResume<CR>
 nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<CR>
 nnoremap <silent><nowait> <leader>ly  :<C-u>CocList -A --normal yank<CR>
 
+nmap <space>e :CocCommand explorer<CR>
+
+let g:leader_key_map.l = { 'name': '+coclist' }
+
+autocmd FileType rust let g:localleader_key_map.l = {
+  \ 'name': '+rust-analyzer',
+  \ 'm':    [':CocCommand rust-analyzer.expandMacro',   'expand-macro'],
+  \ 'p':    [':CocCommand rust-analyzer.parentModule',  'parent-module'],
+  \ 's':    [':CocCommand rust-analyzer.ssr',           'structural-search-replace'],
+  \ 'c':    [':CocCommand rust-analyzer.openCargoToml', 'open-cargo-toml'],
+  \ }

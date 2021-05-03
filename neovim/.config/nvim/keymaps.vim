@@ -2,42 +2,20 @@
 let mapleader = ' '
 let maplocalleader = '\'
 
-noremap <F2> :Vista!!<CR>
-
-noremap <localleader>y "+y
-noremap <localleader>p "+p
-
-" EasyAlign {{{
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-" }}}
+" Fast window switching: ALT+SHIFT+HJKL
+noremap <m-H> <c-w>h
+noremap <m-L> <c-w>l
+noremap <m-J> <c-w>j
+noremap <m-K> <c-w>k
+inoremap <m-H> <esc><c-w>h
+inoremap <m-L> <esc><c-w>l
+inoremap <m-J> <esc><c-w>j
+inoremap <m-K> <esc><c-w>k
 
 let g:leader_key_map   = {
   \ 'a':  'code-action-selected',
   \ 'ac': 'code-action',
   \ 's':  ['StripWhitespace',         'strip-whitespace'],
-  \ }
-let g:leader_key_map.c = { 'name': '+nerdcommenter' }
-let g:leader_key_map.f = {
-  \ 'name': '+fzf',
-  \ 'b':    [':Buffers',  'buffers'],
-  \ 'c':    [':Commits',  'commits'],
-  \ 'C':    [':BCommits', 'buffer-commits'],
-  \ 'f':    [':Files',    'files'],
-  \ 'ft':   [':Filetypes', 'file-types'],
-  \ 'gg':   [':GFiles',   'git-files-ls-files'],
-  \ 'g?':   [':GFiles?',  'git-files-status'],
-  \ 'hh':   [':History',  'file-history'],
-  \ 'h:':   [':History:', 'command-history'],
-  \ 'h/':   [':History/', 'search-history'],
-  \ 'l':    [':Lines',    'lines-loaded-buffers'],
-  \ 'L':    [':Blines',   'lines-current-buffer'],
-  \ 'm':    [':Marks',    'Marks'],
-  \ 'M':    ['Maps',      'nmaps'],
-  \ 'r':    [':Rg',       'ripgrep'],
-  \ 't':    [':Tags',     'tags-project'],
-  \ 'T':    [':BTags',    'tags-buffer'],
-  \ 'w':    [':Windows',  'windows'],
   \ }
 let g:leader_key_map.g = {
   \ 'name': '+utilities',
@@ -47,13 +25,6 @@ let g:leader_key_map.g = {
   \ 's':    ['Sleuth',         'detect-indent'],
   \ 'u':    ['UndotreeToggle', 'undo-tree'],
   \ }
-let g:leader_key_map.h = {
-  \ 'name': '+gitgutter',
-  \ 'p':    'preview-hunk',
-  \ 's':    'stage-hunk',
-  \ 'u':    'undo-hunk',
-  \}
-let g:leader_key_map.l = { 'name': '+coclist' }
 let g:leader_key_map.t = {
   \ 'name': '+tabs',
   \ 'c':    [':tabc',     'close-tab'],
@@ -82,40 +53,12 @@ let g:leader_key_map.w = {
   \ 's':    ['<c-w>s',    'split-window-below']    ,
   \ 'v':    ['<c-w>v',    'split-window-below']    ,
   \ }
-let g:leader_key_map.z = {
-  \ 'name': '+zen-mode',
-  \ 'z':    [':Goyo',        'toggle-zen-mode'],
-  \ 'l':    {
-  \     'name': '+Limelight',
-  \     'l':    [':Limelight',  'turn-on-limelight'],
-  \     'k':    [':Limelight!', 'turn-off-limelight'],
-  \     }
-  \ }
 
 let g:localleader_key_map = {
-  \ 'p': 'clipboard-paste',
-  \ 'y': 'clipboard-yank',
+  \ 'p': ['\"+p', 'clipboard-paste'],
+  \ 'y': ['\"+y', 'clipboard-yank'],
   \ }
 let g:localleader_key_map['\'] = { 'name' : '+Vim-Multi-cursor' }
-
-autocmd FileType tex let g:localleader_key_map.l = { 'name': '+vimtex' }
-autocmd FileType markdown let g:localleader_key_map.l = {
-  \ 'name': '+markdown',
-  \ 'p':    {
-  \     'name': '+preview',
-  \     'l':    ['MarkdownPreview',     'preview'],
-  \     'k':    ['MarkdownPreviewStop', 'stop-preview'],
-  \     }
-  \ }
-autocmd FileType rust let g:localleader_key_map.l = {
-  \ 'name': '+rust-analyzer',
-  \ 'm':    [':CocCommand rust-analyzer.expandMacro',   'expand-macro'],
-  \ 'p':    [':CocCommand rust-analyzer.parentModule',  'parent-module'],
-  \ 's':    [':CocCommand rust-analyzer.ssr',           'structural-search-replace'],
-  \ 'c':    [':CocCommand rust-analyzer.openCargoToml', 'open-cargo-toml'],
-  \ }
-
-nmap <space>e :CocCommand explorer<CR>
 
 call which_key#register('<Space>', "g:leader_key_map")
 call which_key#register('\', "g:localleader_key_map")

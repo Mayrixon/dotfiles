@@ -2,18 +2,13 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-sleuth'
 
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'easymotion/vim-easymotion'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 
 " Appearance
 Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'luochen1990/rainbow'
-" Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 
@@ -52,7 +47,7 @@ Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': [
 
 
 " Build and debug
-Plug 'skywind3000/vim-terminal-help'
+Plug 'voldikss/vim-floaterm'
 
 " Utilities
 Plug 'liuchengxu/vim-which-key'

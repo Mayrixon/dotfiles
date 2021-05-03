@@ -45,3 +45,13 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " changing from the default 80 to accomodate for UndoTree panel
 let g:goyo_width = 104
+
+let g:leader_key_map.z = {
+  \ 'name': '+zen-mode',
+  \ 'z':    [':Goyo',        'toggle-zen-mode'],
+  \ 'l':    {
+  \     'name': '+Limelight',
+  \     'l':    [':Limelight',  'turn-on-limelight'],
+  \     'k':    [':Limelight!', 'turn-off-limelight'],
+  \     }
+  \ }
