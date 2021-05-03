@@ -2,6 +2,16 @@
 let mapleader = ' '
 let maplocalleader = '\'
 
+" Fast window switching: ALT+SHIFT+HJKL
+noremap <m-H> <c-w>h
+noremap <m-L> <c-w>l
+noremap <m-J> <c-w>j
+noremap <m-K> <c-w>k
+inoremap <m-H> <esc><c-w>h
+inoremap <m-L> <esc><c-w>l
+inoremap <m-J> <esc><c-w>j
+inoremap <m-K> <esc><c-w>k
+
 let g:leader_key_map   = {
   \ 'a':  'code-action-selected',
   \ 'ac': 'code-action',
