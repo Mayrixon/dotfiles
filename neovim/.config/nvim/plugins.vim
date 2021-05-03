@@ -3,7 +3,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-sleuth'
 
 Plug 'jiangmiao/auto-pairs'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 
 " Appearance
 Plug 'morhetz/gruvbox'
