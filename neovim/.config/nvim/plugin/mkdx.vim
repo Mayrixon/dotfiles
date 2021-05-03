@@ -24,3 +24,12 @@ for s:type in map(copy(g:markdown_fenced_languages),'matchstr(v:val,"[^=]*$")')
 endfor
 unlet! s:type
 unlet! s:done_include
+
+autocmd FileType markdown let g:localleader_key_map.l = {
+  \ 'name': '+markdown',
+  \ 'p':    {
+  \     'name': '+preview',
+  \     'l':    ['MarkdownPreview',     'preview'],
+  \     'k':    ['MarkdownPreviewStop', 'stop-preview'],
+  \     }
+  \ }
