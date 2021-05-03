@@ -47,7 +47,7 @@ Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': [
 
 
 " Build and debug
-Plug 'skywind3000/vim-terminal-help'
+Plug 'voldikss/vim-floaterm'
 
 " Utilities
 Plug 'liuchengxu/vim-which-key'
