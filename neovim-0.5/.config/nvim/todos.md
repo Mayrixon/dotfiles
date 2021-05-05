@@ -7,6 +7,7 @@
 - [ ] Add config files in lua/ for lua plugins
 - [ ] Add config files in plugin/ for viml plugins
 - [ ] Add file type specific key mappings to ftplugin/
+- [ ] Status line
 - [-] LSP
   - [x] Compare 'lspsaga' functions with builtin Lua functions
   - [x] Remove action windows which jump out automatically after press `[d` and `]d`
@@ -18,13 +19,13 @@
     - [ ] Add LSP status to status line
 - [ ] Fuzzy finder
  - [ ] Add sub-commands for telescope to behave like FZF
-- [ ] Add old plugins and configs
-  - [ ] Setup configs
+- [-] Add old plugins and configs
+  - [-] Setup configs
     - [ ] NerdCommenter
     - [ ] vista
-    - [ ] Goyo
+    - [x] Goyo
     - [x] mkdx
-    - [ ] vimtex
+    - [x] vimtex
     - [ ] gitgutter
   - [-] Plugins
     - [x] undotree
@@ -46,9 +47,9 @@
     - [ ] easymotion and (wordmotion + sneak)
     - [ ] indent-blankline.nvim and sleuth
 - [ ] Tree sitter
-- [ ] Zen mode
-  - [ ] Setup Goyo and limelight
-  - [ ] Find a way to store value of scrolloff temporarilly
+- [x] Zen mode
+  - [x] Setup Goyo and limelight
+  - [x] Find a way to store value of scrolloff temporarilly
 - [ ] Spell checker
 - [-] Markdown
  - [-] Highlight (waiting for tree-sitter)

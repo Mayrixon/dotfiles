@@ -17,4 +17,13 @@ wk.register({
         g = {'<cmd>Telescope live_grep<CR>', 'live grep'},
         h = {'<cmd>Telescope help_tags<CR>', 'help tags'},
     },
+    z = {
+        name = 'zen mode',
+        l = {
+            name = 'limelight',
+            k = {'<cmd>Limelight!<CR>', 'turn off'},
+            l = {'<cmd>Limelight<CR>', 'turn on'},
+        },
+        z = {'<cmd>Goyo<CR>', 'toggle zen mode'}
+    }
 }, {prefix = '<leader>'})
