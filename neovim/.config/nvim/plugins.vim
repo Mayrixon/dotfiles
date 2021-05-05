@@ -42,6 +42,7 @@ Plug 'cespare/vim-toml'
 Plug 'ron-rs/ron.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'wlangstroth/vim-racket'
+Plug 'tpope/vim-markdown'
 Plug 'SidOfc/mkdx'
 Plug 'iamcco/markdown-preview.nvim', {'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
