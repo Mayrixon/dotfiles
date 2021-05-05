@@ -27,7 +27,6 @@ utils.opt('o', 'lazyredraw', true)
 -- utils.opt('o', 'synmaxcol', 500)
 
 utils.opt('o', 'wildmode', 'longest,full')
-utils.opt('o', 'shortmess', vim.o.shortmess .. 'c')
 
 utils.opt('o', 'showmatch', true)
 

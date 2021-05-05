@@ -1,5 +1,4 @@
 -- Sensible defaults
--- TODO: check and modify
 require('settings')
 
 -- Auto install packer.nvim if not exists
@@ -19,7 +18,8 @@ require('plugins')
 -- Key mappings
 require('keymappings')
 
--- Setup lua language server using submodule
-require('lang')
+-- Setup LSP and autocomplete functions
+require('autocomplete')
 
+-- Other configurations
 require('config')
