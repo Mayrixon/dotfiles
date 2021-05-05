@@ -14,8 +14,43 @@
   - [ ] Set up servers
   - [ ] Set up formatters
   - [ ] Adujust appearance
+    - [ ] Adjust notice color
+    - [ ] Add LSP status to status line
 - [ ] Fuzzy finder
  - [ ] Add sub-commands for telescope to behave like FZF
 - [ ] Add old plugins and configs
   - [ ] Setup configs
-  - [ ] Plugins
+    - [ ] NerdCommenter
+    - [ ] vista
+    - [ ] Goyo
+    - [ ] mkdx
+    - [ ] vimtex
+    - [ ] gitgutter
+  - [-] Plugins
+    - [x] undotree
+    - [x] easyAlign
+    - [x] NerdCommenter
+    - [x] better-whitespace
+    - [x] floaterm
+    - [x] gutentags
+    - [x] vista
+    - [x] Goyo and limelight
+    - [x] mkdx
+    - [x] vimtex
+    - [x] gitgutter
+  - [ ] Compare plugins
+    - [ ] NerdCommenter and tcomment\_vim
+    - [ ] Colorizer and nvim-colorizer.lua
+    - [ ] Autopair
+    - [ ] Status line
+    - [ ] easymotion and (wordmotion + sneak)
+    - [ ] indent-blankline.nvim and sleuth
+- [ ] Tree sitter
+- [ ] Zen mode
+  - [ ] Find a way to store value of scrolloff temporarilly
+- [ ] Spell checker
+- [ ] Markdown
+ - [ ] Highlight
+ - [ ] Edit
+ - [ ] Preview
+- [ ] LaTeX

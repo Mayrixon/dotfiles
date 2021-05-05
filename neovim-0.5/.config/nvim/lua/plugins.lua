@@ -10,6 +10,12 @@ return require('packer').startup(function()
     -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
     use {'sainnhe/gruvbox-material'}
 
+    -- Fuzzy finder
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    }
+
     -- LSP and completion
     use {
         'neovim/nvim-lspconfig',
@@ -32,4 +38,26 @@ return require('packer').startup(function()
     }
 
     use {'tpope/vim-surround'}
+
+    use {'folke/which-key.nvim'}
+    use {'junegunn/vim-easy-align'}
+    use {'scrooloose/nerdcommenter'}
+    use {'ntpeters/vim-better-whitespace'}
+    use {'ludovicchabant/vim-gutentags'}
+    use { 'airblade/vim-gitgutter' }
+    use 'liuchengxu/vista.vim'
+    use 'junegunn/limelight.vim'
+    use 'junegunn/goyo.vim'
+    use 'lervag/vimtex'
+    use 'tpope/vim-markdown'
+    use 'SidOfc/mkdx'
+
+    -- Terminal
+    use {'voldikss/vim-floaterm'}
+
+    -- Undo tree
+    use {
+        'mbbill/undotree',
+        cmd = 'UndotreeToggle',
+    }
 end)
