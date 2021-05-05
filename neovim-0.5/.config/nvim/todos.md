@@ -23,7 +23,7 @@
     - [ ] NerdCommenter
     - [ ] vista
     - [ ] Goyo
-    - [ ] mkdx
+    - [x] mkdx
     - [ ] vimtex
     - [ ] gitgutter
   - [-] Plugins
@@ -47,10 +47,13 @@
     - [ ] indent-blankline.nvim and sleuth
 - [ ] Tree sitter
 - [ ] Zen mode
+  - [ ] Setup Goyo and limelight
   - [ ] Find a way to store value of scrolloff temporarilly
 - [ ] Spell checker
-- [ ] Markdown
- - [ ] Highlight
- - [ ] Edit
- - [ ] Preview
-- [ ] LaTeX
+- [-] Markdown
+ - [-] Highlight (waiting for tree-sitter)
+ - [x] Edit
+ - [x] Preview
+- [x] LaTeX
+  - [x] vimtex
+  - [x] texlab

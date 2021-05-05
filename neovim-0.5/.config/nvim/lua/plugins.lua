@@ -45,12 +45,14 @@ return require('packer').startup(function()
     use {'ntpeters/vim-better-whitespace'}
     use {'ludovicchabant/vim-gutentags'}
     use { 'airblade/vim-gitgutter' }
-    use 'liuchengxu/vista.vim'
-    use 'junegunn/limelight.vim'
-    use 'junegunn/goyo.vim'
-    use 'lervag/vimtex'
-    use 'tpope/vim-markdown'
-    use 'SidOfc/mkdx'
+    use {'liuchengxu/vista.vim'}
+    use {'junegunn/limelight.vim'}
+    use {'junegunn/goyo.vim'}
+    use {'lervag/vimtex'}
+    use {'tpope/vim-markdown'}
+    use {'SidOfc/mkdx'}
+    use {'npxbr/glow.nvim'}
+    use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
 
     -- Terminal
     use {'voldikss/vim-floaterm'}

@@ -1,8 +1,6 @@
 local servers = {
     pyright = {},
     rust_analyzer = {},
-    tsserver = {},
-    vimls = {},
     sumneko_lua = {
         cmd = {'lua-language-server'},
         settings = {
@@ -21,7 +19,19 @@ local servers = {
                 telemetry = {enable = false}
             }
         }
-    }
+    },
+    texlab = {
+        settings = {
+            latex = {
+                forwardSearch = {
+                    executable = 'zathura',
+                    args = {'--synctex-forward', '%l:1:%f', '%p'}
+                }
+            }
+        }
+    },
+    tsserver = {},
+    vimls = {},
 }
 
 return servers
