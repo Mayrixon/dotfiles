@@ -73,8 +73,12 @@ local on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
         buf_set_keymap('n', '<leader>lf',
                        '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    elseif client.resolved_capabilities.document_range_formatting then
-        buf_set_keymap('n', '<leader>lf',
+    else
+        buf_set_keymap('n', '<leader>lf', '<cmd>Format<CR>', opts)
+    end
+
+    if client.resolved_capabilities.document_range_formatting then
+        buf_set_keymap('n', '<leader>lrf',
                        '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
     end
 

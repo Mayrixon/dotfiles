@@ -13,7 +13,13 @@
   - [x] Remove action windows which jump out automatically after press `[d` and `]d`
   - [x] Check the difference between with and without nlua.nvim (read the source code)
   - [ ] Set up servers
-  - [ ] Set up formatters
+  - [-] Set up formatters
+    - [x] Set up formatter plugin
+    - [-] Set up formatters' config
+      - [ ] C/C++
+      - [x] Lua
+      - [ ] Markdown
+      - [ ] Typescript
   - [ ] Adujust appearance
     - [ ] Adjust notice color
     - [ ] Add LSP status to status line

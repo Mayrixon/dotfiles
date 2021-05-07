@@ -53,6 +53,7 @@ return require('packer').startup(function()
     use {'SidOfc/mkdx'}
     use {'npxbr/glow.nvim'}
     use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
+    use {'mhartington/formatter.nvim'}
 
     -- Terminal
     use {'voldikss/vim-floaterm'}
