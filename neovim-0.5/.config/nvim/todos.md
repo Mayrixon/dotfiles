@@ -6,25 +6,29 @@
   - [ ] use which-key
 - [ ] Add config files in lua/ for lua plugins
 - [ ] Add config files in plugin/ for viml plugins
-- [ ] Add file type specific key mappings to ftplugin/
+- [x] Add file type specific key mappings to ftplugin/
 - [ ] Status line
 - [-] LSP
   - [x] Compare 'lspsaga' functions with builtin Lua functions
   - [x] Remove action windows which jump out automatically after press `[d` and `]d`
   - [x] Check the difference between with and without nlua.nvim (read the source code)
   - [ ] Set up servers
-  - [-] Set up formatters
+  - [ ] Set up autocomplete
+  - [x] Set up formatters
     - [x] Set up formatter plugin
-    - [-] Set up formatters' config
-      - [ ] C/C++
+    - [x] Set up formatters' config
+      - [x] C/C++
       - [x] Lua
-      - [ ] Markdown
-      - [ ] Typescript
+      - [x] LaTeX
+      - [x] Markdown
+      - [x] Python
+      - [x] Typescript
   - [ ] Adujust appearance
     - [ ] Adjust notice color
     - [ ] Add LSP status to status line
+    - [ ] Add virtual text
 - [ ] Fuzzy finder
- - [ ] Add sub-commands for telescope to behave like FZF
+  - [ ] Add sub-commands for telescope to behave like FZF
 - [-] Add old plugins and configs
   - [-] Setup configs
     - [ ] NerdCommenter
@@ -46,7 +50,7 @@
     - [x] vimtex
     - [x] gitgutter
   - [ ] Compare plugins
-    - [ ] NerdCommenter and tcomment\_vim
+    - [ ] NerdCommenter and tcomment_vim
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
@@ -58,9 +62,9 @@
   - [x] Find a way to store value of scrolloff temporarilly
 - [ ] Spell checker
 - [-] Markdown
- - [-] Highlight (waiting for tree-sitter)
- - [x] Edit
- - [x] Preview
+  - [-] Highlight (waiting for tree-sitter)
+  - [x] Edit
+  - [x] Preview
 - [x] LaTeX
   - [x] vimtex
   - [x] texlab
