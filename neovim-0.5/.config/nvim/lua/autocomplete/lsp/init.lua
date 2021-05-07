@@ -32,4 +32,3 @@ for server, config in pairs(servers) do
   lspconfig[server].setup(config)
 end
 
-

@@ -1,9 +1,5 @@
 lua << EOF
 local wk = require('which-key')
 
-wk.register({
-    l = {
-        name = 'vimtex',
-    },
-}, {prefix = '<localleader>'})
+wk.register({l = {name = 'vimtex'}}, {prefix = '<localleader>'})
 EOF

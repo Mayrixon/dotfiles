@@ -1,4 +1,4 @@
-local utils = { }
+local utils = {}
 
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
@@ -8,8 +8,8 @@ local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 -- @param key String of the key.
 -- @param value Any kind of desire value.
 function utils.opt(scope, key, value)
-    scopes[scope][key] = value
-    if scope ~= 'o' then scopes['o'][key] = value end
+  scopes[scope][key] = value
+  if scope ~= 'o' then scopes['o'][key] = value end
 end
 
 function utils.map(mode, lhs, rhs, opts)

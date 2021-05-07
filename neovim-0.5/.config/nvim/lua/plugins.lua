@@ -1,66 +1,63 @@
 return require('packer').startup(function()
 
-    -- Packer can manage itself as an optional plugin
-    use {'wbthomason/packer.nvim', opt = true}
+  -- Packer can manage itself as an optional plugin
+  use {'wbthomason/packer.nvim', opt = true}
 
-    use {'tpope/vim-sleuth'}
+  use {'tpope/vim-sleuth'}
 
-    -- Color sheme
-    use {'morhetz/gruvbox'}
-    -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-    use {'sainnhe/gruvbox-material'}
+  -- Color sheme
+  use {'morhetz/gruvbox'}
+  -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+  use {'sainnhe/gruvbox-material'}
 
-    -- Fuzzy finder
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-    }
+  -- Fuzzy finder
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
 
-    -- LSP and completion
-    use {
-        'neovim/nvim-lspconfig',
-        requires = {'glepnir/lspsaga.nvim', 'ray-x/lsp_signature.nvim'}
-    }
-    use {'onsails/lspkind-nvim'}
-    use {'hrsh7th/nvim-compe'}
-    use {'hrsh7th/vim-vsnip'}
-    use {'hrsh7th/vim-vsnip-integ'}
+  -- LSP and completion
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {'glepnir/lspsaga.nvim', 'ray-x/lsp_signature.nvim'}
+  }
+  use {'onsails/lspkind-nvim'}
+  use {'hrsh7th/nvim-compe'}
+  use {'hrsh7th/vim-vsnip'}
+  use {'hrsh7th/vim-vsnip-integ'}
 
-    -- File expolorer
-    use {'kyazdani42/nvim-web-devicons'}
-    use {'kyazdani42/nvim-tree.lua'}
+  -- File expolorer
+  use {'kyazdani42/nvim-web-devicons'}
+  use {'kyazdani42/nvim-tree.lua'}
 
-    -- Profiling
-    use {
-        'dstein64/vim-startuptime',
-        cmd = 'StartupTime',
-        config = [[vim.g.startuptime_tries = 10]]
-    }
+  -- Profiling
+  use {
+    'dstein64/vim-startuptime',
+    cmd = 'StartupTime',
+    config = [[vim.g.startuptime_tries = 10]]
+  }
 
-    use {'tpope/vim-surround'}
+  use {'tpope/vim-surround'}
 
-    use {'folke/which-key.nvim'}
-    use {'junegunn/vim-easy-align'}
-    use {'scrooloose/nerdcommenter'}
-    use {'ntpeters/vim-better-whitespace'}
-    use {'ludovicchabant/vim-gutentags'}
-    use { 'airblade/vim-gitgutter' }
-    use {'liuchengxu/vista.vim'}
-    use {'junegunn/limelight.vim'}
-    use {'junegunn/goyo.vim'}
-    use {'lervag/vimtex'}
-    use {'tpope/vim-markdown'}
-    use {'SidOfc/mkdx'}
-    use {'npxbr/glow.nvim'}
-    use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
-    use {'mhartington/formatter.nvim'}
+  use {'folke/which-key.nvim'}
+  use {'junegunn/vim-easy-align'}
+  use {'scrooloose/nerdcommenter'}
+  use {'ntpeters/vim-better-whitespace'}
+  use {'ludovicchabant/vim-gutentags'}
+  use {'airblade/vim-gitgutter'}
+  use {'liuchengxu/vista.vim'}
+  use {'junegunn/limelight.vim'}
+  use {'junegunn/goyo.vim'}
+  use {'lervag/vimtex'}
+  use {'tpope/vim-markdown'}
+  use {'SidOfc/mkdx'}
+  use {'npxbr/glow.nvim'}
+  use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
+  use {'mhartington/formatter.nvim'}
 
-    -- Terminal
-    use {'voldikss/vim-floaterm'}
+  -- Terminal
+  use {'voldikss/vim-floaterm'}
 
-    -- Undo tree
-    use {
-        'mbbill/undotree',
-        cmd = 'UndotreeToggle',
-    }
+  -- Undo tree
+  use {'mbbill/undotree', cmd = 'UndotreeToggle'}
 end)

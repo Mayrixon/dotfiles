@@ -30,10 +30,9 @@ utils.opt('o', 'wildmode', 'longest,full')
 
 utils.opt('o', 'showmatch', true)
 
-
 -- Window-local settings
-utils.opt('w', 'scrolloff', 4 )
-utils.opt('w', 'sidescrolloff', 4 )
+utils.opt('w', 'scrolloff', 4)
+utils.opt('w', 'sidescrolloff', 4)
 
 utils.opt('w', 'listchars', 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+')
 utils.opt('w', 'list', true)
@@ -47,13 +46,11 @@ utils.opt('w', 'foldmethod', 'syntax')
 utils.opt('w', 'conceallevel', 1)
 utils.opt('w', 'concealcursor', 'nc')
 
-
 -- Buffer-local settings
 utils.opt('b', 'expandtab', true)
 utils.opt('b', 'shiftwidth', indent)
 utils.opt('b', 'smartindent', true)
 utils.opt('b', 'tabstop', indent)
-
 
 -- Highlight on yank
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
