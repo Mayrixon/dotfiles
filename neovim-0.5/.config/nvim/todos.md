@@ -7,7 +7,10 @@
 - [ ] Add config files in lua/ for lua plugins
 - [ ] Add config files in plugin/ for viml plugins
 - [x] Add file type specific key mappings to ftplugin/
-- [ ] Status line
+- [-] Status line
+  - [x] Add lighline
+  - [x] Add barbar
+  - [ ] (Option): change lightline to other lua-based status lines
 - [-] LSP
   - [x] Compare 'lspsaga' functions with builtin Lua functions
   - [x] Remove action windows which jump out automatically after press `[d` and `]d`

@@ -54,6 +54,7 @@ return require('packer').startup(function()
   use {'npxbr/glow.nvim'}
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
   use {'mhartington/formatter.nvim'}
+  use {'itchyny/lightline.vim'}
 
   -- Terminal
   use {'voldikss/vim-floaterm'}
