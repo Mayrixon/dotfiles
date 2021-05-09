@@ -1,9 +1,7 @@
-local ts_configs = require('nvim-treesitter.configs')
-
-ts_configs.setup {
-  ensure_installed = "maintained",
+require('nvim-treesitter.configs').setup {
+  ensure_installed = 'maintained',
   highlight = {enable = true, use_languagetree = true},
-  indent = {enable = false},
+  indent = {enable = true},
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -14,7 +12,7 @@ ts_configs.setup {
     }
   },
   refactor = {
-    smart_rename = {enable = true, keymaps = {smart_rename = "grr"}},
+    smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
     highlight_definitions = {enable = true}
     -- highlight_current_scope = { enable = true }
   },
@@ -48,3 +46,13 @@ ts_configs.setup {
     }
   }
 }
+
+local utils = require('utils')
+
+-- utils.opt('w', 'foldmethod', 'expr')
+-- utils.opt('w', 'foldexpr', 'nvim_treesitter#foldexpr()')
+
+-- vim.cmd[[
+-- setlocal foldmethod=expr
+-- setlocal foldexpr=nvim_treesitter#foldexpr()
+-- ]]

@@ -61,4 +61,13 @@ return require('packer').startup(function()
 
   -- Undo tree
   use {'mbbill/undotree', cmd = 'UndotreeToggle'}
+
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    requires = {
+      'nvim-treesitter/nvim-treesitter-refactor',
+      'nvim-treesitter/nvim-treesitter-textobjects'
+    },
+    run = ':TSUpdate'
+  }
 end)
