@@ -10,26 +10,6 @@
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
     },
-    "clangd": {
-      "command": "clangd",
-      "args": ["--background-index"],
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
-    },
-    "cmake": {
-      "command": "cmake-language-server",
-      "filetypes": ["cmake"],
-      "rootPatterns": ["build/"],
-      "initializationOptions": {
-        "buildDirectory": "build"
-      }
-    },
     "haskell": {
       "command": "haskell-language-server-wrapper",
       "args": ["--lsp"],

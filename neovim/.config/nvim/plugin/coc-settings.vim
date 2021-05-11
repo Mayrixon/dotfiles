@@ -1,4 +1,6 @@
 let g:coc_global_extensions = [
+  \ 'coc-clangd',
+  \ 'coc-cmake',
   \ 'coc-explorer',
   \ 'coc-highlight',
   \ 'coc-json',
