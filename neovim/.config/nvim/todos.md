@@ -71,3 +71,4 @@
 - [x] LaTeX
   - [x] vimtex
   - [x] texlab
+- [ ] DAP
