@@ -6,14 +6,10 @@ let g:bufferline_echo = 0
 let g:bufferline_active_buffer_left = ''
 let g:bufferline_active_buffer_right = ''
 
-augroup lightline
-  autocmd!
-  autocmd Filetype * :call lightline#update()
-augroup END
-
-function! CocCurrentFunction()
-  return get(b:, 'coc_current_function', '')
-endfunction
+" augroup lightline
+"   autocmd!
+"   autocmd Filetype * :call lightline#update()
+" augroup END
 
 let g:lightline = {
   \ 'colorscheme': 'gruvbox',
@@ -21,7 +17,7 @@ let g:lightline = {
 		\ 'subseparator': { 'left': '', 'right': '' },
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified', ] ],
+  \             [ 'readonly', 'filename', 'modified', ] ],
   \   'right': [ [ 'lineinfo' ],
   \              [ 'percent' ],
   \              [ 'fileformat', 'fileencoding', 'filetype', 'sw' ]],
@@ -34,8 +30,6 @@ let g:lightline = {
   \   'filename': '%n:%t',
   \ },
   \ 'component_function': {
-  \   'cocstatus': 'coc#status',
-  \   'currentfunction': 'CocCurrentFunction',
   \   'filepath': 'LightlineAbsoluteFilePath',
   \   'gitbranch': 'fugitive#head',
   \   'sw': 'SleuthIndicator',

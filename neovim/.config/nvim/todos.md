@@ -59,6 +59,7 @@
     - [ ] Status line
     - [ ] easymotion and (wordmotion + sneak)
     - [ ] indent-blankline.nvim and sleuth
+    - [ ] other plugins mentioned in the update log of neovim v0.5
 - [ ] Tree sitter
 - [x] Zen mode
   - [x] Setup Goyo and limelight
