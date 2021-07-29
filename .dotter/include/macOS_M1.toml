@@ -1,0 +1,6 @@
+[zsh.files.zshrc]
+target = "~/.zshrc"
+type = "template"
+append = """
+alias ls="/opt/homebrew/opt/coreutils/libexec/gnubin/ls"
+"""
