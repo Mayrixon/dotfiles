@@ -1,0 +1,7 @@
+[zsh.files.zshrc]
+target = "~/.zshrc"
+type = "template"
+append = """
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+"""
