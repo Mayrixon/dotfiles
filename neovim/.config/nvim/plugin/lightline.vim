@@ -1,3 +1,4 @@
+" utils.opt('w', 'modeline', false)
 set noshowmode
 set showtabline=2
 

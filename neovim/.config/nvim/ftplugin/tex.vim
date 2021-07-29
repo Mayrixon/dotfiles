@@ -1,1 +1,5 @@
-let g:localleader_key_map.l = { 'name': '+vimtex' }
+lua << EOF
+local wk = require('which-key')
+
+wk.register({l = {name = 'vimtex'}}, {prefix = '<localleader>'})
+EOF

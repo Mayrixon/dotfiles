@@ -1,8 +1,15 @@
-let g:localleader_key_map.l = {
-  \ 'name': '+markdown',
-  \ 'p':    {
-  \     'name': '+preview',
-  \     'l':    ['MarkdownPreview',     'preview'],
-  \     'k':    ['MarkdownPreviewStop', 'stop-preview'],
-  \     }
-  \ }
+lua << EOF
+local wk = require('which-key')
+
+wk.register({
+  l = {
+    name = 'markdown',
+    p = {
+      name = 'preview',
+      g = {'<cmd>Glow<CR>', 'glow-preview'},
+      p = {'<cmd>MarkdownPreview<CR>', 'preview'},
+      k = {'<cmd>MarkdownPreviewStop<CR>', 'stop-preview'}
+    }
+  }
+}, {prefix = '<localleader>'})
+EOF

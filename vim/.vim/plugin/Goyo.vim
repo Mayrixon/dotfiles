@@ -17,7 +17,6 @@ function! s:goyo_enter()
   map j gj
   map k gk
 
-  LspStop
   Limelight
 endfunction
 
@@ -41,8 +40,20 @@ function! s:goyo_leave()
   unmap k
 
   Limelight!
-  LspStart
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" changing from the default 80 to accomodate for UndoTree panel
+let g:goyo_width = 104
+
+let g:leader_key_map.z = {
+  \ 'name': '+zen-mode',
+  \ 'z':    [':Goyo',        'toggle-zen-mode'],
+  \ 'l':    {
+  \     'name': '+Limelight',
+  \     'l':    [':Limelight',  'turn-on-limelight'],
+  \     'k':    [':Limelight!', 'turn-off-limelight'],
+  \     }
+  \ }
