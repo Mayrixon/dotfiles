@@ -73,3 +73,4 @@
   - [x] vimtex
   - [x] texlab
 - [ ] DAP
+- [x] Change packer compiled file path
