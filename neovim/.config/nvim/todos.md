@@ -9,7 +9,7 @@
 - [x] Add file type specific key mappings to ftplugin/
 - [-] Status line
   - [x] Add lighline
-  - [x] Add barbar
+  - [ ] Add barbar
   - [ ] (Option): change lightline to other lua-based status lines
 - [-] LSP
   - [x] Compare 'lspsaga' functions with builtin Lua functions
@@ -17,6 +17,7 @@
   - [x] Check the difference between with and without nlua.nvim (read the source code)
   - [ ] Set up servers
   - [ ] Set up autocomplete
+  - [ ] Set up code actions
   - [x] Set up formatters
     - [x] Set up formatter plugin
     - [x] Set up formatters' config
@@ -34,13 +35,17 @@
   - [ ] Add sub-commands for telescope to behave like FZF
 - [-] Add old plugins and configs
   - [-] Setup configs
-    - [ ] NerdCommenter
     - [ ] vista
     - [x] Goyo
     - [x] mkdx
     - [x] vimtex
-    - [ ] gitgutter
+    - [x] <strike>gitgutter</strike>
+    - [-] diffview
+    - [x] hop.nvim (alternative to easymotion)
+    - [-] telescope.nvim
+    - [ ] nvim-autopairs with compe
   - [-] Plugins
+    - [-] NerdCommenter
     - [x] undotree
     - [x] easyAlign
     - [x] NerdCommenter
@@ -48,29 +53,34 @@
     - [x] floaterm
     - [x] gutentags
     - [x] vista
-    - [x] Goyo and limelight
+    - [-] Goyo and limelight (disable gitsigns)
     - [x] mkdx
     - [x] vimtex
-    - [x] gitgutter
-  - [ ] Compare plugins
-    - [ ] NerdCommenter and tcomment_vim
+    - [x] indent-blankline
+    - [x] <strike>gitgutter</strike> gitsigns.nvim
+  - [-] Compare plugins
+    - [ ] NerdCommenter and tcomment_vim and kommentary
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
-    - [ ] easymotion and (wordmotion + sneak)
-    - [ ] indent-blankline.nvim and sleuth
-    - [ ] other plugins mentioned in the update log of neovim v0.5
+    - [x] easymotion and (wordmotion + sneak)
+    - [x] indent-blankline.nvim and indentLine
+    - [x] other plugins mentioned in the update log of neovim v0.5
+    - [x] Neogit vs fugitive
+    - [x] gitsigns vs gitgutter
+    - [ ] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
 - [ ] Tree sitter
+- [ ] Spell checker
 - [x] Zen mode
   - [x] Setup Goyo and limelight
   - [x] Find a way to store value of scrolloff temporarilly
 - [ ] Spell checker
 - [-] Markdown
   - [-] Highlight (waiting for tree-sitter)
-  - [x] Edit
+  - [-] Edit
+    - [ ] mkdx newline settings
   - [x] Preview
 - [x] LaTeX
   - [x] vimtex
   - [x] texlab
 - [ ] DAP
-- [x] Change packer compiled file path

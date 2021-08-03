@@ -1,8 +1,5 @@
 return require('packer').startup({
-  config = {
-    compile_path = vim.fn.stdpath('data') .. '/packer_compiled.lua',
-    display = {open_fn = require('packer.util').float}
-  },
+  config = {display = {open_fn = require('packer.util').float}},
   function()
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
@@ -41,6 +38,25 @@ return require('packer').startup({
       config = [[vim.g.startuptime_tries = 10]]
     }
 
+    -- Editor interface
+    use {'lukas-reineke/indent-blankline.nvim'}
+    use {'itchyny/lightline.vim'}
+    -- use {'romgrk/barbar.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+
+    -- Git
+    use {
+      'lewis6991/gitsigns.nvim',
+      requires = {'nvim-lua/plenary.nvim'},
+      config = function() require('gitsigns').setup() end
+    }
+    use {
+      'TimUntersberger/neogit',
+      requires = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
+      config = function()
+        require('neogit').setup({integrations = {diffview = true}})
+      end
+    }
+
     use {'tpope/vim-surround'}
 
     use {'folke/which-key.nvim'}
@@ -48,7 +64,6 @@ return require('packer').startup({
     use {'scrooloose/nerdcommenter'}
     use {'ntpeters/vim-better-whitespace'}
     use {'ludovicchabant/vim-gutentags'}
-    use {'airblade/vim-gitgutter'}
     use {'liuchengxu/vista.vim'}
     use {'junegunn/limelight.vim'}
     use {'junegunn/goyo.vim'}
@@ -58,7 +73,8 @@ return require('packer').startup({
     use {'npxbr/glow.nvim'}
     use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
     use {'mhartington/formatter.nvim'}
-    use {'itchyny/lightline.vim'}
+    use {'sindrets/diffview.nvim'}
+    use {'phaazon/hop.nvim', as = 'hop'}
 
     -- Terminal
     use {'voldikss/vim-floaterm'}
