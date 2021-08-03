@@ -9,7 +9,7 @@
 - [x] Add file type specific key mappings to ftplugin/
 - [-] Status line
   - [x] Add lighline
-  - [x] Add barbar
+  - [ ] Add barbar
   - [ ] (Option): change lightline to other lua-based status lines
 - [-] LSP
   - [x] Compare 'lspsaga' functions with builtin Lua functions
@@ -17,6 +17,7 @@
   - [x] Check the difference between with and without nlua.nvim (read the source code)
   - [ ] Set up servers
   - [ ] Set up autocomplete
+  - [ ] Set up code actions
   - [x] Set up formatters
     - [x] Set up formatter plugin
     - [x] Set up formatters' config
@@ -40,6 +41,9 @@
     - [x] mkdx
     - [x] vimtex
     - [ ] gitgutter
+    - [ ] hop.nvim (alternative to easymotion)
+    - [ ] telescope.nvim
+    - [ ] nvim-autopairs with compe
   - [-] Plugins
     - [x] undotree
     - [x] easyAlign
@@ -51,15 +55,18 @@
     - [x] Goyo and limelight
     - [x] mkdx
     - [x] vimtex
-    - [x] gitgutter
-  - [ ] Compare plugins
+    - [ ] indent-blankline
+    - [ ] <strike>gitgutter</strike> gitsigns.nvim
+  - [-] Compare plugins
     - [ ] NerdCommenter and tcomment_vim
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
-    - [ ] easymotion and (wordmotion + sneak)
-    - [ ] indent-blankline.nvim and sleuth
-    - [ ] other plugins mentioned in the update log of neovim v0.5
+    - [x] easymotion and (wordmotion + sneak)
+    - [x] indent-blankline.nvim and indentLine
+    - [x] other plugins mentioned in the update log of neovim v0.5
+    - [ ] Neogit vs fugitive
+    - [x] gitsigns vs gitgutter
 - [ ] Tree sitter
 - [x] Zen mode
   - [x] Setup Goyo and limelight
@@ -67,10 +74,10 @@
 - [ ] Spell checker
 - [-] Markdown
   - [-] Highlight (waiting for tree-sitter)
-  - [x] Edit
+  - [-] Edit
+    - [ ] mkdx newline settings
   - [x] Preview
 - [x] LaTeX
   - [x] vimtex
   - [x] texlab
 - [ ] DAP
-- [ ] Change packer compiled file path
