@@ -35,16 +35,17 @@
   - [ ] Add sub-commands for telescope to behave like FZF
 - [-] Add old plugins and configs
   - [-] Setup configs
-    - [ ] NerdCommenter
     - [ ] vista
     - [x] Goyo
     - [x] mkdx
     - [x] vimtex
-    - [ ] gitgutter
-    - [ ] hop.nvim (alternative to easymotion)
-    - [ ] telescope.nvim
+    - [x] <strike>gitgutter</strike>
+    - [-] diffview
+    - [x] hop.nvim (alternative to easymotion)
+    - [-] telescope.nvim
     - [ ] nvim-autopairs with compe
   - [-] Plugins
+    - [-] NerdCommenter
     - [x] undotree
     - [x] easyAlign
     - [x] NerdCommenter
@@ -52,22 +53,24 @@
     - [x] floaterm
     - [x] gutentags
     - [x] vista
-    - [x] Goyo and limelight
+    - [-] Goyo and limelight (disable gitsigns)
     - [x] mkdx
     - [x] vimtex
-    - [ ] indent-blankline
-    - [ ] <strike>gitgutter</strike> gitsigns.nvim
+    - [x] indent-blankline
+    - [x] <strike>gitgutter</strike> gitsigns.nvim
   - [-] Compare plugins
-    - [ ] NerdCommenter and tcomment_vim
+    - [ ] NerdCommenter and tcomment_vim and kommentary
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
     - [x] easymotion and (wordmotion + sneak)
     - [x] indent-blankline.nvim and indentLine
     - [x] other plugins mentioned in the update log of neovim v0.5
-    - [ ] Neogit vs fugitive
+    - [x] Neogit vs fugitive
     - [x] gitsigns vs gitgutter
+    - [ ] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
 - [ ] Tree sitter
+- [ ] Spell checker
 - [x] Zen mode
   - [x] Setup Goyo and limelight
   - [x] Find a way to store value of scrolloff temporarilly
