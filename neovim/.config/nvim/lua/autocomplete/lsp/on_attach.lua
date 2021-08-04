@@ -39,8 +39,9 @@ local on_attach = function(client, bufnr)
                  '<cmd>lua require("lspsaga.rename").rename()<CR>', opts)
 
   -- Preview definition
-  buf_set_keymap('n', '<leader>ld',
-                 'require("lspsaga.provider").preview_definition()', opts)
+  buf_set_keymap('n', 'gd',
+                 '<cmd>lua require("lspsaga.provider").preview_definition()<CR>',
+                 opts)
 
   -- Jump to diagnostics
   buf_set_keymap('n', '[g',
@@ -56,7 +57,6 @@ local on_attach = function(client, bufnr)
                  opts)
 
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 

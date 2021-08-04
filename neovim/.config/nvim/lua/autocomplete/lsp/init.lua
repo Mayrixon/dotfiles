@@ -3,6 +3,9 @@ local utils = require('utils')
 -- Set short updatetime for a shorter LSP update frequency
 utils.opt('o', 'updatetime', 500)
 
+local saga = require('lspsaga')
+saga.init_lsp_saga({code_action_keys = {quit = {'<ESC>', 'q'}}})
+
 require('autocomplete.lsp.appearance')
 
 local on_attach = require('autocomplete.lsp.on_attach')
@@ -31,4 +34,3 @@ for server, config in pairs(servers) do
   config.capabilities = capabilities;
   lspconfig[server].setup(config)
 end
-

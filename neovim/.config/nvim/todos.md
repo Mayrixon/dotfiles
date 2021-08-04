@@ -69,6 +69,7 @@
     - [x] Neogit vs fugitive
     - [x] gitsigns vs gitgutter
     - [ ] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
+    - [ ] lspsaga vs telescope LSP functions
 - [ ] Tree sitter
 - [ ] Spell checker
 - [x] Zen mode
