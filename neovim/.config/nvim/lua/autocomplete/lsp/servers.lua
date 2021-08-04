@@ -1,3 +1,5 @@
+local lsp_status = require('lsp-status')
+
 local servers = {
   pyright = {},
   rust_analyzer = {},

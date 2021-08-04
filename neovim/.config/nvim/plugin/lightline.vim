@@ -11,13 +11,21 @@ let g:bufferline_active_buffer_right = ''
 "   autocmd Filetype * :call lightline#update()
 " augroup END
 
+function! LspStatus() abort
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+  endif
+
+  return ''
+endfunction
+
 let g:lightline = {
   \ 'colorscheme': 'gruvbox',
 		\ 'separator': { 'left': '', 'right': '' },
 		\ 'subseparator': { 'left': '', 'right': '' },
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'readonly', 'filename', 'modified', ] ],
+  \             [ 'readonly', 'filename', 'modified', 'lsp' ] ],
   \   'right': [ [ 'lineinfo' ],
   \              [ 'percent' ],
   \              [ 'fileformat', 'fileencoding', 'filetype', 'sw' ]],
@@ -30,6 +38,7 @@ let g:lightline = {
   \   'filename': '%n:%t',
   \ },
   \ 'component_function': {
+  \   'lsp': 'LspStatus',
   \   'filepath': 'LightlineAbsoluteFilePath',
   \   'gitbranch': 'fugitive#head',
   \   'sw': 'SleuthIndicator',

@@ -26,6 +26,7 @@ return require('packer').startup({
     use {'hrsh7th/nvim-compe'}
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
+    use {'nvim-lua/lsp-status.nvim'}
 
     -- File expolorer
     use {'kyazdani42/nvim-web-devicons'}
