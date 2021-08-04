@@ -20,12 +20,19 @@ wk.setup({
 })
 
 wk.register({
+  c = {name = 'nerdcommenter'},
   f = {
     name = 'fuzzy finder',
     b = {'<cmd>Telescope buffers<CR>', 'buffers'},
     f = {'<cmd>Telescope find_files<CR>', 'find files'},
     g = {'<cmd>Telescope live_grep<CR>', 'live grep'},
     h = {'<cmd>Telescope help_tags<CR>', 'help tags'},
+    l = {
+      name = 'LSP',
+      a = {
+        '<cmd>Telescope lsp_code_actions theme=get_cursor<CR>', 'code actions'
+      }
+    },
     p = {'<cmd>Telescope<CR>', 'pickers'}
   },
   z = {
@@ -42,7 +49,8 @@ wk.register({
     f = {'<cmd>HopChar1<CR>', '1 char word'},
     g = {'<cmd>HopChar2<CR>', '2 chars word'},
     l = {'<cmd>HopLine<CR>', 'line'},
-    w = {'<cmd>HopWord<CR>', 'word'}
+    w = {'<cmd>HopWord<CR>', 'word'},
+    ['/'] = {'<cmd>HopPattern<CR>', 'pattern'}
   }
 }, {prefix = '<leader>'})
 

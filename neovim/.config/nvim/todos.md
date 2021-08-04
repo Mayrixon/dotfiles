@@ -4,6 +4,7 @@
 
 - [ ] Move key bindings into lua/mappings.lua
   - [ ] use which-key
+  - [ ] Add trouble keybindings
 - [ ] Add config files in lua/ for lua plugins
 - [ ] Add config files in plugin/ for viml plugins
 - [x] Add file type specific key mappings to ftplugin/
@@ -27,10 +28,10 @@
       - [x] Markdown
       - [x] Python
       - [x] Typescript
-  - [ ] Adujust appearance
+  - [-] Adujust appearance
     - [ ] Adjust notice color
-    - [ ] Add LSP status to status line
-    - [ ] Add virtual text
+    - [ ] Add virtual text (waiting for a solution to combining rust-tools with other servers)
+    - [x] Add LSP status to status line
 - [ ] Fuzzy finder
   - [ ] Add sub-commands for telescope to behave like FZF
 - [-] Add old plugins and configs
@@ -43,7 +44,7 @@
     - [-] diffview
     - [x] hop.nvim (alternative to easymotion)
     - [-] telescope.nvim
-    - [ ] nvim-autopairs with compe
+    - [-] nvim-autopairs with compe (need more autopairs settings such as fastwrap)
   - [-] Plugins
     - [-] NerdCommenter
     - [x] undotree
@@ -59,7 +60,7 @@
     - [x] indent-blankline
     - [x] <strike>gitgutter</strike> gitsigns.nvim
   - [-] Compare plugins
-    - [ ] NerdCommenter and tcomment_vim and kommentary
+    - [x] NerdCommenter <strike>and tcomment_vim and kommentary</strike>
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
@@ -69,6 +70,7 @@
     - [x] Neogit vs fugitive
     - [x] gitsigns vs gitgutter
     - [ ] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
+    - [ ] lspsaga vs telescope LSP functions
 - [ ] Tree sitter
 - [ ] Spell checker
 - [x] Zen mode
@@ -84,3 +86,4 @@
   - [x] vimtex
   - [x] texlab
 - [ ] DAP
+- [ ] Optimise startup time
