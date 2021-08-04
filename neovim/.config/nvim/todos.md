@@ -4,6 +4,7 @@
 
 - [ ] Move key bindings into lua/mappings.lua
   - [ ] use which-key
+  - [ ] Add trouble keybindings
 - [ ] Add config files in lua/ for lua plugins
 - [ ] Add config files in plugin/ for viml plugins
 - [x] Add file type specific key mappings to ftplugin/
@@ -27,9 +28,9 @@
       - [x] Markdown
       - [x] Python
       - [x] Typescript
-  - [ ] Adujust appearance
+  - [-] Adujust appearance
     - [ ] Adjust notice color
-    - [ ] Add virtual text
+    - [ ] Add virtual text (waiting for a solution to combining rust-tools with other servers)
     - [x] Add LSP status to status line
 - [ ] Fuzzy finder
   - [ ] Add sub-commands for telescope to behave like FZF
@@ -43,7 +44,7 @@
     - [-] diffview
     - [x] hop.nvim (alternative to easymotion)
     - [-] telescope.nvim
-    - [ ] nvim-autopairs with compe
+    - [-] nvim-autopairs with compe (need more autopairs settings such as fastwrap)
   - [-] Plugins
     - [-] NerdCommenter
     - [x] undotree
@@ -85,3 +86,4 @@
   - [x] vimtex
   - [x] texlab
 - [ ] DAP
+- [ ] Optimise startup time

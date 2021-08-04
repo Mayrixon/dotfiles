@@ -1,5 +1,8 @@
 return require('packer').startup({
-  config = {display = {open_fn = require('packer.util').float}},
+  config = {
+    display = {open_fn = require('packer.util').float},
+    profile = {enable = true}
+  },
   function()
     -- Packer can manage itself as an optional plugin
     use {'wbthomason/packer.nvim', opt = true}
@@ -25,6 +28,14 @@ return require('packer').startup({
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
     use {'nvim-lua/lsp-status.nvim'}
+    use {
+      'windwp/nvim-autopairs',
+      config = function() require('nvim-autopairs').setup({}) end
+    }
+    -- use {
+    --   'simrat39/rust-tools.nvim',
+    --   config = function() require('rust-tools').setup({}) end
+    -- }
 
     -- File expolorer
     use {'kyazdani42/nvim-web-devicons'}
@@ -41,6 +52,16 @@ return require('packer').startup({
     use {'lukas-reineke/indent-blankline.nvim'}
     use {'itchyny/lightline.vim'}
     -- use {'romgrk/barbar.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
+    use {
+      'folke/trouble.nvim',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function() require('trouble').setup({}) end
+    }
+    use {
+      'folke/todo-comments.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+      config = function() require('todo-comments').setup({}) end
+    }
 
     -- Git
     use {
