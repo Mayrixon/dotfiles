@@ -1,5 +1,8 @@
 [tmux.files]
 "tmux.conf" = "~/.tmux.conf"
 
+# [vim.files]
+# "vim/.vim" = {target = "~", type = "symbolic", recursive = false}
+
 [zsh.files]
 zshrc = "~/.zshrc"
