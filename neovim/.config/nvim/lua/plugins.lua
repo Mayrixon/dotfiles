@@ -7,9 +7,7 @@ return require('packer').startup({
     use {'tpope/vim-sleuth'}
 
     -- Color sheme
-    use {'morhetz/gruvbox'}
-    -- use {"npxbr/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
-    use {'sainnhe/gruvbox-material'}
+    use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
 
     -- Fuzzy finder
     use {
