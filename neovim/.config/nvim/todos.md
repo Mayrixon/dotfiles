@@ -29,8 +29,8 @@
       - [x] Typescript
   - [ ] Adujust appearance
     - [ ] Adjust notice color
-    - [ ] Add LSP status to status line
     - [ ] Add virtual text
+    - [x] Add LSP status to status line
 - [ ] Fuzzy finder
   - [ ] Add sub-commands for telescope to behave like FZF
 - [-] Add old plugins and configs
@@ -59,7 +59,7 @@
     - [x] indent-blankline
     - [x] <strike>gitgutter</strike> gitsigns.nvim
   - [-] Compare plugins
-    - [ ] NerdCommenter and tcomment_vim and kommentary
+    - [x] NerdCommenter <strike>and tcomment_vim and kommentary</strike>
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
