@@ -47,3 +47,4 @@ for server, config in pairs(servers) do
                                        lsp_status.capabilities)
   lspconfig[server].setup(config)
 end
+require'rust-tools'.setup({server = {on_attach = on_attach}})

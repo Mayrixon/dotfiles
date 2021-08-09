@@ -32,10 +32,7 @@ return require('packer').startup({
       'windwp/nvim-autopairs',
       config = function() require('nvim-autopairs').setup({}) end
     }
-    -- use {
-    --   'simrat39/rust-tools.nvim',
-    --   config = function() require('rust-tools').setup({}) end
-    -- }
+    use {'simrat39/rust-tools.nvim'}
 
     -- File expolorer
     use {'kyazdani42/nvim-web-devicons'}
