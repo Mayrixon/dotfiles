@@ -19,6 +19,8 @@ function! s:goyo_enter()
 
   LspStop
   Limelight
+  " Disable compe
+  call compe#setup({'enabled': v:false})
 endfunction
 
 function! s:goyo_leave()
@@ -42,6 +44,8 @@ function! s:goyo_leave()
 
   Limelight!
   LspStart
+  " Enable compe
+  call compe#setup(g:compe)
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
