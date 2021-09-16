@@ -3,7 +3,7 @@ local utils = require('utils')
 utils.opt('o', 'shortmess', vim.o.shortmess .. 'c')
 utils.opt('o', 'completeopt', 'menuone,noselect')
 
-require'compe'.setup {
+local settings = {
   enabled = true,
   autocomplete = true,
   debug = false,
@@ -19,9 +19,12 @@ require'compe'.setup {
     treesitter = true
   }
 }
+vim.g['compe'] = settings
+
+require'compe'.setup(settings)
 
 -- Set autopairs working with compe
-require("nvim-autopairs.completion.compe").setup({
+require('nvim-autopairs.completion.compe').setup({
   map_cr = true, --  map <CR> on insert mode
   map_complete = true -- it will auto insert `(` after select function or method item
 })
