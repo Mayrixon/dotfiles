@@ -54,7 +54,7 @@
     - [x] floaterm
     - [x] gutentags
     - [x] vista
-    - [-] Goyo and limelight (disable gitsigns)
+    - [x] Goyo and limelight (disable gitsigns)
     - [x] mkdx
     - [x] vimtex
     - [x] indent-blankline
@@ -69,7 +69,7 @@
     - [x] other plugins mentioned in the update log of neovim v0.5
     - [x] Neogit vs fugitive
     - [x] gitsigns vs gitgutter
-    - [ ] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
+    - [-] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
     - [ ] lspsaga vs telescope LSP functions
 - [ ] Tree sitter
 - [ ] Spell checker
