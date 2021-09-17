@@ -10,6 +10,7 @@ function! s:goyo_enter()
   endif
   set noshowmode
   set noshowcmd
+  setlocal signcolumn=no
 
   setlocal scrolloff=999
   setlocal linebreak
@@ -35,9 +36,10 @@ function! s:goyo_leave()
   endif
   set showmode
   set showcmd
+  set signcolumn<
 
-  setlocal scrolloff<
-  setlocal linebreak<
+  set scrolloff<
+  set linebreak<
 
   unmap j
   unmap k
