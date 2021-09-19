@@ -47,12 +47,5 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
-local utils = require('utils')
-
--- utils.opt('w', 'foldmethod', 'expr')
--- utils.opt('w', 'foldexpr', 'nvim_treesitter#foldexpr()')
-
--- vim.cmd[[
--- setlocal foldmethod=expr
--- setlocal foldexpr=nvim_treesitter#foldexpr()
--- ]]
+vim.opt_local.foldmethod = 'expr'
+vim.opt_local.foldexpr = 'nvim_treesitter#foldexpr()'

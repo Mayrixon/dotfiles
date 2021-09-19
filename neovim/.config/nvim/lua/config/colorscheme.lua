@@ -1,9 +1,8 @@
-local utils = require('utils')
+vim.opt_local.cursorline = true
 
-utils.opt('w', 'cursorline', true)
+vim.opt.termguicolors = true
+vim.opt.background = 'dark'
 
-utils.opt('o', 'termguicolors', true)
-utils.opt('o', 'background', 'dark')
 vim.g.gruvbox_italic = 1
 
 vim.cmd [[colorscheme gruvbox]]
