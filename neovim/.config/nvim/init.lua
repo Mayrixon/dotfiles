@@ -1,25 +1,48 @@
--- Sensible defaults
-require('settings')
-
--- Auto install packer.nvim if not exists
+-- TODO: check function sys_init()
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 local fn = vim.fn
-local execute = vim.api.nvim_command
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+
+local function packer_init()
+  local install_path = fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({
+      'git', 'clone', '--depth', '1',
+      'https://github.com/wbthomason/packer.nvim', install_path
+    })
+  end
+  vim.cmd [[packadd packer.nvim]]
+  vim.cmd [[
+    augroup packer_user_config
+      autocmd!
+      autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    augroup end
+  ]]
 end
-vim.cmd [[packadd packer.nvim]]
--- Auto compile when there are changes in plugins.lua
-vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile'
 
--- Install plugins
-require('plugins')
+-- local function sys_init()
+--   -- Performance
+--   -- require 'impatient'
+-- end
 
--- Key mappings
-require('keymappings')
+-------------------------------- Start loading ---------------------------------
 
--- Setup LSP and autocomplete functions
-require('autocomplete')
+packer_init()
 
--- Other configurations
-require('config')
+-- sys_init()
+
+require('defaults').setup()
+
+require('keymappings').setup()
+
+-- BUG: Solve the problem of open file dump. Neovim would crash if open a file
+-- in the terminal with plugins.
+require('plugins').setup()
+
+require('settings').setup()
+
+require('config.lsp').setup()
+
+-- require('config.dap').setup()
+
+--------------------------------- End loading ----------------------------------

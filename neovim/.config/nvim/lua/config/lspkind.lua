@@ -1,3 +1,6 @@
+-- TODO: cleanup
+local M = {}
+
 -- From coc.nvim suggesting Nerd-Fonts icons
 -- "keyword": "\uf1de",
 -- "variable": "\ue79b",
@@ -59,4 +62,11 @@ local kind_symbols = {
   -- File = '',
 }
 
-require('lspkind').init({symbol_map = kind_symbols})
+
+function M.setup()
+  require('lspkind').init({
+    -- symbol_map = kind_symbols
+  })
+end
+
+return M

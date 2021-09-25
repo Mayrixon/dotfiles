@@ -1,56 +1,77 @@
--- Remote providers
-vim.g.loaded_python_provider = 0
-vim.g.python3_host_prog = '/usr/bin/python3'
+-- TODO: add all functions into function setup()
+local M = {}
 
-vim.cmd [[
-  syntax enable
-  filetype plugin indent on
-]]
+function M.colorscheme()
+  vim.opt.cursorline = true
 
--- Global settings
-vim.opt.ttimeoutlen = 100
+  vim.opt.background = 'dark'
+  vim.g.gruvbox_italic = 1
 
-vim.opt.mouse = 'a'
+  vim.cmd [[colorscheme gruvbox]]
 
-vim.opt.hidden = true
+end
 
-vim.opt.display = 'msgsep'
+function M.provider_settings()
+  vim.g.loaded_python_provider = 0
+  vim.g.python3_host_prog = '/usr/bin/python3'
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.inccommand = 'nosplit'
+end
 
-vim.opt.lazyredraw = true
--- vim.opt.synmaxcol=500
+function M.auto_cmds()
 
-vim.opt.wildmode = 'longest,full'
+  -- Highlight on yank
+  -- cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
+  vim.cmd 'au TextYankPost * silent! lua vim.highlight.on_yank()'
 
-vim.opt.showmatch = true
+  -- don't auto commenting new lines
+  vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 
--- Window-local settings
-vim.opt_global.scrolloff = 4
-vim.opt_global.sidescrolloff = 4
+  -- Auto format
+  -- vim.api.nvim_exec([[
+  -- augroup auto_fmt
+  --     autocmd!
+  --     autocmd BufWritePre *.py,*.lua,*.rs try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+  -- aug END
+  -- ]], false)
 
-vim.opt_global.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
-vim.opt_global.list = true
+  vim.api.nvim_exec([[
+        augroup auto_html
+            autocmd!
+            autocmd Filetype html setlocal ts=2 sw=2 expandtab
+            autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
+        augroup END
+    ]], false)
 
-vim.opt_global.number = true
-vim.opt_global.relativenumber = true
-vim.opt_global.signcolumn = 'yes'
+  vim.api.nvim_exec([[
+        augroup auto_term
+            autocmd!
+            autocmd TermOpen * setlocal nonumber norelativenumber
+            autocmd TermOpen * startinsert
+        augroup END
+    ]], false)
 
-vim.opt_global.foldmethod = 'syntax'
+  -- TODO: check the whitespace plugin
+  vim.api.nvim_exec([[
+        fun! TrimWhitespace()
+            let l:save = winsaveview()
+            keeppatterns %s/\s\+$//e
+            call winrestview(l:save)
+        endfun
+        "-- autocmd FileType * autocmd BufWritePre <buffer> call TrimWhitespace()
+    ]], false)
 
-vim.opt_global.conceallevel = 1
-vim.opt_global.concealcursor = 'nc'
+  -- vim.cmd [[ autocmd CmdWinEnter * quit ]]
 
--- Buffer-local settings
-local indent = 4
-vim.opt_global.expandtab = true
-vim.opt_global.shiftwidth = indent
-vim.opt_global.smartindent = true
-vim.opt_global.tabstop = indent
+  vim.api.nvim_exec([[
+      hi InactiveWindow guibg=#282C34
+      autocmd VimEnter * set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
+    ]], false)
+end
 
--- Highlight on yank
-vim.cmd [[
-  autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
-]]
+function M.setup()
+  M.colorscheme()
+  M.provider_settings()
+  --  M.auto_cmds()
+end
+
+return M

@@ -1,51 +1,93 @@
-require('nvim-treesitter.configs').setup {
-  ensure_installed = 'maintained',
-  highlight = {enable = true, use_languagetree = true},
-  indent = {enable = true},
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = 'gnn',
-      node_incremental = 'grn',
-      scope_incremental = 'grc',
-      node_decremental = 'grm'
-    }
-  },
-  refactor = {
-    smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
-    highlight_definitions = {enable = true}
-    -- highlight_current_scope = { enable = true }
-  },
-  textobjects = {
-    select = {
+-- TODO: clean up comments.
+local M = {}
+
+function M.setup()
+  -- local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+
+  -- parser_configs.norg = {
+  --  install_info = {
+  --    url = "https://github.com/nvim-neorg/tree-sitter-norg",
+  --    files = { "src/parser.c", "src/scanner.cc" },
+  --    branch = "main",
+  --  },
+  -- }
+
+  require('nvim-treesitter.configs').setup {
+    autotag = {enable = true},
+    context = {enable = true},
+    context_commentstring = {enable = true},
+    ensure_installed = 'maintained',
+    highlight = {enable = true},
+    incremental_selection = {
       enable = true,
       keymaps = {
-        ['iF'] = {
-          python = '(function_definition) @function',
-          cpp = '(function_definition) @function',
-          c = '(function_definition) @function',
-          java = '(method_declaration) @function'
-        },
-        -- or you use the queries from supported languages with textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['aC'] = '@class.outer',
-        ['iC'] = '@class.inner',
-        ['ac'] = '@conditional.outer',
-        ['ic'] = '@conditional.inner',
-        ['ae'] = '@block.outer',
-        ['ie'] = '@block.inner',
-        ['al'] = '@loop.outer',
-        ['il'] = '@loop.inner',
-        ['is'] = '@statement.inner',
-        ['as'] = '@statement.outer',
-        ['ad'] = '@comment.outer',
-        ['am'] = '@call.outer',
-        ['im'] = '@call.inner'
+        init_selection = 'gnn',
+        node_incremental = 'grn',
+        scope_incremental = 'grc',
+        node_decremental = 'grm'
       }
+    },
+    indent = {enable = true},
+    matchup = {enable = true},
+    rainbow = {enable = true, extended_mode = true},
+    textobjects = {
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {[']m'] = '@function.outer', [']]'] = '@class.outer'},
+        goto_next_end = {[']M'] = '@function.outer', [']['] = '@class.outer'},
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer'
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer'
+        }
+      },
+      refactor = {
+        -- TODO: check if this highlight is compitable with highlight groups in lua/settings.lua.
+        --       checked. Confilicts with LSP highlight.
+        highlight_definitions = {enable = true},
+        highlight_current_scope = {enable = true}
+        -- smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
+        -- navigation = {
+        -- enable = true,
+        -- keymaps = {
+        -- TODO: check if goto_definition is compitable with LSP and <C-t>
+        -- goto_definition = 'gnd',
+        -- list_definitions = 'gnD',
+        -- list_definitions_toc = 'gO',
+        -- goto_next_usage = '<a-*>',
+        -- goto_previous_usage = '<a-#>'
+        -- }
+        -- }
+      },
+      select = {
+        enable = true,
+
+        -- Automatically jump forward to textobj, similar to targets.vim
+        lookahead = true,
+
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner'
+        }
+      }
+      -- swap = {
+      --  enable = true,
+      --  TODO: remap to better keymappings
+      --  swap_next = { ["<Leader>rx"] = "@parameter.inner" },
+      --  swap_previous = { ["<Leader>rX"] = "@parameter.inner" },
+      -- },
     }
   }
-}
 
-vim.opt_local.foldmethod = 'expr'
-vim.opt_local.foldexpr = 'nvim_treesitter#foldexpr()'
+  vim.opt_global.foldmethod = 'expr'
+  vim.opt_global.foldexpr = 'nvim_treesitter#foldexpr()'
+end
+
+return M

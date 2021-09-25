@@ -1,89 +1,75 @@
 # Nvim Lua config
 
+## Refectory
+
+- [ ] Clear the plugin list.
+- [ ] Clear all backup files.
+- [ ] Clear all TODOs.
+- [ ] Setup which-key mappings without all mapped.
+  - [ ] Based on alpha2phi's.
+  - [ ] Based on Spacevim's.
+    - [x] Map `<Leader>-b`.
+- [x] Cleanup the following TODO list.
+  - [x] Delete outdated items.
+  - [x] Delete un-necessary items.
+  - [x] Update to the current plans.
+
 ## TODOs
 
-- [ ] Move key bindings into lua/mappings.lua
-  - [ ] use which-key
-  - [ ] Add trouble keybindings
-- [ ] Add config files in lua/ for lua plugins
-- [ ] Add config files in plugin/ for viml plugins
 - [x] Add file type specific key mappings to ftplugin/
-- [-] Status line
-  - [x] Add lighline
-  - [ ] Add barbar
-  - [ ] (Option): change lightline to other lua-based status lines
-- [-] LSP
-  - [x] Compare 'lspsaga' functions with builtin Lua functions
-  - [x] Remove action windows which jump out automatically after press `[d` and `]d`
-  - [x] Check the difference between with and without nlua.nvim (read the source code)
+- [ ] Status line
+  - [ ] Setup lualine.
+    - [ ] Basic settings according to lightline.
+    - [ ] Add lsp\_status.
+    - [ ] Add nvim-gps.
+  - [ ] Add barbar. Maybe another plugin. The plugin should be tabbar rather than barbar.
+- [ ] LSP
   - [ ] Set up servers
   - [ ] Set up autocomplete
   - [ ] Set up code actions
-  - [x] Set up formatters
-    - [x] Set up formatter plugin
-    - [x] Set up formatters' config
-      - [x] C/C++
-      - [x] Lua
-      - [x] LaTeX
-      - [x] Markdown
-      - [x] Python
-      - [x] Typescript
-  - [-] Adujust appearance
+    - [ ] Setup according to VS Code and LSP functions' definations.
+      - [ ] Definition
+      - [ ] Declaration
+      - [ ] Implementation
+      - [ ] References
+      - [ ] Hover
+      - [ ] Type defination
+    - [ ] Compare lspsaga with (telescope + native LSP + goto-preview)
+  - [ ] Set up formatters
+  - [ ] Adujust appearance
     - [ ] Adjust notice color
-    - [ ] Add virtual text (waiting for a solution to combining rust-tools with other servers)
-    - [x] Add LSP status to status line
-- [ ] Fuzzy finder
-  - [ ] Add sub-commands for telescope to behave like FZF
+    - [ ] Add LSP status to status line
+- [ ] telescope
 - [-] Add old plugins and configs
   - [-] Setup configs
-    - [ ] vista
-    - [x] Goyo
-    - [x] mkdx
-    - [x] vimtex
-    - [x] <strike>gitgutter</strike>
     - [-] diffview
-    - [x] hop.nvim (alternative to easymotion)
-    - [-] telescope.nvim
-    - [-] nvim-autopairs with compe (need more autopairs settings such as fastwrap)
+    - [ ] telescope.nvim
   - [-] Plugins
-    - [-] NerdCommenter
-    - [x] undotree
-    - [x] easyAlign
-    - [x] NerdCommenter
-    - [x] better-whitespace
-    - [x] floaterm
-    - [x] gutentags
-    - [x] vista
-    - [x] Goyo and limelight (disable gitsigns)
-    - [x] mkdx
-    - [x] vimtex
-    - [x] indent-blankline
-    - [x] <strike>gitgutter</strike> gitsigns.nvim
+    - [-] undotree
+    - [ ] better-whitespace
+    - [ ] gutentags
+    - [ ] Goyo and limelight (disable gitsigns)
   - [-] Compare plugins
-    - [x] NerdCommenter <strike>and tcomment_vim and kommentary</strike>
     - [ ] Colorizer and nvim-colorizer.lua
     - [ ] Autopair
     - [ ] Status line
-    - [x] easymotion and (wordmotion + sneak)
-    - [x] indent-blankline.nvim and indentLine
-    - [x] other plugins mentioned in the update log of neovim v0.5
-    - [x] Neogit vs fugitive
-    - [x] gitsigns vs gitgutter
+    - [ ] Neogit vs fugitive
     - [-] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
     - [ ] lspsaga vs telescope LSP functions
-- [ ] Tree sitter
+- [-] Tree sitter
 - [ ] Spell checker
-- [x] Zen mode
+- [-] Zen mode
   - [x] Setup Goyo and limelight
   - [x] Find a way to store value of scrolloff temporarilly
-- [ ] Spell checker
+  - [ ] TrueZen or Goyo?
 - [-] Markdown
   - [-] Highlight (waiting for tree-sitter)
   - [-] Edit
     - [ ] mkdx newline settings
-  - [x] Preview
-- [x] LaTeX
-  - [x] vimtex
-  - [x] texlab
 - [ ] DAP
 - [ ] Optimise startup time
+  - [ ] Profile:
+    - [ ] packer's profile
+    - [ ] vim-startuptime
+  - [ ] Use plugin impatient
+- [ ] Setup startup screen

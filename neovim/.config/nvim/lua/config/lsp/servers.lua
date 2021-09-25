@@ -1,6 +1,6 @@
-local lsp_status = require('lsp-status')
-
+-- TODO: seperate into multiple files
 local servers = {
+  clangd = {},
   pyright = {},
   rust_analyzer = {},
   sumneko_lua = {
