@@ -1,56 +1,56 @@
-local utils = require('utils')
-
-local cmd = vim.cmd
-local indent = 4
-
 -- Remote providers
 vim.g.loaded_python_provider = 0
 vim.g.python3_host_prog = '/usr/bin/python3'
 
-cmd 'syntax enable'
-cmd 'filetype plugin indent on'
+vim.cmd [[
+  syntax enable
+  filetype plugin indent on
+]]
 
 -- Global settings
-utils.opt('o', 'ttimeoutlen', 100)
+vim.opt.ttimeoutlen = 100
 
-utils.opt('o', 'mouse', 'a')
+vim.opt.mouse = 'a'
 
-utils.opt('o', 'hidden', true)
+vim.opt.hidden = true
 
-utils.opt('o', 'display', 'msgsep')
+vim.opt.display = 'msgsep'
 
-utils.opt('o', 'ignorecase', true)
-utils.opt('o', 'smartcase', true)
-utils.opt('o', 'inccommand', 'nosplit')
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.inccommand = 'nosplit'
 
-utils.opt('o', 'lazyredraw', true)
--- utils.opt('o', 'synmaxcol', 500)
+vim.opt.lazyredraw = true
+-- vim.opt.synmaxcol=500
 
-utils.opt('o', 'wildmode', 'longest,full')
+vim.opt.wildmode = 'longest,full'
 
-utils.opt('o', 'showmatch', true)
+vim.opt.showmatch = true
 
 -- Window-local settings
-utils.opt('w', 'scrolloff', 4)
-utils.opt('w', 'sidescrolloff', 4)
+vim.opt_global.scrolloff = 4
+vim.opt_global.sidescrolloff = 4
 
-utils.opt('w', 'listchars', 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+')
-utils.opt('w', 'list', true)
+vim.opt_global.listchars = 'tab:> ,trail:-,extends:>,precedes:<,nbsp:+'
+vim.opt_global.list = true
 
-utils.opt('w', 'number', true)
-utils.opt('w', 'relativenumber', true)
-utils.opt('w', 'signcolumn', 'yes')
+vim.opt_global.number = true
+vim.opt_global.relativenumber = true
+vim.opt_global.signcolumn = 'yes'
 
-utils.opt('w', 'foldmethod', 'syntax')
+vim.opt_global.foldmethod = 'syntax'
 
-utils.opt('w', 'conceallevel', 1)
-utils.opt('w', 'concealcursor', 'nc')
+vim.opt_global.conceallevel = 1
+vim.opt_global.concealcursor = 'nc'
 
 -- Buffer-local settings
-utils.opt('b', 'expandtab', true)
-utils.opt('b', 'shiftwidth', indent)
-utils.opt('b', 'smartindent', true)
-utils.opt('b', 'tabstop', indent)
+local indent = 4
+vim.opt_global.expandtab = true
+vim.opt_global.shiftwidth = indent
+vim.opt_global.smartindent = true
+vim.opt_global.tabstop = indent
 
 -- Highlight on yank
-cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
+vim.cmd [[
+  autocmd TextYankPost * lua vim.highlight.on_yank {on_visual = false}
+]]

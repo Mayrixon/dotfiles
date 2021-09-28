@@ -1,7 +1,7 @@
 local utils = require('utils')
 
-utils.opt('o', 'shortmess', vim.o.shortmess .. 'c')
-utils.opt('o', 'completeopt', 'menuone,noselect')
+vim.opt.shortmess = vim.opt.shortmess + {c = true}
+vim.opt.completeopt = 'menuone,noselect'
 
 local settings = {
   enabled = true,
