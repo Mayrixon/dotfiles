@@ -139,4 +139,8 @@ function M.setup_server(server, config)
   end
 end
 
+-- INFO: temporary API. Should be deleted after LSP refectory.
+M.on_attach = on_attach
+M.get_capabilities = get_capabilities
+
 return M

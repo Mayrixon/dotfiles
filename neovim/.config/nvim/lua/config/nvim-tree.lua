@@ -62,7 +62,6 @@ function M.setup()
   vim.g.nvim_tree_highlight_opened_files = 1 -- 0 by default, will enable folder and file icon highlight for opened files/directories.
   vim.g.nvim_tree_add_trailing = 1 -- 0 by default, append a trailing slash to folder names
   vim.g.nvim_tree_group_empty = 1 -- 0 by default, compact folders that only contain a single folder into one node in the file tree
-  vim.g.nvim_tree_respect_buf_cwd = 1 -- 0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
   vim.g.nvim_tree_special_files = {
     ['Readme.md'] = 1,
     ['readme.md'] = 1,
@@ -70,12 +69,5 @@ function M.setup()
     ['Makefile'] = 1,
     ['MAKEFILE'] = 1
   } -- List of filenames that gets highlighted with NvimTreeSpecialFile
-
-  -- TODO: check the document. If the highlight group could be used,
-  -- move this section to lua/settings.lua.
-  -- vim.cmd [[
-  --   " a list of groups can be found at `:help nvim_tree_highlight`
-  --   highlight NvimTreeFolderIcon guibg=blue
-  -- ]]
 end
 return M

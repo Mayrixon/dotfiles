@@ -10,39 +10,23 @@ function M.setup()
     --  profile = {enable = true}
     -- },
     function(use)
-      -- Packer can manage itself as an optional plugin
       use {'wbthomason/packer.nvim', opt = true}
 
       -- Development
-      use {'tpope/vim-fugitive'}
-      use {'tpope/vim-rhubarb'}
-      use {'tpope/vim-dispatch'}
       use {'tpope/vim-surround'}
       use {'tpope/vim-commentary'}
       use {'tpope/vim-unimpaired'}
       use {'tpope/vim-sleuth'}
       use {'easymotion/vim-easymotion'}
-      use {
-        'lewis6991/gitsigns.nvim',
-        requires = {'nvim-lua/plenary.nvim'},
-        config = function() require('gitsigns').setup() end
-      }
-      use {
-        'TimUntersberger/neogit',
-        requires = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
-        config = function()
-          require('neogit').setup({integrations = {diffview = true}})
-        end
-      }
-      use {'sindrets/diffview.nvim'}
       use {'voldikss/vim-floaterm'}
+      use {'windwp/nvim-spectre'}
       use {
         'folke/which-key.nvim',
         config = function() require('config.which-key').setup() end
       }
       use {
         'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require('config.nvim-tree').setup() end
 
       }
@@ -54,12 +38,31 @@ function M.setup()
         'liuchengxu/vista.vim',
         config = function() require('config.vista').setup() end
       }
-      -- TODO: setup keymapping
       use {
         'mbbill/undotree',
         cmd = 'UndotreeToggle',
         config = function() require('config.undotree').setup() end
       }
+
+      -- Git
+      use {'tpope/vim-fugitive'}
+      use {'tpope/vim-rhubarb'}
+      use {'tpope/vim-dispatch'}
+      use {'junegunn/gv.vim'}
+      use {
+        'lewis6991/gitsigns.nvim',
+        requires = {'nvim-lua/plenary.nvim'},
+        config = function() require('config.gitsigns').setup() end
+      }
+      use {
+        'TimUntersberger/neogit',
+        requires = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
+        config = function()
+          require('neogit').setup({integrations = {diffview = true}})
+        end
+      }
+      -- TODO: check the mapping '<leader>-e'.
+      use {'sindrets/diffview.nvim'}
 
       -- Color scheme
       use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
@@ -87,15 +90,13 @@ function M.setup()
       use {
         'nvim-telescope/telescope.nvim',
         requires = {
-          'nvim-lua/plenary.nvim',
-          {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}, {
+          'nvim-lua/plenary.nvim', {
             'nvim-telescope/telescope-frecency.nvim',
-            requires = {'tami5/sqlite.lua', 'kyazdani42/nvim-web-devicons'}
-          }
+            requires = {
+              'tami5/sqlite.lua', {'kyazdani42/nvim-web-devicons', opt = true}
+            }
+          }, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
           --        "nvim-telescope/telescope-project.nvim",
-          --        "nvim-telescope/telescope-symbols.nvim",
-          -- 'nvim-telescope/telescope-github.nvim',
-          -- 'nvim-telescope/telescope-hop.nvim'
         },
         config = function() require('config.telescope').setup() end
       }
@@ -147,7 +148,7 @@ function M.setup()
       use {
         'andymass/vim-matchup',
         -- TODO: move to folder lua/config
-        config = function() vim.g.matchup_matchparen_offscreen = {} end
+        config = function() require('config.matchup').setup() end
       }
       -- use {
       --  "nacro90/numb.nvim",
@@ -156,10 +157,6 @@ function M.setup()
       --  end,
       -- }
       -- use { "antoinemadec/FixCursorHold.nvim" }
-      -- use {
-      --  "jose-elias-alvarez/null-ls.nvim",
-      --  requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-      -- }
 
       -- Completion
       -- TODO: finish plugin settings
@@ -242,7 +239,6 @@ function M.setup()
       --    require("config.symbols-outline").setup()
       --  end,
       -- }
-      -- use { "~/workspace/dev/alpha2phi/alpha.nvim" }
 
       ---- Dashboard
       -- use {
@@ -260,7 +256,16 @@ function M.setup()
       ----   end,
       ---- }
 
-      ---- Status line
+      -- Status line
+      -- TODO: setup. Including:
+      -- - tabline
+      -- - lsp-status (maybe not?)
+      -- - nvim-gps
+      use {
+        'shadmansaleh/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function() require('lualine').setup() end
+      }
       ---- use {
       ----   "famiu/feline.nvim",
       ----   config = function()
@@ -338,7 +343,6 @@ function M.setup()
       ----     config = function() vim.notify = require("notify") end
       ---- }
       -- use {'SmiteshP/nvim-gps'}
-      use {'windwp/nvim-spectre'}
 
       ---- Profiling
       -- use {
@@ -346,6 +350,7 @@ function M.setup()
       --  cmd = 'StartupTime',
       --  config = [[vim.g.startuptime_tries = 10]]
       -- }
+      -- use{'tweekmonster/startuptime.vim'}
 
       ---- Editor interface
       use {'lukas-reineke/indent-blankline.nvim'}
@@ -383,6 +388,7 @@ return M
 -- LSP config
 -- use {'kabouzeid/nvim-lspinstall'}
 -- use {'tamago324/nlsp-settings.nvim'}
+-- use {'jose-elias-alvarez/null-ls.nvim'}
 
 -- Treesitter
 -- use {'mfussenegger/nvim-ts-hint-textobject'}

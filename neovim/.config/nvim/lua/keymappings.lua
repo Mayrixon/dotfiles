@@ -33,7 +33,9 @@ local keymappings = {
     [','] = ',<c-g>u',
     ['.'] = '.<c-g>u',
     ['!'] = '!<c-g>u',
-    ['?'] = '?<c-g>u'
+    ['?'] = '?<c-g>u',
+    -- Unmap <F1>
+    ['<F1>'] = '<ESC>'
   },
   normal_mode = {
     ['ga'] = {'<Plug>(EasyAlign)', {noremap = false, silent = false}},

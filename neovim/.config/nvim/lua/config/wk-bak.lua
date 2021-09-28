@@ -1,15 +1,11 @@
 local M = {}
 
 local mappings = {
-  ['w'] = {'<Cmd>w<Cr>', 'Save'},
-  ['q'] = {'<Cmd>q<Cr>', 'Quit'},
 
   -- System
   ['z'] = {
     name = 'System',
     b = {'<Cmd>hi Normal ctermbg=none guibg=none<CR>', 'Transparent background'},
-    s = {':<C-u>SaveSession<Cr>', 'Save session'},
-    l = {':<C-u>SearchSession<Cr>', 'Load session'},
     c = {'<Cmd>DashboardChangeColorscheme<Cr>', 'Color scheme'},
     h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     t = {'<Cmd>terminal<CR>', 'New terminal'},
@@ -23,18 +19,7 @@ local mappings = {
       ':let &runtimepath.=\',\'.escape(expand(\'%:p:h\'), \'\\,\')<Cr>',
       'Set runtime path'
     },
-    f = {'<Cmd>FloatermNew<Cr>', 'Floating terminal'},
-    i = {'<Cmd>PackerUpdate<Cr>', 'Packer update'}
-  },
-
-  -- Quick fix
-  c = {
-    name = 'Quickfix',
-    o = {'<Cmd>copen<Cr>', 'Open quickfix'},
-    c = {'<Cmd>cclose<Cr>', 'Close quickfix'},
-    n = {'<Cmd>cnext<Cr>', 'Next quickfix'},
-    p = {'<Cmd>cprev<Cr>', 'Previous quickfix'},
-    x = {'<Cmd>cex []<Cr>', 'Clear quickfix'}
+    f = {'<Cmd>FloatermNew<Cr>', 'Floating terminal'}
   },
 
   -- File
@@ -51,26 +36,13 @@ local mappings = {
   -- Git
   g = {
     name = 'Source code',
-    s = {'<Cmd>Git<Cr>', 'Git status'},
-    p = {'<Cmd>Git push<Cr>', 'Git push'},
-    b = {'<Cmd>Git branch<Cr>', 'Git branch'},
     d = {'<Cmd>Gvdiffsplit<Cr>', 'Git diff'},
-    f = {'<Cmd>Git fetch --all<Cr>', 'Git fetch'},
-    n = {'<Cmd>Neogit<Cr>', 'NeoGit'},
-    v = {'<Cmd>DiffviewOpen<Cr>', 'Diffview open'},
-    c = {'<Cmd>DiffviewClose<Cr>', 'Diffview close'},
-    h = {'<Cmd>DiffviewFileHistory<Cr>', 'File history'},
-    ['r'] = {
-      name = 'Rebase',
-      u = {'<Cmd>Git rebase upstream/master<Cr>', 'Git rebase upstream/master'},
-      o = {'<Cmd>Git rebase origin/master<Cr>', 'Git rebase origin/master'}
-    },
     x = {
       name = 'Diff',
       ['2'] = {'<Cmd>diffget //2', 'Diffget 2'},
       ['3'] = {'<Cmd>diffget //3', 'Diffget 3'}
     },
-    g = {name = 'Generate doc'},
+    g = {name = 'Generate doc'}
   },
 
   -- eSpeak
@@ -96,20 +68,7 @@ local mappings = {
       '<Cmd>lua require(\'telescope\').extensions.arecibo.websearch()<CR>',
       'Web search'
     },
-    s = {'<Cmd>lua require(\'spectre\').open()<CR>', 'Search file'},
     b = {'<Plug>SearchNormal', 'Browser search'},
-    v = {
-      '<Cmd>lua require(\'spectre\').open_visual({select_word=true})<CR>',
-      'Visual search'
-    },
-    f = {
-      'viw:lua require(\'spectre\').open_file_search()<Cr>', 'Open file search'
-    },
-    c = {'q:', 'Command history'},
-    g = {'q/', 'Grep history'},
-    l = {
-      '<Cmd>lua require(\'utils.cheatsheet\').cheatsheet()<CR>', 'Search code'
-    },
     o = {'<Cmd>SymbolsOutline<CR>', 'Symbols Outline'}
   },
 
@@ -131,27 +90,10 @@ local mappings = {
     s = {'<Cmd>lua require\'sniprun\'.run()<CR>', 'Run snippets'}
   },
 
-  -- Git signs
-  h = {
-    name = 'Git signs',
-    b = 'Blame line',
-    p = 'Preview hunk',
-    R = 'Reset buffer',
-    r = 'Reset buffer',
-    s = 'Stage hunk',
-    S = 'Stage buffer',
-    u = 'Undo stage hunk',
-    U = 'Reset buffer index'
-  },
-
   -- Notes
   n = {
     name = 'Notes',
     n = {'<Cmd>FloatermNew nvim ~/workspace/dev/notes/<Cr>', 'New note'}
-    -- z = {
-    --   "<Cmd>ZenMode<Cr>",
-    --   "Zen Mode",
-    -- },
   }
 
 }

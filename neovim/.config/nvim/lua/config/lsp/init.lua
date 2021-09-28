@@ -25,6 +25,13 @@ function M.setup()
   for server, config in pairs(servers) do
     lsp_utils.setup_server(server, config)
   end
+  require'rust-tools'.setup({
+    server = {
+      on_attach = require('config.lsp.utils').on_attach,
+      capabilities = require('config.lsp.utils').get_capabilities()
+    }
+  })
+
 end
 
 return M

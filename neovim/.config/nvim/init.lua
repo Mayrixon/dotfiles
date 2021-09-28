@@ -1,4 +1,3 @@
--- TODO: check function sys_init()
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 local fn = vim.fn

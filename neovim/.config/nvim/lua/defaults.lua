@@ -8,7 +8,7 @@ function M.setup()
   cmd 'syntax enable'
   cmd 'filetype plugin indent on'
 
-  opt.timeoutlen = 500
+  opt.timeoutlen = 1000
   opt.updatetime = 500
 
   opt.mouse = 'a'

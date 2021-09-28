@@ -5,10 +5,12 @@
 - [ ] Clear the plugin list.
 - [ ] Clear all backup files.
 - [ ] Clear all TODOs.
-- [ ] Setup which-key mappings without all mapped.
+- [-] Setup which-key mappings without all mapped.
   - [ ] Based on alpha2phi's.
-  - [ ] Based on Spacevim's.
-    - [x] Map `<Leader>-b`.
+  - [-] Based on Spacevim's.
+    - [x] Map `<leader>-b`.
+    - [x] Map `<leader>-s`.
+    - [x] Map `<leader>-g`.
 - [x] Cleanup the following TODO list.
   - [x] Delete outdated items.
   - [x] Delete un-necessary items.

@@ -76,13 +76,12 @@ function M.setup()
           ['ac'] = '@class.outer',
           ['ic'] = '@class.inner'
         }
-      }
-      -- swap = {
-      --  enable = true,
-      --  TODO: remap to better keymappings
-      --  swap_next = { ["<Leader>rx"] = "@parameter.inner" },
-      --  swap_previous = { ["<Leader>rX"] = "@parameter.inner" },
-      -- },
+      },
+      swap = {
+       enable = true,
+       swap_next = { ["<localleader>es"] = "@parameter.inner" },
+       swap_previous = { ["<localleader>eS"] = "@parameter.inner" },
+      },
     }
   }
 
