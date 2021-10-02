@@ -1,22 +1,21 @@
--- TODO: clean up comments.
 local M = {}
 
+local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+parser_configs.norg = {
+  install_info = {
+    url = 'https://github.com/nvim-neorg/tree-sitter-norg',
+    files = {'src/parser.c', 'src/scanner.cc'},
+    branch = 'main'
+  }
+}
+
 function M.setup()
-  -- local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-
-  -- parser_configs.norg = {
-  --  install_info = {
-  --    url = "https://github.com/nvim-neorg/tree-sitter-norg",
-  --    files = { "src/parser.c", "src/scanner.cc" },
-  --    branch = "main",
-  --  },
-  -- }
-
   require('nvim-treesitter.configs').setup {
     autotag = {enable = true},
     context = {enable = true},
     context_commentstring = {enable = true},
-    ensure_installed = 'maintained',
+    ensure_installed = 'all',
     highlight = {enable = true},
     incremental_selection = {
       enable = true,
@@ -30,6 +29,23 @@ function M.setup()
     indent = {enable = true},
     matchup = {enable = true},
     rainbow = {enable = true, extended_mode = true},
+    refactor = {
+      -- TODO: solve the conflict with LSP. Prefer treesitter rather than LSP.
+      highlight_definitions = {enable = true}
+      -- highlight_current_scope = {enable = true}
+      -- smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
+      -- navigation = {
+      -- enable = true,
+      -- keymaps = {
+      -- TODO: check if goto_definition is compitable with LSP and <C-t>
+      -- goto_definition = 'gnd',
+      -- list_definitions = 'gnD',
+      -- list_definitions_toc = 'gO',
+      -- goto_next_usage = '<a-*>',
+      -- goto_previous_usage = '<a-#>'
+      -- }
+      -- }
+    },
     textobjects = {
       move = {
         enable = true,
@@ -44,24 +60,6 @@ function M.setup()
           ['[M'] = '@function.outer',
           ['[]'] = '@class.outer'
         }
-      },
-      refactor = {
-        -- TODO: check if this highlight is compitable with highlight groups in lua/settings.lua.
-        --       checked. Confilicts with LSP highlight.
-        highlight_definitions = {enable = true},
-        highlight_current_scope = {enable = true}
-        -- smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
-        -- navigation = {
-        -- enable = true,
-        -- keymaps = {
-        -- TODO: check if goto_definition is compitable with LSP and <C-t>
-        -- goto_definition = 'gnd',
-        -- list_definitions = 'gnD',
-        -- list_definitions_toc = 'gO',
-        -- goto_next_usage = '<a-*>',
-        -- goto_previous_usage = '<a-#>'
-        -- }
-        -- }
       },
       select = {
         enable = true,
@@ -78,10 +76,10 @@ function M.setup()
         }
       },
       swap = {
-       enable = true,
-       swap_next = { ["<localleader>es"] = "@parameter.inner" },
-       swap_previous = { ["<localleader>eS"] = "@parameter.inner" },
-      },
+        enable = true,
+        swap_next = {['<localleader>es'] = '@parameter.inner'},
+        swap_previous = {['<localleader>eS'] = '@parameter.inner'}
+      }
     }
   }
 

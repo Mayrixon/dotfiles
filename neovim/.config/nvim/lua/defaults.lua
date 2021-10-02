@@ -49,7 +49,7 @@ function M.setup()
   opt.shiftwidth = indent
   opt.tabstop = indent
 
-  opt.pumblend = 17
+  opt.pumblend = 12
 
   opt.formatoptions =
       opt.formatoptions - 't' -- Don't auto format my code. I got linters for that.

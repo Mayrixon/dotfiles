@@ -63,10 +63,25 @@ local keymappings = {
     ['ga'] = {'<Plug>(EasyAlign)', {noremap = false, silent = false}}
   },
   command_mode = {
-    ['w!!'] = 'execute \'silent! write !sudo tee % >/dev/null\' <bar> edit!'
+    -- ['w!!'] = 'execute \'silent! write !sudo tee % >/dev/null\' <bar> edit!'
   }
 }
 
+local lsp_keymappings = {
+  normal_mode = {
+    ['[d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<cr>',
+    [']d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<cr>',
+    ['gd'] = '<Cmd>lua require("lspsaga.provider").preview_definition()<CR>',
+    ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
+    ['gl'] = '<Cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
+    ['gr'] = '<Cmd>lua vim.lsp.buf.references()<CR>',
+    ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
+    ['K'] = '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
+    ['<C-f>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
+    ['<C-b>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
+    ['<C-k>'] = '<Cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>'
+  }
+}
 -- local lsp_keymappings = {
 
 --   normal_mode = {
@@ -103,5 +118,8 @@ end
 -- function M.setup_lsp_mappings()
 --   for mode, mapping in pairs(lsp_keymappings) do map(mode, mapping) end
 -- end
+
+-- INFO: remove temporary API
+M.lsp_keymappings = lsp_keymappings
 
 return M

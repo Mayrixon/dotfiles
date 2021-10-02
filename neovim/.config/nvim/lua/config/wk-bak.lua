@@ -14,7 +14,6 @@ local mappings = {
       '<Cmd>lua require(\'config.telescope\').search_dotfiles()<CR>',
       'Configuration'
     },
-    r = {'<Cmd>luafile %<Cr>', 'Reload lua file'},
     p = {
       ':let &runtimepath.=\',\'.escape(expand(\'%:p:h\'), \'\\,\')<Cr>',
       'Set runtime path'
@@ -29,24 +28,15 @@ local mappings = {
     x = {'<Cmd>DashboardFindHistory<Cr>', 'History'},
     m = {'<Cmd>DashboardJumpMark<Cr>', 'Mark'},
     n = {'<Cmd>DashboardNewFile<Cr>', 'New file'},
-    a = {'<Cmd>xa<Cr>', 'Save all & quit'},
-    z = {'<Cmd>lefta 20vsp ~/workspace/dev/alpha2phi<CR>', 'Netrw'}
+    a = {'<Cmd>xa<Cr>', 'Save all & quit'}
   },
 
   -- Git
   g = {
     name = 'Source code',
     d = {'<Cmd>Gvdiffsplit<Cr>', 'Git diff'},
-    x = {
-      name = 'Diff',
-      ['2'] = {'<Cmd>diffget //2', 'Diffget 2'},
-      ['3'] = {'<Cmd>diffget //3', 'Diffget 3'}
-    },
     g = {name = 'Generate doc'}
   },
-
-  -- eSpeak
-  e = {name = 'eSpeak', s = {'<Cmd>call tts#Speak()<CR>', 'Speak'}},
 
   -- Project
   p = {
@@ -55,19 +45,11 @@ local mappings = {
       '<Cmd>lua require(\'config.telescope\').switch_projects()<CR>',
       'Search files'
     },
-    p = {
-      '<Cmd>lua require(\'telescope\').extensions.project.project({change_dir = true})<Cr>',
-      'List projects'
-    }
   },
 
   -- Search
   ['s'] = {
     name = 'Search',
-    w = {
-      '<Cmd>lua require(\'telescope\').extensions.arecibo.websearch()<CR>',
-      'Web search'
-    },
     b = {'<Plug>SearchNormal', 'Browser search'},
     o = {'<Cmd>SymbolsOutline<CR>', 'Symbols Outline'}
   },

@@ -1,6 +1,8 @@
 -- TODO: refactor the LSP settings.
 local M = {}
 
+-- TODO: config lsp_status. Only display the server status.
+-- Delete warnings, errors, hints, and locations.
 local lsp_status = require('lsp-status')
 
 local function document_highlight(client)
@@ -25,19 +27,7 @@ local function set_buffer_keymap(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = {noremap = true, silent = true}
 
-  local n_keybindings = {
-    ['[d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<cr>',
-    [']d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<cr>',
-    ['gd'] = '<Cmd>lua require("lspsaga.provider").preview_definition()<CR>',
-    ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
-    ['gl'] = '<Cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
-    ['gr'] = '<Cmd>lua vim.lsp.buf.references()<CR>',
-    ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
-    ['K'] = '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
-    ['<C-f>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-    ['<C-b>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-    ['<C-k>'] = '<Cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>'
-  }
+  local n_keybindings = require('keymappings').lsp_keymappings.normal_mode
 
   local n_leader_keybindings = {
     ['<leader>ac'] = '<cmd>lua require("lspsaga.codeaction").code_action()<CR>',
@@ -57,7 +47,6 @@ local function set_buffer_keymap(client, bufnr)
   end
 
   -- Set some keybinds conditional on server capabilities
-  -- TODO: use cmd Neoformat instead of Format
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>',
                    opts)
@@ -117,7 +106,8 @@ local function on_attach(client, bufnr)
   set_buffer_keymap(client, bufnr)
   set_buffer_option(bufnr)
 
-  document_highlight(client)
+  -- TODO: solve the highlight conflict with treesitter-refactor and enable this function.
+  -- document_highlight(client)
 end
 
 function M.setup_server(server, config)

@@ -1,10 +1,6 @@
 local M = {}
 
 function M.setup()
-  -- TODO: determine if this feature should be disabled after the settings of the status line.
-  -- INFO: test file: kilo.c line 141 "else if"
-  -- vim.g.matchup_matchparen_offscreen = {}
-
   vim.cmd [[
     augroup matchup_matchparen_disable_ft
       autocmd!

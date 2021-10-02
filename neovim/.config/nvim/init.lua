@@ -34,8 +34,6 @@ require('defaults').setup()
 
 require('keymappings').setup()
 
--- BUG: Solve the problem of open file dump. Neovim would crash if open a file
--- in the terminal with plugins.
 require('plugins').setup()
 
 require('settings').setup()

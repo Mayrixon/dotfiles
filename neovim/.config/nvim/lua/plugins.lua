@@ -61,10 +61,9 @@ function M.setup()
           require('neogit').setup({integrations = {diffview = true}})
         end
       }
-      -- TODO: check the mapping '<leader>-e'.
       use {'sindrets/diffview.nvim'}
 
-      -- Color scheme
+      -- Colorscheme
       use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
       use {
         'kyazdani42/nvim-web-devicons',
@@ -72,10 +71,7 @@ function M.setup()
           require('nvim-web-devicons').setup {default = true}
         end
       }
-      use {'NLKNguyen/papercolor-theme'}
-      use {'folke/tokyonight.nvim'}
-      use {'sainnhe/everforest'}
-      use {'folke/lsp-colors.nvim'}
+      -- use {'folke/lsp-colors.nvim'}
 
       -- Testing
       --    use {
@@ -86,17 +82,20 @@ function M.setup()
       --    }
 
       -- Telescope
-      -- TODO: config
       use {
         'nvim-telescope/telescope.nvim',
         requires = {
           'nvim-lua/plenary.nvim', {
+            'nvim-telescope/telescope-arecibo.nvim',
+            rocks = {'openssl', 'lua-http-parser'}
+          }, {
             'nvim-telescope/telescope-frecency.nvim',
             requires = {
               'tami5/sqlite.lua', {'kyazdani42/nvim-web-devicons', opt = true}
             }
-          }, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-          --        "nvim-telescope/telescope-project.nvim",
+          }, {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+          'nvim-telescope/telescope-project.nvim',
+          'TC72/telescope-tele-tabby.nvim'
         },
         config = function() require('config.telescope').setup() end
       }
@@ -128,17 +127,12 @@ function M.setup()
         'glepnir/lspsaga.nvim',
         config = function() require('config.lspsaga').setup() end
       }
-      use {
-        'onsails/lspkind-nvim',
-        config = function() require('config.lspkind').setup() end
-      }
+      use {'onsails/lspkind-nvim'}
       use {'nvim-lua/lsp-status.nvim'}
-      -- TODO: change to neoformat because of easy to setup.
       use {
         'mhartington/formatter.nvim',
         config = function() require('config.formatter-config').setup() end
       }
-      -- use { "sbdchd/neoformat" }
       use {'ray-x/lsp_signature.nvim'}
       -- use { "szw/vim-maximizer" }
       ---- use {'dbeniamine/cheat.sh-vim'}
@@ -147,7 +141,6 @@ function M.setup()
       -- use { "kevinhwang91/nvim-bqf" }
       use {
         'andymass/vim-matchup',
-        -- TODO: move to folder lua/config
         config = function() require('config.matchup').setup() end
       }
       -- use {
@@ -159,12 +152,11 @@ function M.setup()
       -- use { "antoinemadec/FixCursorHold.nvim" }
 
       -- Completion
-      -- TODO: finish plugin settings
       use {
         'hrsh7th/nvim-cmp',
         requires = {
           'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp',
-          'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lua',
+          'saadparwaiz1/cmp_luasnip', 'hrsh7th/cmp-nvim-lua',
           'octaltree/cmp-look', 'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
           'f3fora/cmp-spell', 'hrsh7th/cmp-emoji', 'ray-x/cmp-treesitter'
         },
@@ -173,15 +165,16 @@ function M.setup()
       use {
         'tzachar/cmp-tabnine',
         run = './install.sh',
-        requires = 'hrsh7th/nvim-cmp'
+        requires = 'hrsh7th/nvim-cmp',
+        config = function() require('config.tabnine').setup() end
       }
 
       -- Snippets
       use {
-        'SirVer/ultisnips',
-        requires = {'honza/vim-snippets'},
-        config = function() vim.g.UltiSnipsRemoveSelectModeMappings = 0 end
+        'L3MON4D3/LuaSnip',
+        config = function() require('config.luasnip').setup() end
       }
+      use {'rafamadriz/friendly-snippets'}
 
       -- Treesitter
       use {
@@ -205,13 +198,50 @@ function M.setup()
 
       -- Editor
       use {'junegunn/vim-easy-align'}
-      -- TODO: add configures
-      use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
-      -- TODO: setup with telescope
       use {
         'folke/trouble.nvim',
         config = function() require('trouble').setup {} end
       }
+      use {
+        'Pocco81/TrueZen.nvim',
+        requires = {
+          'folke/twilight.nvim',
+          opt = true,
+          config = function() require('twilight').setup {context = 20} end
+        },
+        config = function() require('config.truezen').setup() end
+      }
+
+      -- Dashboard
+      -- TODO: setup
+      use {
+        'goolord/alpha-nvim',
+        requires = {'kyazdani42/nvim-web-devicons'},
+        config = function()
+          require('alpha').setup(require('alpha.themes.dashboard').opts)
+        end
+      }
+
+      -- Status line
+      use {
+        'shadmansaleh/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function() require('config.lualine').setup() end
+      }
+      use {
+        'SmiteshP/nvim-gps',
+        requires = 'nvim-treesitter/nvim-treesitter',
+        config = function() require('nvim-gps').setup({}) end
+      }
+
+      ---- Lua development
+      -- use { "folke/lua-dev.nvim" }
+      -- use {
+      --  "simrat39/symbols-outline.nvim",
+      --  config = function()
+      --    require("config.symbols-outline").setup()
+      --  end,
+      -- }
 
       -- LaTeX
       -- TODO: reconfig ftplugins/tex
@@ -225,74 +255,11 @@ function M.setup()
       use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
       use {'tpope/vim-markdown'}
       use {'SidOfc/mkdx'}
-      use {'npxbr/glow.nvim'}
+      use {'ellisonleao/glow.nvim'}
 
       -- Rust
       -- use {'rust-lang/rust.vim'}
       use {'simrat39/rust-tools.nvim'}
-
-      ---- Lua development
-      -- use { "folke/lua-dev.nvim" }
-      -- use {
-      --  "simrat39/symbols-outline.nvim",
-      --  config = function()
-      --    require("config.symbols-outline").setup()
-      --  end,
-      -- }
-
-      ---- Dashboard
-      -- use {
-      --  "glepnir/dashboard-nvim",
-      --  config = function()
-      --    require("config.dashboard").setup()
-      --  end,
-      -- }
-
-      ---- use {
-      ----   "goolord/alpha-nvim",
-      ----   requires = { "kyazdani42/nvim-web-devicons" },
-      ----   config = function()
-      ----     require("alpha").setup(require("alpha.themes.dashboard").opts)
-      ----   end,
-      ---- }
-
-      -- Status line
-      -- TODO: setup. Including:
-      -- - tabline
-      -- - lsp-status (maybe not?)
-      -- - nvim-gps
-      use {
-        'shadmansaleh/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
-        config = function() require('lualine').setup() end
-      }
-      ---- use {
-      ----   "famiu/feline.nvim",
-      ----   config = function()
-      ----     require("config.feline").setup()
-      ----   end,
-      ---- }
-      ---- use {
-      ----   "glepnir/galaxyline.nvim",
-      ----   branch = "main",
-      ----   config = function()
-      ----     require("config.galaxyline").setup()
-      ----   end,
-      ---- }
-      -- use {
-      --  "hoob3rt/lualine.nvim",
-      --  config = function()
-      --    require("config.lualine").setup()
-      --  end,
-      -- }
-
-      -- use {
-      --  "akinsho/nvim-bufferline.lua",
-      --  requires = "kyazdani42/nvim-web-devicons",
-      --  config = function()
-      --    require("config.bufferline").setup()
-      --  end,
-      -- }
 
       ---- Debugging
       -- use { "puremourning/vimspector", event = "BufWinEnter" }
@@ -342,7 +309,6 @@ function M.setup()
       ----     "rcarriga/nvim-notify",
       ----     config = function() vim.notify = require("notify") end
       ---- }
-      -- use {'SmiteshP/nvim-gps'}
 
       ---- Profiling
       -- use {
@@ -353,8 +319,15 @@ function M.setup()
       -- use{'tweekmonster/startuptime.vim'}
 
       ---- Editor interface
-      use {'lukas-reineke/indent-blankline.nvim'}
-      -- use {'itchyny/lightline.vim'}
+      use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+          require('indent_blankline').setup {
+            show_current_context = true,
+            use_treesitter = true
+          }
+        end
+      }
 
       -- use {'ntpeters/vim-better-whitespace'}
       -- use {'ludovicchabant/vim-gutentags'}
@@ -376,10 +349,16 @@ return M
 -- use {'unblevable/quick-scope'}
 -- use {'phaazon/hop.nvim', as = 'hop'}
 
+-- Colorscheme
+-- use {'NLKNguyen/papercolor-theme'}
+-- use {'folke/tokyonight.nvim'}
+-- use {'sainnhe/everforest'}
+-- use {'sainnhe/gruvbox-material'}
+
 -- use {'romgrk/barbar.nvim', requires = {'kyazdani42/nvim-web-devicons'}}
--- use {'lukas-reineke/indent-blankline.nvim' }
 -- use {'Yggdroot/indentLine' }
 
+-- use {'itchyny/lightline.vim'}
 -- use {'sainnhe/gruvbox-material'}
 
 -- Lua config enhancement
@@ -402,6 +381,10 @@ return M
 --   'folke/twilight.nvim',
 --   config = function() require('twilight').setup {} end
 -- }
+
+-- use {'sbdchd/neoformat'}
+
+-- use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
 
 ------------------------------- alpha2phi's list -------------------------------
 -- Go
@@ -469,8 +452,6 @@ return M
 -- use {'oberblastmeister/neuron.nvim', branch = 'unstable'}
 
 -- use {'oberblastmeister/neuron.nvim' }
--- use {'junegunn/fzf', run = '-> fzf#install()' }
--- use {'junegunn/fzf.vim'}
 -- use {'fiatjaf/neuron.vim' }
 
 -- Project mgmt
@@ -528,14 +509,7 @@ return M
 
 -- use {'thaerkh/vim-workspace'}
 
--- use {'sainnhe/edge'}
--- use {'joshdick/onedark.vim'}
-
 -- use {'camspiers/snap'}
--- use {
---     'nvim-telescope/telescope-arecibo.nvim',
---     rocks = {"openssl", "lua-http-parser"}
--- }
 -- use { 'nvim-telescope/telescope-media-files.nvim' }
 -- use { 'nvim-telescope/telescope-packer.nvim ' }
 
@@ -544,18 +518,11 @@ return M
 --     config = function() require('spellsitter').setup() end
 -- }
 
--- use {'npxbr/glow.nvim', run = ':GlowInstall'}
 -- use {'mzlogin/vim-markdown-toc'}
 -- use {'godlygeek/tabular'}
 
 -- Development settings
 -- use {'editorconfig/editorconfig-vim'}
-
--- Database
--- use {'tpope/vim-dadbod'}
--- use {'kristijanhusak/vim-dadbod-ui'}
--- use {'kristijanhusak/vim-dadbod-completion'}
--- use {'tpope/vim-dotenv' }
 
 -- use {'tpope/vim-projectionist'}
 
@@ -573,7 +540,6 @@ return M
 -- }
 
 -- use {'TaDaa/vimade'}
--- use {'junegunn/vim-peekaboo'}
 -- use {'gennaro-tedesco/nvim-peekup'}
 -- use {'wellle/context.vim'}
 -- use {'beauwilliams/focus.nvim' }
@@ -586,16 +552,7 @@ return M
 -- use {'rafcamlet/nvim-luapad'}
 -- use {'thinca/vim-themis'}
 -- use {'tpope/vim-scriptease'}
--- use {'junegunn/vader.vim'}
 -- use {'milisims/nvim-luaref'}
 -- use {'tjdevries/nlua.nvim'}
 -- use {'metakirby5/codi.vim'}
 -- use {'bfredl/nvim-luadev'}
-
--- Snippets
--- use {'L3MON4D3/LuaSnip'}
--- use {
---     'norcalli/snippets.nvim',
---     config = function() require("config.snippets") end
--- }
--- use {'nvim-telescope/telescope-snippets.nvim'}

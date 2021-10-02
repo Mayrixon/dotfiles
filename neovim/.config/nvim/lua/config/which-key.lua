@@ -1,6 +1,7 @@
 -- TODO: complete selection from alpha2phi's config.
 -- TODO: config mappings according to spacevim's.
 -- TODO: clear all unmapped mappings.
+-- TODO: add :Format to <localleader>-f in visual mode.
 local M = {}
 
 local gitsigns = require('gitsigns')
@@ -24,11 +25,7 @@ local v_opts = {
 }
 
 local leader_n_mappings = {
-  -- TODO: add following bindings:
-  -- - sleuth
-  -- - undotree
-  -- - remove trailing spaces
-  -- - toggle spellcheck
+  -- TODO: add <leader>-e mapping to cover diffview's mapping.
 
   -- TODO: find a cheatsheet plugin
   -- ['?'] = {'<Cmd>Telescope keymaps<CR>', 'Show mappings'},
@@ -70,11 +67,16 @@ local leader_n_mappings = {
     }
   },
 
+  e = {name = 'Edit'},
+
   f = {
     name = 'File',
     e = {'<Cmd>NvimTreeToggle<CR>', 'Open explorer'},
     F = {'<Cmd>Telescope find_files<CR>', 'Find files'},
-    f = {'<Cmd>Telescope git_files<CR>', 'Find git files'},
+    f = {
+      function() require('config.telescope').find_project_files() end,
+      'Find project files'
+    },
     g = {'<Cmd>Telescope live_grep<CR>', 'Live grep'},
 
     r = {'<Cmd>Telescope frecency<CR>', 'Find recent file'},
@@ -88,7 +90,7 @@ local leader_n_mappings = {
     name = 'Git',
     ['<Space>'] = {'<Cmd>Git add %<CR>', 'Stage current file'},
     a = {'<Cmd>Git add .<CR>', 'Stage all files'},
-    b = {'<Cmd>Git branch<Cr>', 'Open git branch manager'},
+    b = {'<Cmd>Telescope git_branches<CR>', 'Open git branch manager'},
     B = {'<Cmd>Git blame<CR>', 'View git blame'},
     f = {'<Cmd>Git fetch --all<CR>', 'Git fetch'},
     n = {'<Cmd>Neogit<CR>', 'Open NeoGit'},
@@ -122,14 +124,28 @@ local leader_n_mappings = {
     m = {'<Cmd>Telescope keymaps<CR>', 'keymaps'}
   },
 
+  i = {name = 'Insert', s = {'<Cmd>Telescope symbols<CR>', 'Symbols'}},
+
   n = {
     name = 'Notes',
+    -- TODO: remove :Limelight
     l = {
       name = 'Limelight',
       k = {'<Cmd>Limelight!<CR>', 'turn off'},
       l = {'<Cmd>Limelight<CR>', 'turn on'}
     },
-    z = {'<Cmd>Goyo<CR>', 'Zen mode'}
+    -- TODO: add :Twilight
+    z = {'<Cmd>TZAtaraxis<CR>', 'Zen mode'}
+  },
+
+  p = {
+    -- TODO: add plugins to config dictionary-base settings
+    name = 'Project',
+    p = {
+      function()
+        require('telescope').extensions.project.project({display_type = 'full'})
+      end, 'List projects'
+    }
   },
 
   q = {
@@ -155,10 +171,34 @@ local leader_n_mappings = {
       function()
         spectre.open_visual({cwd = vim.fn.getcwd(), select_word = true})
       end, 'Visual search'
+    },
+    w = {
+      function() require('telescope').extensions.arecibo.websearch() end,
+      'Web search'
     }
   },
 
-  t = {name = 'tabs', ['1'] = {'1gt', 'tab 1'}},
+  t = {
+    name = 'Tabs',
+    ['1'] = {'1gt', 'tab 1'},
+    -- TODO: change telescope to dropdown
+    t = {'<Cmd>Telescope tele_tabby list<CR>', 'List tabs'}
+  },
+
+  u = {
+    -- TODO: add plugin or commands:
+    -- - undotree
+    -- - toggle spellcheck
+    -- - <Cmd>MatchupWhereAmI
+    -- - Sleuth
+    -- - colorize
+    -- - trailing white space
+    -- - todo-comments
+    -- - trouble
+    -- - vim default diff tools (diffthis and diffoff).
+    -- - vim spell toggle
+    name = 'Utilities'
+  },
 
   -- TODO: delete after trying.
   x = {
@@ -166,8 +206,9 @@ local leader_n_mappings = {
     a = {
       '<cmd>Telescope lsp_code_actions theme=get_dropdown<CR>', 'code actions'
     },
+    -- INFO: use get_cursor for code actions but requiring settings for a longer list.
     b = {'<cmd>Telescope lsp_code_actions theme=get_cursor<CR>', 'code actions'},
-    c = {'<cmd>Telescope lsp_code_actions theme=get_ivy<CR>', 'code actions'}
+    c = {'<cmd>Telescope lsp_code_actions theme=get_ivy<CR>', 'code actions'},
   },
 
   z = {
@@ -205,12 +246,11 @@ local leader_v_mappings = {
 -- TODO: add yank to <localleader>y
 local local_n_mappings = {
   f = {
-    -- TODO: change to other formatter plugins
     '<Cmd>Format<CR>', 'Format'
   },
 
   -- TODO: add paste in v mode
-  P = {'"+P', 'Paster before here'},
+  P = {'"+P', 'Paste before here'},
   p = {'"+p', 'Paste after here'}
 }
 

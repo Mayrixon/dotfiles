@@ -11,6 +11,7 @@
     - [x] Map `<leader>-b`.
     - [x] Map `<leader>-s`.
     - [x] Map `<leader>-g`.
+- [ ] Finish which-key mapping bindings.
 - [x] Cleanup the following TODO list.
   - [x] Delete outdated items.
   - [x] Delete un-necessary items.
@@ -18,13 +19,12 @@
 
 ## TODOs
 
-- [x] Add file type specific key mappings to ftplugin/
-- [ ] Status line
-  - [ ] Setup lualine.
-    - [ ] Basic settings according to lightline.
-    - [ ] Add lsp\_status.
-    - [ ] Add nvim-gps.
-  - [ ] Add barbar. Maybe another plugin. The plugin should be tabbar rather than barbar.
+- [ ] Consider the process between telescope -> quickfix and telescope -> trouble.
+- [-] Status line
+  - [-] Setup lualine.
+    - [x] Basic settings according to lightline.
+    - [-] Add lsp\_status.
+      - [ ] Config lsp\_status.
 - [ ] LSP
   - [ ] Set up servers
   - [ ] Set up autocomplete
@@ -37,15 +37,10 @@
       - [ ] Hover
       - [ ] Type defination
     - [ ] Compare lspsaga with (telescope + native LSP + goto-preview)
-  - [ ] Set up formatters
   - [ ] Adujust appearance
     - [ ] Adjust notice color
-    - [ ] Add LSP status to status line
-- [ ] telescope
+- [ ] Set up formatters
 - [-] Add old plugins and configs
-  - [-] Setup configs
-    - [-] diffview
-    - [ ] telescope.nvim
   - [-] Plugins
     - [-] undotree
     - [ ] better-whitespace
@@ -53,17 +48,14 @@
     - [ ] Goyo and limelight (disable gitsigns)
   - [-] Compare plugins
     - [ ] Colorizer and nvim-colorizer.lua
-    - [ ] Autopair
-    - [ ] Status line
     - [ ] Neogit vs fugitive
-    - [-] TrueZen.nvim vs zen-mode.nvim vs goyo.vim
     - [ ] lspsaga vs telescope LSP functions
 - [-] Tree sitter
 - [ ] Spell checker
 - [-] Zen mode
   - [x] Setup Goyo and limelight
   - [x] Find a way to store value of scrolloff temporarilly
-  - [ ] TrueZen or Goyo?
+  - [ ] TrueZen
 - [-] Markdown
   - [-] Highlight (waiting for tree-sitter)
   - [-] Edit
