@@ -343,6 +343,18 @@ local function startup()
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
       -- use {'vimwiki/vimwiki', branch = 'dev'}
+      use {
+        'nvim-neorg/neorg',
+        -- TODO: complete configurations according to the main page.
+        config = function() require('config.neorg').setup() end,
+        requires = {'nvim-lua/plenary.nvim', {'nvim-neorg/neorg-telescope'}}
+      }
+      use {
+        'kristijanhusak/orgmode.nvim',
+        config = function()
+          require('orgmode').setup {org_default_notes_file = '~/org'}
+        end
+      }
 
       ---- Trying
       use {'lewis6991/impatient.nvim'}
