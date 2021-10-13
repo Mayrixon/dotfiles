@@ -69,33 +69,19 @@ local keymappings = {
 
 local lsp_keymappings = {
   normal_mode = {
-    ['[d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<cr>',
-    [']d'] = '<Cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<cr>',
-    ['gd'] = '<Cmd>lua require("lspsaga.provider").preview_definition()<CR>',
-    ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
-    ['gl'] = '<Cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
-    ['gr'] = '<Cmd>lua vim.lsp.buf.references()<CR>',
+    ['[d'] = '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
+    [']d'] = '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
+    ['gd'] = '<Cmd>lua vim.lsp.buf.definition()<CR>',
     ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
-    ['K'] = '<Cmd>lua require("lspsaga.hover").render_hover_doc()<CR>',
-    ['<C-f>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-    ['<C-b>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-    ['<C-k>'] = '<Cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>'
+    ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
+    -- ['gl'] = '<Cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
+    ['gr'] = '<Cmd>lua vim.lsp.buf.references()<CR>',
+    ['K'] = '<Cmd>lua vim.lsp.buf.hover()<CR>',
+    -- ['<C-f>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
+    -- ['<C-b>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
+    ['<C-k>'] = '<Cmd>lua vim.lsp.buf.signature_help()<CR>'
   }
 }
--- local lsp_keymappings = {
-
---   normal_mode = {
---     ['K'] = '<Cmd>lua vim.lsp.buf.hover()<CR>',
---     ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
---     ['gd'] = '<Cmd>lua vim.lsp.buf.definition()<CR>',
---     ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
---     ['<C-k>'] = '<Cmd>lua vim.lsp.buf.signature_help()<CR>',
---     ['[d'] = '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
---     [']d'] = '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
---     ['[e'] = '<Cmd>Lspsaga diagnostic_jump_next<CR>',
---     [']e'] = '<Cmd>Lspsaga diagnostic_jump_prev<CR>'
---   }
--- }
 
 local function set_keymaps(mode, key, val)
   local opt = generic_opts[mode] and generic_opts[mode] or opts

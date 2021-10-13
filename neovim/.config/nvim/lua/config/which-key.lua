@@ -35,9 +35,6 @@ local leader_n_mappings = {
 
   ['<Space>'] = {name = 'EasyMotion'},
 
-  -- TODO: remap this mapping, maybe move to lsp_mappings
-  -- ['ac'] = {'code action'},
-
   b = {
     name = 'Buffer',
     -- a = {'<Cmd>%bd|e#<Cr>', 'Delete all buffers'},

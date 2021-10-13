@@ -27,14 +27,16 @@
       - [ ] Config lsp\_status.
 - [ ] LSP
   - [ ] Set up servers
-  - [ ] Set up autocomplete
+  - [x] Set up autocomplete
+  - [ ] Setup CodeLens
+  - [ ] Setup previews
   - [ ] Set up code actions
     - [ ] Setup according to VS Code and LSP functions' definations.
-      - [ ] Definition
-      - [ ] Declaration
-      - [ ] Implementation
+      - [x] Definition
+      - [x] Declaration
+      - [x] Implementation
       - [ ] References
-      - [ ] Hover
+      - [x] Hover
       - [ ] Type defination
     - [ ] Compare lspsaga with (telescope + native LSP + goto-preview)
   - [ ] Adujust appearance

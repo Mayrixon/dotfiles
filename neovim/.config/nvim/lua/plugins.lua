@@ -116,17 +116,33 @@ function M.setup()
       use {'neovim/nvim-lspconfig'}
 
       -- Better LSP experience
-      use {
-        'glepnir/lspsaga.nvim',
-        config = function() require('config.lspsaga').setup() end
-      }
-      use {'onsails/lspkind-nvim'}
-      use {'nvim-lua/lsp-status.nvim'}
+      -- use {
+      --   'glepnir/lspsaga.nvim',
+      --   -- config = function() require('config.lspsaga').setup() end
+      -- }
+      -- use {'onsails/lspkind-nvim'}
+      -- use {'nvim-lua/lsp-status.nvim'}
       use {
         'mhartington/formatter.nvim',
         config = function() require('config.formatter-config').setup() end
       }
+<<<<<<< HEAD
       use {'ray-x/lsp_signature.nvim'}
+||||||| parent of 796c89f (Refactor LSP settings.)
+      use {'ray-x/lsp_signature.nvim'}
+      -- use { "szw/vim-maximizer" }
+      ---- use {'dbeniamine/cheat.sh-vim'}
+      ---- use {'dyng/ctrlsf.vim'}
+      ---- use {'pechorin/any-jump.vim'}
+      -- use { "kevinhwang91/nvim-bqf" }
+=======
+      -- use {'ray-x/lsp_signature.nvim'}
+      -- use { "szw/vim-maximizer" }
+      ---- use {'dbeniamine/cheat.sh-vim'}
+      ---- use {'dyng/ctrlsf.vim'}
+      ---- use {'pechorin/any-jump.vim'}
+      -- use { "kevinhwang91/nvim-bqf" }
+>>>>>>> 796c89f (Refactor LSP settings.)
       use {
         'andymass/vim-matchup',
         config = function() require('config.matchup').setup() end

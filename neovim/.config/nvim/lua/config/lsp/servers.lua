@@ -1,8 +1,8 @@
--- TODO: seperate into multiple files
-local servers = {
+local M = {}
+
+M.server_settings = {
   clangd = {},
   pyright = {},
-  rust_analyzer = {},
   sumneko_lua = {
     cmd = {'lua-language-server'},
     settings = {
@@ -33,4 +33,30 @@ local servers = {
   vimls = {}
 }
 
-return servers
+local utils = require('config.lsp.utils')
+local general_config = {
+  capabilities = utils.get_general_capabilities(),
+  flags = {debounce_text_changes = 150},
+  on_attach = utils.on_attach
+}
+
+local function get_server_config(config)
+  local server_config = vim.tbl_deep_extend('force', general_config, config)
+
+  return server_config
+end
+
+function M.setup(server, config)
+
+  local lspconfig = require('lspconfig')
+
+  local server_config = get_server_config(config)
+  lspconfig[server].setup(server_config)
+
+  local cfg = lspconfig[server]
+  if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
+    print(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
+  end
+end
+
+return M

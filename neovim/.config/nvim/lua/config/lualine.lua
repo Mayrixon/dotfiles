@@ -34,7 +34,7 @@ function M.setup()
     sections = {
       lualine_a = {'mode', paste_indicator},
       lualine_b = {
-        'branch', 'diff', lsp_status,
+        'branch', 'diff', -- lsp_status,
         {'diagnostics', sources = {'nvim_lsp', 'coc'}}
       },
       lualine_c = {'filename', {gps.get_location, cond = gps.is_available}},

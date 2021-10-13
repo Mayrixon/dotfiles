@@ -3,9 +3,9 @@ local M = {}
 
 -- TODO: config lsp_status. Only display the server status.
 -- Delete warnings, errors, hints, and locations.
-local lsp_status = require('lsp-status')
+-- local lsp_status = require('lsp-status')
 
-local function document_highlight(client)
+local function set_document_highlight(client)
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.cmd [[
@@ -15,49 +15,93 @@ local function document_highlight(client)
       augroup lsp_document_highlight
         autocmd! * <buffer>
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorHold <buffer> lua require('lspsaga.diagnostic').show_cursor_diagnostics()
+"        autocmd CursorHold <buffer> lua require('lspsaga.diagnostic').show_cursor_diagnostics()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
       ]]
   end
 end
 
--- TODO: consider move keymappings into overall mapping files
-local function set_buffer_keymap(client, bufnr)
+local function set_keymap_1(bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = {noremap = true, silent = true}
 
-  local n_keybindings = require('keymappings').lsp_keymappings.normal_mode
+  local keybindings = require('keymappings').lsp_keymappings.normal_mode
 
-  local n_leader_keybindings = {
-    ['<leader>ac'] = '<cmd>lua require("lspsaga.codeaction").code_action()<CR>',
-    ['<leader>ld'] = '<cmd>lua require("lspsaga.diagnostic").show_line_diagnostics()<CR>',
-    ['<leader>ll'] = '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',
-    ['<leader>lr'] = '<cmd>lua require("lspsaga.rename").rename()<CR>',
-    ['<leader>lt'] = '<cmd>lua vim.lsp.buf.type_definition()<CR>'
-  }
-  buf_set_keymap('v', '<leader>ac',
-                 ':<C-U>lua require("lspsaga.codeaction").range_code_action()<CR>',
-                 opts)
-
-  local keybindings =
-      vim.tbl_extend('keep', n_keybindings, n_leader_keybindings)
   for key, binding in pairs(keybindings) do
     buf_set_keymap('n', key, binding, opts)
   end
+end
 
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.formatting()<CR>',
-                   opts)
-  else
-    buf_set_keymap('n', '<leader>lf', '<cmd>Format<CR>', opts)
-  end
+local function set_keymap_3(bufnr)
+  local mappings = {
+    l = {
+      name = 'LSP',
+      a = {'<Cmd>Telescope lsp_code_actions<CR>', 'Code actions'},
+      d = {
+        function() vim.lsp.diagnostic.show_line_diagnostics() end,
+        'Show line diagnostics'
+      },
+      f = {function() vim.lsp.buf.formatting() end, 'Format'},
+      o = {'<Cmd>Telescope lsp_document_symbols<CR>', 'Document symbols'},
+      r = {function() vim.lsp.buf.rename() end, 'Rename'},
+
+      l = {
+        function() vim.lsp.diagnostic.set_loclist() end, 'Buffer diagnostics'
+      },
+      T = {function() vim.lsp.buf.type_definition() end, 'Type definition'},
+
+      -- TODO: compare with goto-preview
+      u = {'<Cmd>Telescope lsp_references<CR>', 'References'},
+      D = {'<Cmd>Telescope lsp_definitions<CR>', 'Definition'},
+
+      e = {'<Cmd>lua vim.lsp.diagnostic.enable()<CR>', 'Enable diagnostics'},
+      x = {'<Cmd>lua vim.lsp.diagnostic.disable()<CR>', 'Disable diagnostics'},
+      t = {'<Cmd>TroubleToggle<CR>', 'Trouble'}
+    },
+    w = {
+      name = 'Workspace',
+      a = {
+        function() vim.lsp.buf.add_workspace_folder() end,
+        'Add Workspace folder'
+      },
+      l = {
+        function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, 'List workspace folders'
+      },
+      r = {
+        function() vim.lsp.buf.remove_workspace_folder() end,
+        'Remove Workspace folder'
+      }
+    }
+  }
+
+  require('which-key').register(mappings, {
+    mode = 'n',
+    buffer = bufnr,
+    prefix = '<leader>'
+  })
+end
+
+local function set_keymap_2(client, bufnr)
+  set_keymap_3(bufnr)
+
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local opts = {noremap = true, silent = true}
+
+  buf_set_keymap('v', '<leader>la',
+                 ':<C-U>lua vim.lsp.buf.range_code_action()<CR>', opts)
 
   if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap('v', '<leader>lrf',
+    buf_set_keymap('v', '<leader>lF',
                    '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
   end
+end
+
+local function set_buffer_keymap(client, bufnr)
+  set_keymap_1(bufnr)
+  set_keymap_2(client, bufnr)
 end
 
 local function set_buffer_option(bufnr)
@@ -65,72 +109,43 @@ local function set_buffer_option(bufnr)
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
-local function get_capabilities()
+local function set_cosmetics(border_kind)
+  vim.lsp.handlers['textDocument/hover'] =
+      vim.lsp.with(vim.lsp.handlers.hover, {border = border_kind})
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+                                                       vim.lsp.handlers
+                                                           .signature_help,
+                                                       {border = border_kind})
+end
+
+function M.get_general_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
   -- lsp_status settings
-  capabilities = vim.tbl_extend('keep', capabilities or {},
-                                lsp_status.capabilities)
+  -- capabilities = vim.tbl_extend('keep', capabilities or {},
+  --                               lsp_status.capabilities)
 
   -- for nvim-cmp
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-  ---- Code actions
-  -- capabilities.textDocument.codeAction = {
-  --  dynamicRegistration = true,
-  --  codeActionLiteralSupport = {
-  --    codeActionKind = {
-  --      valueSet = (function()
-  --        local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-  --        table.sort(res)
-  --        return res
-  --      end)()
-  --    }
-  --  }
-  -- }
-
-  -- capabilities.textDocument.completion.completionItem.snippetSupport = true
-  -- capabilities.textDocument.completion.completionItem.resolveSupport = {
-  --  properties = {'documentation', 'detail', 'additionalTextEdits'}
-  -- }
-  -- capabilities.experimental = {}
-  -- capabilities.experimental.hoverActions = true
-
   return capabilities
 end
 
-local function on_attach(client, bufnr)
-  lsp_status.on_attach(client)
-  require('lsp_signature').on_attach()
+function M.on_attach(client, bufnr)
+  local border_kind = nil
+  -- set_cosmetics(border_kind)
+
+  -- require'lsp_signature'.setup({
+  --   bind = true,
+  --   handler_opts = {border = border_kind}
+  -- })
+
+  -- lsp_status.on_attach(client)
 
   set_buffer_keymap(client, bufnr)
   set_buffer_option(bufnr)
 
-  -- TODO: solve the highlight conflict with treesitter-refactor and enable this function.
-  -- document_highlight(client)
+  set_document_highlight(client)
 end
-
-function M.setup_server(server, config)
-  local lspconfig = require('lspconfig')
-
-  local updated_config = vim.tbl_deep_extend('force', {
-    on_attach = on_attach,
-    -- on_exit = M.lsp_exit,
-    -- on_init = M.lsp_init,
-    capabilities = get_capabilities()
-    -- flags = {debounce_text_changes = 150},
-  }, config)
-
-  lspconfig[server].setup(updated_config)
-
-  local cfg = lspconfig[server]
-  if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
-    print(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
-  end
-end
-
--- INFO: temporary API. Should be deleted after LSP refectory.
-M.on_attach = on_attach
-M.get_capabilities = get_capabilities
 
 return M

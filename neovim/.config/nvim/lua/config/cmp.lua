@@ -10,31 +10,32 @@ end
 
 function M.setup()
   local cmp = require('cmp')
-  local lspkind = require('lspkind')
+  -- TODO: re-enable lspkind
+  -- local lspkind = require('lspkind')
   local luasnip = require('luasnip')
 
   cmp.setup({
     completion = {completeopt = 'menu,menuone,noselect'},
     formatting = {
-      format = lspkind.cmp_format({
-        with_text = true,
-        -- preset = 'codicons',
-        menu = ({
-          buffer = '[Buffer]',
-          nvim_lsp = '[LSP]',
-          luasnip = '[LuaSnip]',
-          nvim_lua = '[Lua]',
-          latex_symbols = '[LaTeX]',
-          cmp_tabnine = '[TabNine]',
-          look = '[Look]',
-          path = '[Path]',
-          spell = '[Spell]',
-          calc = '[Calc]',
-          emoji = '[Emoji]',
-          treesitter = '[treesitter]',
-          neorg = '[Neorg]'
-        })
-      })
+      -- format = lspkind.cmp_format({
+      --   with_text = true,
+      --   -- preset = 'codicons',
+      --   menu = ({
+      --     buffer = '[Buffer]',
+      --     nvim_lsp = '[LSP]',
+      --     luasnip = '[LuaSnip]',
+      --     nvim_lua = '[Lua]',
+      --     latex_symbols = '[LaTeX]',
+      --     cmp_tabnine = '[TabNine]',
+      --     look = '[Look]',
+      --     path = '[Path]',
+      --     spell = '[Spell]',
+      --     calc = '[Calc]',
+      --     emoji = '[Emoji]',
+      --     treesitter = '[treesitter]',
+      --     neorg = '[Neorg]'
+      --   })
+      -- })
     },
     mapping = {
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),

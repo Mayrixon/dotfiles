@@ -1,34 +1,19 @@
--- TODO: seperate server files into languate-specific files. With this update,
--- it's easier to setup language specific keymappings.
 local M = {}
-
-local lsp_utils = require('config.lsp.utils')
 
 function M.setup()
   -- Register the lsp status progress handler
-  require('lsp-status').register_progress()
+  -- require('lsp-status').register_progress()
 
-  -- LSPs
-  -- local servers = { "pyright", "rust_analyzer", "tsserver", "vimls"}
-  -- for _, lsp in ipairs(servers) do
-  --     nvim_lsp[lsp].setup {
-  --         capabilities = capabilities;
-  --         on_attach = on_attach;
-  --         -- init_options = {
-  --         --     onlyAnalyzeProjectsWithOpenFiles = true,
-  --         --     suggestFromUnimportedLibraries = false,
-  --         --     closingLabels = true,
-  --         -- };
-  --     }
-  -- end
   local servers = require('config.lsp.servers')
-  for server, config in pairs(servers) do
-    lsp_utils.setup_server(server, config)
+  for server, config in pairs(servers.server_settings) do
+    servers.setup(server, config)
   end
+
+  local utils = require('config.lsp.utils')
   require'rust-tools'.setup({
     server = {
-      on_attach = require('config.lsp.utils').on_attach,
-      capabilities = require('config.lsp.utils').get_capabilities()
+      on_attach = utils.on_attach,
+      capabilities = utils.get_general_capabilities()
     }
   })
 
