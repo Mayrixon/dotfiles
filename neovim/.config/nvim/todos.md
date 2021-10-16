@@ -67,3 +67,4 @@
     - [ ] vim-startuptime
   - [ ] Use plugin impatient
 - [ ] Setup startup screen
+- [ ] Setup REPL

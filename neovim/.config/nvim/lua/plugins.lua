@@ -111,13 +111,6 @@ function M.setup()
         },
         config = function() require('session-lens').setup {} end
       }
-      --    use {
-      --      "ahmedkhalf/project.nvim",
-      --      config = function()
-      --        require("project_nvim").setup {}
-      --      end,
-      --    }
-      -- use {'airblade/vim-rooter'}
 
       -- LSP config
       use {'neovim/nvim-lspconfig'}
@@ -134,22 +127,21 @@ function M.setup()
         config = function() require('config.formatter-config').setup() end
       }
       use {'ray-x/lsp_signature.nvim'}
-      -- use { "szw/vim-maximizer" }
-      ---- use {'dbeniamine/cheat.sh-vim'}
-      ---- use {'dyng/ctrlsf.vim'}
-      ---- use {'pechorin/any-jump.vim'}
-      -- use { "kevinhwang91/nvim-bqf" }
       use {
         'andymass/vim-matchup',
         config = function() require('config.matchup').setup() end
       }
+      -- Reference settings:
+      -- use {'RRethy/vim-illuminate' }
+      -- use {'kosayoda/nvim-lightbulb' }
       -- use {
-      --  "nacro90/numb.nvim",
-      --  config = function()
-      --    require("numb").setup()
-      --  end,
+      --     'ray-x/navigator.lua',
+      --     requires = {
+      --         'ray-x/guihua.lua',
+      --         run = 'cd lua/fzy && make',
+      --         config = function() require'navigator'.setup() end
+      --     }
       -- }
-      -- use { "antoinemadec/FixCursorHold.nvim" }
 
       -- Completion
       use {
@@ -188,6 +180,12 @@ function M.setup()
       use {'JoosepAlviste/nvim-ts-context-commentstring'}
       use {'romgrk/nvim-treesitter-context'}
       use {'windwp/nvim-ts-autotag'}
+      -- use { 'nvim-telescope/telescope-media-files.nvim' }
+      -- use { 'nvim-telescope/telescope-packer.nvim ' }
+      -- use {
+      --     'lewis6991/spellsitter.nvim',
+      --     config = function() require('spellsitter').setup() end
+      -- }
 
       -- Better syntax
       use {
@@ -234,15 +232,6 @@ function M.setup()
         config = function() require('nvim-gps').setup({}) end
       }
 
-      ---- Lua development
-      -- use { "folke/lua-dev.nvim" }
-      -- use {
-      --  "simrat39/symbols-outline.nvim",
-      --  config = function()
-      --    require("config.symbols-outline").setup()
-      --  end,
-      -- }
-
       -- LaTeX
       -- TODO: reconfig ftplugins/tex
       use {
@@ -256,6 +245,12 @@ function M.setup()
       use {'tpope/vim-markdown'}
       use {'SidOfc/mkdx'}
       use {'ellisonleao/glow.nvim'}
+      -- use {'mzlogin/vim-markdown-toc'}
+
+      -- Pandoc
+      -- use {'vim-pandoc/vim-pandoc'}
+      -- use {'vim-pandoc/vim-pandoc-syntax'}
+      -- use {'vim-pandoc/vim-pandoc-after'}
 
       -- Rust
       -- use {'rust-lang/rust.vim'}
@@ -274,41 +269,17 @@ function M.setup()
       -- use { "Pocco81/DAPInstall.nvim" }
       -- use { "jbyuki/one-small-step-for-vimkind" }
 
-      ---- Development workflow
-      -- use { "voldikss/vim-browser-search" }
-      -- use {
-      --  "kkoomen/vim-doge",
-      --  run = ":call doge#install()",
-      --  config = function()
-      --    require("config.doge").setup()
-      --  end,
-      -- }
-      -- use {
-      --  "michaelb/sniprun",
-      --  run = "bash install.sh",
-      --  config = function()
-      --    require("config.sniprun").setup()
-      --  end,
-      -- }
-
       ---- TypeScript
       -- use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
 
       ---- Note taking
-      use {
-        -- TODO: compare with orgmode
-        'nvim-neorg/neorg',
-        -- TODO: complete configurations according to the main page.
-        -- config = function() require('config.neorg').setup() end,
-        requires = 'nvim-lua/plenary.nvim'
-      }
+      -- use {'jbyuki/nabla.nvim'}
+      -- use {'vimwiki/vimwiki', branch = 'dev'}
 
       ---- Trying
       -- use { "lewis6991/impatient.nvim" }
-      ---- use {
-      ----     "rcarriga/nvim-notify",
-      ----     config = function() vim.notify = require("notify") end
-      ---- }
+      -- Embed in browser
+      -- use {'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
 
       ---- Profiling
       -- use {
@@ -331,6 +302,7 @@ function M.setup()
 
       -- use {'ntpeters/vim-better-whitespace'}
       -- use {'ludovicchabant/vim-gutentags'}
+      -- use {'norcalli/nvim-colorizer.lua'}
 
     end
   })
@@ -385,174 +357,3 @@ return M
 -- use {'sbdchd/neoformat'}
 
 -- use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
-
-------------------------------- alpha2phi's list -------------------------------
--- Go
--- use {'ray-x/go.nvim', config = function() require('go').setup() end}
-
--- use { "jamestthompson3/nvim-remote-containers" }
-
--- use {
---     'kristijanhusak/orgmode.nvim',
---     config = function()
---         require('orgmode').setup {
---             org_agenda_files = {'~/workspace/dev/notes/**/*'},
---             org_default_notes_file = '~workspace/dev/notes/notes.org'
---         }
---     end
--- }
-
--- use {
---     "folke/persistence.nvim",
---     event = "BufReadPre",
---     module = "persistence",
---     config = function()
---         require("persistence").setup()
---         require("config.persistence")
---     end
--- }
-
--- use {'jupyter-vim/jupyter-vim'}
--- use {'svermeulen/vim-yoink'}
--- use {
---     'ray-x/navigator.lua',
---     requires = {
---         'ray-x/guihua.lua',
---         run = 'cd lua/fzy && make',
---         config = function() require'navigator'.setup() end
---     }
--- }
-
--- Writing and note taking
-
--- use {'Pocco81/HighStr.nvim'}
--- use {'gyim/vim-boxdraw'}
--- use {'preservim/vim-pencil'}
--- use {'preservim/vim-colors-pencil'}
--- use {'dhruvasagar/vim-dotoo'}
--- use {'dhruvasagar/vim-table-mode'}
--- use {'fmoralesc/vim-pad'}
--- use {'vimwiki/vimwiki', branch = 'dev'}
--- use {'blindFS/vim-taskwarrior'}
--- use {'tools-life/taskwiki'}
--- use {'powerman/vim-plugin-AnsiEsc'}
-
--- Presentation
--- use {'sotte/presenting.vim'}
--- use {'vim-pandoc/vim-pandoc'}
--- use {'vim-pandoc/vim-pandoc-syntax'}
--- use {'vim-pandoc/vim-pandoc-after'}
-
--- Testing
--- use {'FooSoft/vim-argwrap'}
--- use {'preservim/vimux'}
-
--- use {'vuciv/vim-bujo'}
--- use {'freitass/todo.txt-vim'}
--- use {'oberblastmeister/neuron.nvim', branch = 'unstable'}
-
--- use {'oberblastmeister/neuron.nvim' }
--- use {'fiatjaf/neuron.vim' }
-
--- Project mgmt
--- use {'vim-ctrlspace/vim-ctrlspace' }
-
--- Embed in browser
--- use {'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
-
--- OSC 52 yank
--- use {'ojroques/vim-oscyank' }
-
--- Jupyter Vim
--- use {'jupyter-vim/jupyter-vim' }
-
--- Scratch pad
--- use {'metakirby5/codi.vim' }
-
--- Slime
--- use {'jpalardy/vim-slime' }
-
--- Neoterm
--- use {'kassio/neoterm' }
-
--- Better terminal
--- use {'nikvdp/neomux' }
-
--- use {
---     'dstein64/vim-startuptime',
---     cmd = 'StartupTime',
---     config = [[vim.g.startuptime_tries = 10]]
--- }
-
--- use {
---     'edluffy/specs.nvim',
---     config = function() require('specs').setup {} end
--- }
-
--- use {'ggandor/lightspeed.nvim'}
-
--- use {'ms-jpq/chadtree', branch = 'chad', run = 'python3 -m chadtree deps'}
--- use {'tamago324/lir.nvim'}
--- use {'rhysd/committia.vim'}
--- use {
---     "akinsho/nvim-toggleterm.lua",
---     config = function() require("toggleterm").setup {} end
--- }
--- use {'tpope/vim-characterize'}
--- use {'norcalli/nvim-colorizer.lua'}
--- use {'kevinhwang91/rnvimr'}
--- use {'francoiscabrol/ranger.vim'}
--- use {'rbgrouleff/bclose.vim'}
--- use {'christoomey/vim-tmux-navigator'}
--- use {'mhinz/vim-signify'}
--- use {'radenling/vim-dispatch-neovim' }
-
--- use {'thaerkh/vim-workspace'}
-
--- use {'camspiers/snap'}
--- use { 'nvim-telescope/telescope-media-files.nvim' }
--- use { 'nvim-telescope/telescope-packer.nvim ' }
-
--- use {
---     'lewis6991/spellsitter.nvim',
---     config = function() require('spellsitter').setup() end
--- }
-
--- use {'mzlogin/vim-markdown-toc'}
--- use {'godlygeek/tabular'}
-
--- Development settings
--- use {'editorconfig/editorconfig-vim'}
-
--- use {'tpope/vim-projectionist'}
-
--- use {'jbyuki/instant.nvim'}
--- use {'chrisbra/unicode.vim'}
-
--- use {
---     'ThePrimeagen/refactoring.nvim',
---     config = function() require("config.refactoring") end
--- }
--- use {
---     'ray-x/navigator.lua',
---     requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'},
---     config = function() require("navigator").setup {} end
--- }
-
--- use {'TaDaa/vimade'}
--- use {'gennaro-tedesco/nvim-peekup'}
--- use {'wellle/context.vim'}
--- use {'beauwilliams/focus.nvim' }
--- use {'RRethy/vim-illuminate' }
--- use {'kosayoda/nvim-lightbulb' }
-
--- Plugin development
--- use {'bryall/contextprint.nvim'}
--- use {'nanotee/nvim-lua-guide'}
--- use {'rafcamlet/nvim-luapad'}
--- use {'thinca/vim-themis'}
--- use {'tpope/vim-scriptease'}
--- use {'milisims/nvim-luaref'}
--- use {'tjdevries/nlua.nvim'}
--- use {'metakirby5/codi.vim'}
--- use {'bfredl/nvim-luadev'}
