@@ -1,6 +1,4 @@
-local M = {}
-
-M.server_settings = {
+local server_settings = {
   clangd = {},
   pyright = {},
   sumneko_lua = {
@@ -33,29 +31,57 @@ M.server_settings = {
   vimls = {}
 }
 
-local utils = require('config.lsp.utils')
-local general_config = {
-  capabilities = utils.get_general_capabilities(),
-  flags = {debounce_text_changes = 150},
-  on_attach = utils.on_attach
-}
+local M = {}
 
-local function get_server_config(config)
-  local server_config = vim.tbl_deep_extend('force', general_config, config)
+function M.get_general_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-  return server_config
+  -- lsp_status settings
+  -- capabilities = vim.tbl_extend('keep', capabilities or {},
+  --                               lsp_status.capabilities)
+
+  -- for nvim-cmp
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+  return capabilities
 end
 
-function M.setup(server, config)
+M.on_attach = function(client, bufnr)
+  local utils = require('config.lsp.utils')
+  local cosmetics = require('config.lsp.cosmetics')
 
-  local lspconfig = require('lspconfig')
+  -- require'lsp_signature'.setup({
+  --   bind = true,
+  --   handler_opts = {border = border_kind}
+  -- })
 
-  local server_config = get_server_config(config)
-  lspconfig[server].setup(server_config)
+  -- lsp_status.on_attach(client)
 
-  local cfg = lspconfig[server]
-  if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
-    print(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
+  utils.set_buffer_option(bufnr)
+
+  utils.set_keymap_1(bufnr)
+  utils.set_keymap_2(client, bufnr)
+
+  cosmetics.set_document_highlight(client)
+end
+
+function M.set_servers()
+  local general_config = {
+    capabilities = M.get_general_capabilities(),
+    flags = {debounce_text_changes = 150},
+    on_attach = M.on_attach
+  }
+
+  local nvim_lsp = require('lspconfig')
+
+  for server, config in pairs(server_settings) do
+    local server_config = vim.tbl_deep_extend('force', general_config, config)
+    nvim_lsp[server].setup(server_config)
+
+    local cfg = nvim_lsp[server]
+    if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
+      print(server .. ': cmd not found: ' .. vim.inspect(cfg.cmd))
+    end
   end
 end
 

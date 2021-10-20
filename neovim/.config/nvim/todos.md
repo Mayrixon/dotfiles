@@ -63,6 +63,7 @@
   - [-] Edit
     - [ ] mkdx newline settings
 - [ ] DAP
+  - [ ] rust-tools
 - [ ] Optimise startup time
   - [ ] Profile:
     - [ ] packer's profile
@@ -70,3 +71,6 @@
   - [ ] Use plugin impatient
 - [ ] Setup startup screen
 - [ ] Setup REPL
+- [ ] Setup filetype-based keybindings to <localleader>-l
+  - [ ] Rust tools
+  - [ ] mkdx

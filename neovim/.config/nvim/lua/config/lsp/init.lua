@@ -4,19 +4,20 @@ function M.setup()
   -- Register the lsp status progress handler
   -- require('lsp-status').register_progress()
 
-  local servers = require('config.lsp.servers')
-  for server, config in pairs(servers.server_settings) do
-    servers.setup(server, config)
-  end
+  local cosmetics = {}
+  cosmetics.border_type = 'rounded'
+  require('config.lsp.cosmetics').setup(cosmetics)
 
-  local utils = require('config.lsp.utils')
+  local servers = require('config.lsp.servers')
+  servers.set_servers()
+
   require'rust-tools'.setup({
     server = {
-      on_attach = utils.on_attach,
-      capabilities = utils.get_general_capabilities()
-    }
+      on_attach = servers.on_attach,
+      capabilities = servers.get_general_capabilities()
+    },
+    tools = {hover_actions = {border = cosmetics.border_type}}
   })
-
 end
 
 return M
