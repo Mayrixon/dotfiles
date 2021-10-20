@@ -120,7 +120,7 @@ function M.setup()
       --   'glepnir/lspsaga.nvim',
       --   -- config = function() require('config.lspsaga').setup() end
       -- }
-      -- use {'onsails/lspkind-nvim'}
+      use {'onsails/lspkind-nvim'}
       use {'nvim-lua/lsp-status.nvim'}
       use {
         'mhartington/formatter.nvim',
@@ -131,7 +131,7 @@ function M.setup()
       use {
         'rmagatti/goto-preview',
         config = function()
-          require('goto-preview').setup({default_mappings = true})
+          require('goto-preview').setup({default_mappings = true, height = 30})
         end
       }
       use {

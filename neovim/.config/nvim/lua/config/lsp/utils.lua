@@ -22,10 +22,18 @@ function M.set_keymap_2(client, bufnr)
   local n_opts = {mode = 'n', buffer = bufnr, prefix = '<leader>'}
   local v_opts = {mode = 'v', buffer = bufnr, prefix = '<leader>'}
 
+  local cursor_theme = require('telescope.themes').get_cursor({
+    layout_config = {width = 80, height = 14}
+  })
+
   local n_mappings = {
     l = {
       name = 'LSP',
-      a = {'<Cmd>Telescope lsp_code_actions<CR>', 'Code actions'},
+      a = {
+        function()
+          require('telescope.builtin').lsp_code_actions(cursor_theme)
+        end, 'Code actions'
+      },
       f = {function() vim.lsp.buf.formatting() end, 'Format'},
       o = {'<Cmd>Telescope lsp_document_symbols<CR>', 'Document symbols'},
       r = {function() vim.lsp.buf.rename() end, 'Rename'},

@@ -15,7 +15,12 @@ function M.setup()
       on_attach = servers.on_attach,
       capabilities = servers.get_general_capabilities()
     },
-    tools = {hover_actions = {border = settings.cosmetics.border_type}}
+    tools = {
+      hover_actions = {
+        border = settings.cosmetics.border_type,
+        auto_focus = true
+      }
+    }
   })
 end
 

@@ -200,12 +200,6 @@ local leader_n_mappings = {
   -- TODO: delete after trying.
   x = {
     name = 'Trying area',
-    a = {
-      '<cmd>Telescope lsp_code_actions theme=get_dropdown<CR>', 'code actions'
-    },
-    -- INFO: use get_cursor for code actions but requiring settings for a longer list.
-    b = {'<cmd>Telescope lsp_code_actions theme=get_cursor<CR>', 'code actions'},
-    c = {'<cmd>Telescope lsp_code_actions theme=get_ivy<CR>', 'code actions'},
   },
 
   z = {
