@@ -127,6 +127,13 @@ function M.setup()
         config = function() require('config.formatter-config').setup() end
       }
       use {'ray-x/lsp_signature.nvim'}
+      -- TODO: add keymappings to which-key hintss
+      use {
+        'rmagatti/goto-preview',
+        config = function()
+          require('goto-preview').setup({default_mappings = true})
+        end
+      }
       use {
         'andymass/vim-matchup',
         config = function() require('config.matchup').setup() end

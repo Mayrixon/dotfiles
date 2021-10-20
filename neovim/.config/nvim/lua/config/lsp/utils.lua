@@ -35,10 +35,6 @@ function M.set_keymap_2(client, bufnr)
       },
       T = {function() vim.lsp.buf.type_definition() end, 'Type definition'},
 
-      -- TODO: compare with goto-preview
-      u = {'<Cmd>Telescope lsp_references<CR>', 'References'},
-      D = {'<Cmd>Telescope lsp_definitions<CR>', 'Definition'},
-
       e = {'<Cmd>lua vim.lsp.diagnostic.enable()<CR>', 'Enable diagnostics'},
       x = {'<Cmd>lua vim.lsp.diagnostic.disable()<CR>', 'Disable diagnostics'},
       t = {'<Cmd>TroubleToggle<CR>', 'Trouble'}
