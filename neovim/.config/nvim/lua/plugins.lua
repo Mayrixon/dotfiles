@@ -71,7 +71,6 @@ function M.setup()
           require('nvim-web-devicons').setup {default = true}
         end
       }
-      -- use {'folke/lsp-colors.nvim'}
 
       -- Testing
       --    use {
@@ -116,10 +115,6 @@ function M.setup()
       use {'neovim/nvim-lspconfig'}
 
       -- Better LSP experience
-      -- use {
-      --   'glepnir/lspsaga.nvim',
-      --   -- config = function() require('config.lspsaga').setup() end
-      -- }
       use {'onsails/lspkind-nvim'}
       use {'nvim-lua/lsp-status.nvim'}
       use {
@@ -152,17 +147,6 @@ function M.setup()
         'andymass/vim-matchup',
         config = function() require('config.matchup').setup() end
       }
-      -- Reference settings:
-      -- use {'RRethy/vim-illuminate' }
-      -- use {'kosayoda/nvim-lightbulb' }
-      -- use {
-      --     'ray-x/navigator.lua',
-      --     requires = {
-      --         'ray-x/guihua.lua',
-      --         run = 'cd lua/fzy && make',
-      --         config = function() require'navigator'.setup() end
-      --     }
-      -- }
 
       -- Completion
       use {
