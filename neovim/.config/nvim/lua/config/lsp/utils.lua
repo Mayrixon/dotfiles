@@ -26,10 +26,6 @@ function M.set_keymap_2(client, bufnr)
     l = {
       name = 'LSP',
       a = {'<Cmd>Telescope lsp_code_actions<CR>', 'Code actions'},
-      d = {
-        function() vim.lsp.diagnostic.show_line_diagnostics() end,
-        'Show line diagnostics'
-      },
       f = {function() vim.lsp.buf.formatting() end, 'Format'},
       o = {'<Cmd>Telescope lsp_document_symbols<CR>', 'Document symbols'},
       r = {function() vim.lsp.buf.rename() end, 'Rename'},
@@ -95,6 +91,15 @@ function M.set_document_highlight(client)
       augroup END
       ]]
   end
+end
+
+function M.set_hover_diagnostics()
+  vim.cmd [[
+    augroup lsp_cursor_diagnostics
+      autocmd!
+      autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+    augroup END
+  ]]
 end
 
 return M

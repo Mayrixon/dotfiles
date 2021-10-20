@@ -62,6 +62,8 @@ M.on_attach = function(client, bufnr)
   utils.set_keymap_1(bufnr)
   utils.set_keymap_2(client, bufnr)
 
+  utils.set_hover_diagnostics()
+
   cosmetics.set_document_highlight(client)
 end
 
