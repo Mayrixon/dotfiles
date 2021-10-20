@@ -5,6 +5,11 @@ local function set_borders(border_type)
                                                        vim.lsp.handlers
                                                            .signature_help,
                                                        {border = border_type})
+
+  require('lsp_signature').setup({
+    bind = true,
+    handler_opts = {border = border_type}
+  })
 end
 
 local function set_diagnostic_column_signs()
@@ -23,8 +28,10 @@ end
 
 local M = {}
 
-function M.setup(cosmetics)
-  set_borders(cosmetics.border_type)
+function M.setup(settings)
+  M.border_type = settings.cosmetics.border_type
+
+  set_borders(M.border_type)
   set_diagnostic_column_signs()
 end
 

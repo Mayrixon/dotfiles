@@ -51,10 +51,10 @@ M.on_attach = function(client, bufnr)
   local utils = require('config.lsp.utils')
   local cosmetics = require('config.lsp.cosmetics')
 
-  -- require'lsp_signature'.setup({
-  --   bind = true,
-  --   handler_opts = {border = border_kind}
-  -- })
+  require('lsp_signature').on_attach({
+    bind = true,
+    handler_opts = {border = cosmetics.border_type}
+  })
 
   lsp_status.on_attach(client)
 

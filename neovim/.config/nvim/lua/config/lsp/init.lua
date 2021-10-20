@@ -1,11 +1,11 @@
+local settings = {cosmetics = {border_types = 'rounded'}}
+
 local M = {}
 
 function M.setup()
   require('lsp-status').register_progress()
 
-  local cosmetics = {}
-  cosmetics.border_type = 'rounded'
-  require('config.lsp.cosmetics').setup(cosmetics)
+  require('config.lsp.cosmetics').setup(settings)
 
   local servers = require('config.lsp.servers')
   servers.set_servers()
@@ -15,7 +15,7 @@ function M.setup()
       on_attach = servers.on_attach,
       capabilities = servers.get_general_capabilities()
     },
-    tools = {hover_actions = {border = cosmetics.border_type}}
+    tools = {hover_actions = {border = settings.cosmetics.border_type}}
   })
 end
 
