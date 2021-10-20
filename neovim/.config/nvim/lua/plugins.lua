@@ -134,6 +134,20 @@ function M.setup()
           require('goto-preview').setup({default_mappings = true, height = 30})
         end
       }
+      -- TODO: add keymappings to keymapping config file.
+      -- TODO: set highlight group.
+      -- TODO: set blacklist filetypes.
+      use {
+        'RRethy/vim-illuminate',
+        config = function()
+          vim.api.nvim_set_keymap('n', '<a-n>',
+                                  '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
+                                  {noremap = true})
+          vim.api.nvim_set_keymap('n', '<a-p>',
+                                  '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
+                                  {noremap = true})
+        end
+      }
       use {
         'andymass/vim-matchup',
         config = function() require('config.matchup').setup() end

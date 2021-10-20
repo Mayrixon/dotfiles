@@ -56,6 +56,8 @@ M.on_attach = function(client, bufnr)
     handler_opts = {border = cosmetics.border_type}
   })
 
+  require('illuminate').on_attach(client)
+
   lsp_status.on_attach(client)
 
   utils.set_buffer_option(bufnr)
