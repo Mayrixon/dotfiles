@@ -121,7 +121,7 @@ function M.setup()
       --   -- config = function() require('config.lspsaga').setup() end
       -- }
       -- use {'onsails/lspkind-nvim'}
-      -- use {'nvim-lua/lsp-status.nvim'}
+      use {'nvim-lua/lsp-status.nvim'}
       use {
         'mhartington/formatter.nvim',
         config = function() require('config.formatter-config').setup() end

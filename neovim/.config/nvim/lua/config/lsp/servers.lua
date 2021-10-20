@@ -32,13 +32,14 @@ local server_settings = {
 }
 
 local M = {}
+local lsp_status = require('lsp-status')
 
 function M.get_general_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
   -- lsp_status settings
-  -- capabilities = vim.tbl_extend('keep', capabilities or {},
-  --                               lsp_status.capabilities)
+  capabilities = vim.tbl_extend('keep', capabilities or {},
+                                lsp_status.capabilities)
 
   -- for nvim-cmp
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
@@ -55,7 +56,7 @@ M.on_attach = function(client, bufnr)
   --   handler_opts = {border = border_kind}
   -- })
 
-  -- lsp_status.on_attach(client)
+  lsp_status.on_attach(client)
 
   utils.set_buffer_option(bufnr)
 

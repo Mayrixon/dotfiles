@@ -1,8 +1,7 @@
 local M = {}
 
 function M.setup()
-  -- Register the lsp status progress handler
-  -- require('lsp-status').register_progress()
+  require('lsp-status').register_progress()
 
   local cosmetics = {}
   cosmetics.border_type = 'rounded'

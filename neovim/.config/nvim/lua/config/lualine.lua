@@ -1,15 +1,5 @@
 local M = {}
 
-local function lsp_status()
-  local indicator = ''
-
-  if #vim.lsp.buf_get_clients() > 0 then
-    indicator = require('lsp-status').status()
-  end
-
-  return indicator
-end
-
 local function paste_indicator()
   local indicator = ''
 
@@ -34,7 +24,7 @@ function M.setup()
     sections = {
       lualine_a = {'mode', paste_indicator},
       lualine_b = {
-        'branch', 'diff', -- lsp_status,
+        'branch', 'diff', 'require(\'lsp-status\').status_progress()',
         {'diagnostics', sources = {'nvim_lsp', 'coc'}}
       },
       lualine_c = {'filename', {gps.get_location, cond = gps.is_available}},
