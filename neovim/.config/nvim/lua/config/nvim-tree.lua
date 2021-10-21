@@ -74,3 +74,4 @@ function M.setup()
   } -- List of filenames that gets highlighted with NvimTreeSpecialFile
 end
 return M
+-- TODO: refac export
