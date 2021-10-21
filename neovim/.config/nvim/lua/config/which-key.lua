@@ -29,25 +29,14 @@ local function get_prefix_opts(prefix, opts)
 end
 
 local function set_other_operator_hints()
-  -- TODO: move to keymappings/non_leader.
-  -- TODO: add g, [, and ]
-  wk.register({
-    -- TODO: LSP-enabled only. buffer in opts would be useful
-    gd = 'Definition',
-    gl = 'LSP finder',
-
-    ga = 'EasyAlign',
-    gc = 'Comments',
-
-    ['[d'] = 'Previous diagnostic',
-    [']d'] = 'Next diagnostic'
-
-  }, {prefix = ''})
+  local hints = require('keymappings').non_leader_keys.hints
+  wk.register(hints, {prefix = ''})
 end
 
 function M.setup()
+  local wk_operators = require('keymappings').non_leader_keys.wk_operators
   wk.setup({
-    operators = {ga = 'EasyAlign', gc = 'Comments'},
+    operators = wk_operators,
     key_labels = {
       ['<space>'] = '<Space>',
       ['<cr>'] = '<CR>',
