@@ -1,6 +1,7 @@
 local M = {}
 
 local opts = {noremap = true, silent = true}
+M.opts = opts
 
 M.generic_opts = {
   insert_mode = opts,
