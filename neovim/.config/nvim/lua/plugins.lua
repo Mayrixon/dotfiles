@@ -43,6 +43,10 @@ function M.setup()
         cmd = 'UndotreeToggle',
         config = function() require('config.undotree').setup() end
       }
+      use {
+        'andymass/vim-matchup',
+        config = function() require('config.matchup').setup() end
+      }
 
       -- Git
       use {'tpope/vim-fugitive'}
@@ -142,10 +146,6 @@ function M.setup()
                                   '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
                                   {noremap = true})
         end
-      }
-      use {
-        'andymass/vim-matchup',
-        config = function() require('config.matchup').setup() end
       }
 
       -- Completion

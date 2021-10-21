@@ -182,25 +182,27 @@ local leader_n_mappings = {
     t = {'<Cmd>Telescope tele_tabby list<CR>', 'List tabs'}
   },
 
+  T = {
+    name = 'Toggle',
+    p = {'<Cmd>set paste!<CR>', 'Paste mode'},
+    s = {'<Cmd>set spell!<CR>', 'Spell'}
+  },
+
   u = {
     -- TODO: add plugin or commands:
-    -- - undotree
-    -- - toggle spellcheck
     -- - <Cmd>MatchupWhereAmI
-    -- - Sleuth
     -- - colorize
     -- - trailing white space
     -- - todo-comments
     -- - trouble
     -- - vim default diff tools (diffthis and diffoff).
-    -- - vim spell toggle
-    name = 'Utilities'
+    name = 'Utilities',
+    s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
+    u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'}
   },
 
   -- TODO: delete after trying.
-  x = {
-    name = 'Trying area',
-  },
+  x = {name = 'Trying area'},
 
   z = {
     name = 'System',
@@ -236,9 +238,7 @@ local leader_v_mappings = {
 
 -- TODO: add yank to <localleader>y
 local local_n_mappings = {
-  f = {
-    '<Cmd>Format<CR>', 'Format'
-  },
+  f = {'<Cmd>Format<CR>', 'Format'},
 
   -- TODO: add paste in v mode
   P = {'"+P', 'Paste before here'},
@@ -260,7 +260,7 @@ local function set_other_operator_hints()
     gl = 'LSP finder',
 
     ga = 'EasyAlign',
-    gc = 'Comment',
+    gc = 'Comments',
 
     ['[d'] = 'Previous diagnostic',
     [']d'] = 'Next diagnostic'
