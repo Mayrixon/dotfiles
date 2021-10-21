@@ -1,6 +1,3 @@
--- TODO: check LSP mappings
--- TODO: Determine if LSP mappings list here or in LSP configs.
--- TODO: use plugin Trouble or Telescope instead of LSP list window
 local M = {}
 
 local opts = {noremap = true, silent = true}
@@ -67,22 +64,6 @@ local keymappings = {
   }
 }
 
-local lsp_keymappings = {
-  normal_mode = {
-    ['[d'] = '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-    [']d'] = '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
-    ['gd'] = '<Cmd>lua vim.lsp.buf.definition()<CR>',
-    ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
-    ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
-    -- ['gl'] = '<Cmd>lua require("lspsaga.provider").lsp_finder()<CR>',
-    ['gr'] = '<Cmd>lua vim.lsp.buf.references()<CR>',
-    ['K'] = '<Cmd>lua vim.lsp.buf.hover()<CR>',
-    -- ['<C-f>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>',
-    -- ['<C-b>'] = '<Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>',
-    ['<C-k>'] = '<Cmd>lua vim.lsp.buf.signature_help()<CR>'
-  }
-}
-
 local function set_keymaps(mode, key, val)
   local opt = generic_opts[mode] and generic_opts[mode] or opts
   if type(val) == 'table' then
@@ -101,12 +82,7 @@ function M.setup()
   for mode, mapping in pairs(keymappings) do map(mode, mapping) end
 end
 
--- function M.setup_lsp_mappings()
---   for mode, mapping in pairs(lsp_keymappings) do map(mode, mapping) end
--- end
-
--- INFO: remove temporary API
-M.lsp_keymappings = lsp_keymappings
+M.lsp_keys = require('keymappings.lsp_keys')
 M.api = require('keymappings.api')
 
 return M
