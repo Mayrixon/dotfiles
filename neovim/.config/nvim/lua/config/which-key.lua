@@ -3,23 +3,6 @@ local M = {}
 local wk = require('which-key')
 local keymappings = require('keymappings')
 
-local n_opts = keymappings.opts.leader.normal
-local v_opts = keymappings.opts.leader.visual
-
-local leader_n_mappings = keymappings.leader_keys.normal_mappings
-local leader_v_mappings = keymappings.leader_keys.visual_mappings
-
-local localleader_n_mappings = keymappings.localleader_keys.normal_mappings
-
-local function get_prefix_opts(prefix, opts)
-  return vim.tbl_extend('force', opts, {prefix = prefix})
-end
-
-local function set_other_operator_hints()
-  local hints = require('keymappings').non_leader_keys.hints
-  wk.register(hints, {prefix = ''})
-end
-
 function M.setup()
   local wk_operators = keymappings.non_leader_keys.wk_operators
   wk.setup({
@@ -30,12 +13,6 @@ function M.setup()
       ['<tab>'] = '<Tab>'
     }
   })
-
-  -- TODO: move to keymappings.
-  wk.register(leader_n_mappings, get_prefix_opts('<leader>', n_opts))
-  wk.register(leader_v_mappings, get_prefix_opts('<leader>', v_opts))
-  wk.register(localleader_n_mappings, get_prefix_opts('<localleader>', n_opts))
-  set_other_operator_hints()
 end
 
 return M

@@ -1,4 +1,6 @@
 local M = {}
+-- TODO: resolve loop loading.
+-- local keymappings = require('keymappings')
 
 -- TODO: rename
 function M.set_keymap_1(bufnr)
@@ -32,6 +34,33 @@ function M.set_keymap_2(client, bufnr)
       lF = {function() vim.lsp.buf.range_formatting() end, 'Range format'}
     }, v_opts)
   end
+end
+
+local wk = require('which-key')
+
+local function get_prefix_opts(prefix, opts)
+  return vim.tbl_extend('force', opts, {prefix = prefix})
+end
+
+local function set_other_operator_hints()
+  local hints = require('keymappings').non_leader_keys.hints
+  wk.register(hints, {prefix = ''})
+end
+
+function M.set_wk_keys()
+  local n_opts = require('keymappings').opts.leader.normal
+  local v_opts = require('keymappings').opts.leader.visual
+
+  local leader_n_mappings = require('keymappings').leader_keys.normal_mappings
+  local leader_v_mappings = require('keymappings').leader_keys.visual_mappings
+
+  local localleader_n_mappings = require('keymappings').localleader_keys
+                                     .normal_mappings
+  -- TODO: move to keymappings.
+  wk.register(leader_n_mappings, get_prefix_opts('<leader>', n_opts))
+  wk.register(leader_v_mappings, get_prefix_opts('<leader>', v_opts))
+  wk.register(localleader_n_mappings, get_prefix_opts('<localleader>', n_opts))
+  set_other_operator_hints()
 end
 
 return M

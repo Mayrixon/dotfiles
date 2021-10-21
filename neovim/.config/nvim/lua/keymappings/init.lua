@@ -29,8 +29,10 @@ local function map(mode, keymaps)
   for k, v in pairs(keymaps) do set_keymaps(mode, k, v) end
 end
 
-function M.setup()
+function M.set_non_leader_keys()
   for mode, mapping in pairs(keymappings) do map(mode, mapping) end
 end
+
+M.set_wk_keys = M.api.set_wk_keys
 
 return M
