@@ -107,5 +107,6 @@ end
 
 -- INFO: remove temporary API
 M.lsp_keymappings = lsp_keymappings
+M.api = require('keymappings.api')
 
 return M
