@@ -20,27 +20,27 @@
 ## TODOs
 
 - [ ] Consider the process between telescope -> quickfix and telescope -> trouble.
-- [-] Status line
-  - [-] Setup lualine.
+- [x] Status line
+  - [x] Setup lualine.
     - [x] Basic settings according to lightline.
-    - [-] Add lsp\_status.
-      - [ ] Config lsp\_status.
+    - [x] Add lsp\_status.
+      - [x] Config lsp\_status.
 - [ ] LSP
   - [ ] Set up servers
   - [x] Set up autocomplete
   - [ ] Setup CodeLens
-  - [ ] Setup previews
+  - [x] Setup previews
   - [ ] Set up code actions
-    - [ ] Setup according to VS Code and LSP functions' definations.
+    - [x] Setup according to VS Code and LSP functions' definations.
       - [x] Definition
       - [x] Declaration
       - [x] Implementation
-      - [ ] References
+      - [x] References
       - [x] Hover
-      - [ ] Type defination
-    - [ ] Compare lspsaga with (telescope + native LSP + goto-preview)
-  - [ ] Adujust appearance
-    - [ ] Adjust notice color
+      - [x] Type defination
+    - [x] Compare lspsaga with (telescope + native LSP + goto-preview)
+  - [x] Adujust appearance
+    - [x] Adjust notice color
 - [ ] Set up formatters
 - [-] Add old plugins and configs
   - [-] Plugins
@@ -50,9 +50,9 @@
     - [ ] Goyo and limelight (disable gitsigns)
   - [-] Compare plugins
     - [ ] Colorizer and nvim-colorizer.lua
-    - [ ] Neogit vs fugitive
-    - [ ] lspsaga vs telescope LSP functions
-- [-] Tree sitter
+    - [x] Neogit vs fugitive
+    - [x] lspsaga vs telescope LSP functions
+- [x] Tree sitter
 - [ ] Spell checker
 - [-] Zen mode
   - [x] Setup Goyo and limelight
@@ -72,5 +72,6 @@
 - [ ] Setup startup screen
 - [ ] Setup REPL
 - [ ] Setup filetype-based keybindings to <localleader>-l
+  - [ ] Use settings defined in which-key.lua.
   - [ ] Rust tools
   - [ ] mkdx
