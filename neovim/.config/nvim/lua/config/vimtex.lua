@@ -9,9 +9,10 @@ function M.setup()
       '-interaction=nonstopmode'
     }
   }
+  vim.g.vimtex_quickfix_method = 'pplatex'
   vim.g.vimtex_quickfix_mode = 0
 
-  if vim.fn.has('mac') then
+  if vim.fn.has('mac') ~= 0 then
     vim.g.vimtex_view_method = 'skim'
   else
     vim.g.vimtex_view_method = 'zathura'
