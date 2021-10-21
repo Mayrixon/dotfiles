@@ -1,28 +1,15 @@
 local M = {}
 
 local wk = require('which-key')
+local keymappings = require('keymappings')
 
-local n_opts = {
-  mode = 'n',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
+local n_opts = keymappings.opts.leader.normal
+local v_opts = keymappings.opts.leader.visual
 
-local v_opts = {
-  mode = 'v',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
+local leader_n_mappings = keymappings.leader_keys.normal_mappings
+local leader_v_mappings = keymappings.leader_keys.visual_mappings
 
-local leader_n_mappings = require('keymappings').leader_keys.normal_mappings
-local leader_v_mappings = require('keymappings').leader_keys.visual_mappings
-
-local localleader_n_mappings = require('keymappings').localleader_keys
-                                   .normal_mappings
+local localleader_n_mappings = keymappings.localleader_keys.normal_mappings
 
 local function get_prefix_opts(prefix, opts)
   return vim.tbl_extend('force', opts, {prefix = prefix})
@@ -34,7 +21,7 @@ local function set_other_operator_hints()
 end
 
 function M.setup()
-  local wk_operators = require('keymappings').non_leader_keys.wk_operators
+  local wk_operators = keymappings.non_leader_keys.wk_operators
   wk.setup({
     operators = wk_operators,
     key_labels = {
