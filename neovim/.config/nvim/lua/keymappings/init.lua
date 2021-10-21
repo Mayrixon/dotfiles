@@ -82,7 +82,9 @@ function M.setup()
   for mode, mapping in pairs(keymappings) do map(mode, mapping) end
 end
 
-M.lsp_keys = require('keymappings.lsp_keys')
 M.api = require('keymappings.api')
+M.leader_keys = require('keymappings.leader_keys')
+M.localleader_keys = require('keymappings.localleader_keys')
+M.lsp_keys = require('keymappings.lsp_keys')
 
 return M
