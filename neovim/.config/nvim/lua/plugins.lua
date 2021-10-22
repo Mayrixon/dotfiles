@@ -227,7 +227,7 @@ function M.setup()
 
       -- Status line
       use {
-        'shadmansaleh/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function() require('config.lualine').setup() end
       }
