@@ -54,6 +54,7 @@ function M.setup()
   telescope.load_extension('project')
 end
 
+-- TODO: move to user-define function file.
 function M.find_project_files()
   local opts = {}
   local ok = pcall(require'telescope.builtin'.git_files, opts)
@@ -61,4 +62,3 @@ function M.find_project_files()
 end
 
 return M
--- TODO: refac export

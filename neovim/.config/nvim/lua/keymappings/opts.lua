@@ -1,14 +1,15 @@
+local fallback_opts = {noremap = true, silent = true}
+
 local M = {}
 
-local opts = {noremap = true, silent = true}
-M.opts = opts
+M.opts = fallback_opts
 
 M.generic_opts = {
-  insert_mode = opts,
-  normal_mode = opts,
-  visual_mode = opts,
-  visual_block_mode = opts,
-  command_mode = opts,
+  insert_mode = fallback_opts,
+  normal_mode = fallback_opts,
+  visual_mode = fallback_opts,
+  visual_block_mode = fallback_opts,
+  command_mode = fallback_opts,
   term_mode = {silent = false}
 }
 
@@ -40,4 +41,3 @@ M.leader = {
 }
 
 return M
--- TODO: refac export

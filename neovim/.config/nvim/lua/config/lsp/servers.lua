@@ -32,6 +32,7 @@ local server_settings = {
 }
 
 local M = {}
+
 local lsp_status = require('lsp-status')
 
 function M.get_general_capabilities()
@@ -91,4 +92,3 @@ function M.set_servers()
 end
 
 return M
--- TODO: refac export

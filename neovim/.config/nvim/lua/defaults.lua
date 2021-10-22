@@ -1,8 +1,8 @@
-local M = {}
-
 local cmd = vim.cmd
 local opt = vim.opt
 local indent = 4
+
+local M = {}
 
 function M.setup()
   cmd 'syntax enable'
@@ -66,4 +66,3 @@ function M.setup()
 end
 
 return M
--- TODO: refac export

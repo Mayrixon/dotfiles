@@ -1,5 +1,3 @@
-local M = {}
-
 local function paste_indicator()
   local indicator = ''
 
@@ -9,6 +7,8 @@ local function paste_indicator()
 end
 
 local function sleuth_indicator() return vim.fn.SleuthIndicator() end
+
+local M = {}
 
 function M.setup()
   local gps = require('nvim-gps')
@@ -55,4 +55,3 @@ function M.setup()
 end
 
 return M
--- TODO: refac export

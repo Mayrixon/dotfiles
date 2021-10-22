@@ -51,4 +51,3 @@ function M.set_document_highlight(client)
 end
 
 return M
--- TODO: refac export

@@ -1,8 +1,8 @@
-local M = {}
-
 local cursor_theme = require('telescope.themes').get_cursor({
   layout_config = {width = 80, height = 14}
 })
+
+local M = {}
 
 M.non_leader = {
   normal_mode = {
@@ -68,4 +68,3 @@ M.leader = {
 }
 
 return M
--- TODO: refac export

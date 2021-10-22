@@ -1,9 +1,7 @@
-local M = {}
 -- TODO: resolve loop loading.
 -- local keymappings = require('keymappings')
-
 -- TODO: rename
-function M.set_keymap_1(bufnr)
+local function set_keymap_1(bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = {noremap = true, silent = true}
 
@@ -15,7 +13,7 @@ function M.set_keymap_1(bufnr)
 end
 
 -- TODO: rename
-function M.set_keymap_2(client, bufnr)
+local function set_keymap_2(client, bufnr)
   local wk = require('which-key')
 
   -- TODO: remove
@@ -47,7 +45,7 @@ local function set_other_operator_hints()
   wk.register(hints, {prefix = ''})
 end
 
-function M.set_wk_keys()
+local function set_wk_keys()
   local n_opts = require('keymappings').opts.leader.normal
   local v_opts = require('keymappings').opts.leader.visual
 
@@ -63,5 +61,10 @@ function M.set_wk_keys()
   set_other_operator_hints()
 end
 
+local M = {
+  set_keymap_1 = set_keymap_1,
+  set_keymap_2 = set_keymap_2,
+  set_wk_keys = set_wk_keys
+}
+
 return M
--- TODO: refac export

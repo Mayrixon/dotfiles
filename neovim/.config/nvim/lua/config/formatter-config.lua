@@ -1,5 +1,3 @@
-local M = {}
-
 local function clangformat()
   return {
     exe = 'clang-format',
@@ -21,6 +19,8 @@ local function prettier()
     stdin = true
   }
 end
+
+local M = {}
 
 function M.setup()
   require('formatter').setup({
@@ -83,4 +83,3 @@ function M.setup()
 end
 
 return M
--- TODO: refac export

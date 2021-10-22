@@ -1,7 +1,5 @@
 -- TODO: add all functions into function setup()
-local M = {}
-
-function M.colorscheme()
+local function colorscheme()
   vim.opt.cursorline = true
 
   vim.opt.background = 'dark'
@@ -10,14 +8,13 @@ function M.colorscheme()
   vim.cmd [[colorscheme gruvbox]]
 end
 
-function M.provider_settings()
+local function provider_settings()
   vim.g.loaded_python_provider = 0
   vim.g.python3_host_prog = '/usr/bin/python3'
 
 end
 
-function M.auto_cmds()
-
+local function auto_cmds()
   -- Highlight on yank
   -- cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
   vim.cmd 'au TextYankPost * silent! lua vim.highlight.on_yank()'
@@ -67,11 +64,12 @@ function M.auto_cmds()
     ]], false)
 end
 
+local M = {}
+
 function M.setup()
-  M.colorscheme()
-  M.provider_settings()
-  --  M.auto_cmds()
+  colorscheme()
+  provider_settings()
+  -- auto_cmds()
 end
 
 return M
--- TODO: refac export

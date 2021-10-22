@@ -1,5 +1,3 @@
-local M = {}
-
 local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
 parser_configs.norg = {
@@ -9,6 +7,8 @@ parser_configs.norg = {
     branch = 'main'
   }
 }
+
+local M = {}
 
 function M.setup()
   require('nvim-treesitter.configs').setup {
@@ -88,4 +88,3 @@ function M.setup()
 end
 
 return M
--- TODO: refac export

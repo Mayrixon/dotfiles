@@ -35,4 +35,3 @@ function M.set_hover_diagnostics()
 end
 
 return M
--- TODO: refac export

@@ -63,4 +63,3 @@ M.hints = {
 M.wk_operators = {ga = 'EasyAlign', gc = 'Comments'}
 
 return M
--- TODO: refac export

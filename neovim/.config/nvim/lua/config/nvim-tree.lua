@@ -73,5 +73,5 @@ function M.setup()
     ['MAKEFILE'] = 1
   } -- List of filenames that gets highlighted with NvimTreeSpecialFile
 end
+
 return M
--- TODO: refac export
