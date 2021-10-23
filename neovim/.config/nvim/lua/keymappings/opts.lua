@@ -2,7 +2,7 @@ local fallback_opts = {noremap = true, silent = true}
 
 local M = {}
 
-M.opts = fallback_opts
+M.fallback_opts = fallback_opts
 
 M.generic_opts = {
   insert_mode = fallback_opts,

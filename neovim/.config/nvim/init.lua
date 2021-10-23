@@ -34,9 +34,7 @@ require('defaults').setup()
 
 require('plugins').setup()
 
-local keymappings = require('keymappings')
-keymappings.set_non_leader_keys()
-keymappings.set_wk_keys()
+require('keymappings').setup()
 
 require('settings').setup()
 

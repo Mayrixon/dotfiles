@@ -1,5 +1,3 @@
--- TODO: resolve loop loading.
--- local keymappings = require('keymappings')
 -- TODO: rename
 local function set_keymap_1(bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -34,37 +32,6 @@ local function set_keymap_2(client, bufnr)
   end
 end
 
-local wk = require('which-key')
-
-local function get_prefix_opts(prefix, opts)
-  return vim.tbl_extend('force', opts, {prefix = prefix})
-end
-
-local function set_other_operator_hints()
-  local hints = require('keymappings').non_leader_keys.hints
-  wk.register(hints, {prefix = ''})
-end
-
-local function set_wk_keys()
-  local n_opts = require('keymappings').opts.leader.normal
-  local v_opts = require('keymappings').opts.leader.visual
-
-  local leader_n_mappings = require('keymappings').leader_keys.normal_mappings
-  local leader_v_mappings = require('keymappings').leader_keys.visual_mappings
-
-  local localleader_n_mappings = require('keymappings').localleader_keys
-                                     .normal_mappings
-  -- TODO: move to keymappings.
-  wk.register(leader_n_mappings, get_prefix_opts('<leader>', n_opts))
-  wk.register(leader_v_mappings, get_prefix_opts('<leader>', v_opts))
-  wk.register(localleader_n_mappings, get_prefix_opts('<localleader>', n_opts))
-  set_other_operator_hints()
-end
-
-local M = {
-  set_keymap_1 = set_keymap_1,
-  set_keymap_2 = set_keymap_2,
-  set_wk_keys = set_wk_keys
-}
+local M = {set_keymap_1 = set_keymap_1, set_keymap_2 = set_keymap_2}
 
 return M
