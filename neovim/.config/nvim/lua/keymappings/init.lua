@@ -33,7 +33,7 @@ local function set_wk_keys()
 
   local leader_n_mappings = leader_keys.normal_mappings
   local leader_v_mappings = leader_keys.visual_mappings
-  -- TODO: move to functions in utils.
+
   wk.register(leader_n_mappings, utils.get_prefix_opts('<leader>', n_opts))
   wk.register(leader_v_mappings, utils.get_prefix_opts('<leader>', v_opts))
 
@@ -42,19 +42,16 @@ local function set_wk_keys()
               utils.get_prefix_opts('<localleader>', n_opts))
 
   local hints = non_leader_keys.hints
-  wk.register(hints, {prefix = ''})
+  wk.register(hints)
 
 end
 
 -- TODO: refac to remove utils in exported apis.
 local M = {
   api = api,
-  leader_keys = leader_keys,
-  localleader_keys = localleader_keys,
   lsp_keys = lsp_keys,
   non_leader_keys = non_leader_keys,
   opts = opts,
-  utils = utils
 }
 
 function M.setup()
