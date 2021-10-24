@@ -52,6 +52,7 @@ M.hints = {
 
   ga = 'EasyAlign',
   gc = 'Comments',
+  -- TODO: complete
   -- gp = '',
   -- gP = '',
 
