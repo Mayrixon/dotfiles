@@ -1,5 +1,6 @@
-lua << EOF
 local wk = require('which-key')
+
+vim.g.markdown_fenced_languages = {'python', 'rust'}
 
 wk.register({
   l = {
@@ -12,4 +13,3 @@ wk.register({
     }
   }
 }, {prefix = '<localleader>'})
-EOF
