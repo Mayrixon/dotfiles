@@ -34,4 +34,18 @@ function M.set_hover_diagnostics()
   ]]
 end
 
+vim.g.diagnostics_active = true
+function M.toggle_diagnostics()
+  if vim.g.diagnostics_active then
+    vim.g.diagnostics_active = false
+    vim.lsp.diagnostic.clear(0)
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
+  else
+    vim.g.diagnostics_active = true
+    vim.lsp.handlers['textDocument/publishDiagnostics'] =
+        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+                     require('config.lsp.cosmetics').on_publish_diagnostics_handles)
+  end
+end
+
 return M
