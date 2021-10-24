@@ -44,20 +44,33 @@ M.mappings = {
   }
 }
 
--- TODO: add g, [, and ]
 M.hints = {
   -- TODO: LSP-enabled only. buffer in opts would be useful
   gd = 'Definition',
-  gl = 'LSP finder',
+  gD = 'Declaration',
+  gr = 'References',
 
   ga = 'EasyAlign',
   gc = 'Comments',
-  -- gp = '',
-  -- gP = '',
+  gp = {
+    name = 'Preview',
+    d = 'Definition',
+    i = 'Implementations',
+    r = 'References'
+  },
+  gP = 'Close preview window',
 
   ['[d'] = 'Previous diagnostic',
-  [']d'] = 'Next diagnostic'
+  [']d'] = 'Next diagnostic',
 
+  ['[h'] = 'Previous hunk',
+  [']h'] = 'Next hunk',
+
+  ['[['] = 'Previous class start',
+  [']['] = 'Next class end',
+
+  ['[]'] = 'Previous class end',
+  [']]'] = 'Next class start'
 }
 
 M.wk_operators = {ga = 'EasyAlign', gc = 'Comments'}

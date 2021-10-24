@@ -12,8 +12,8 @@ M.normal_mappings = {
   -- TODO: find a cheatsheet plugin
   -- ['?'] = {'<Cmd>Telescope keymaps<CR>', 'Show mappings'},
 
-  w = {'<Cmd>:up<CR>', 'Update file'},
-  W = {'<Cmd>:wq<CR>', 'Write file and quit'},
+  -- w = {'<Cmd>:up<CR>', 'Update file'},
+  -- W = {'<Cmd>:wq<CR>', 'Write file and quit'},
 
   ['<Space>'] = {name = 'EasyMotion'},
 
@@ -172,15 +172,13 @@ M.normal_mappings = {
 
   u = {
     -- TODO: add plugin or commands:
-    -- - <Cmd>MatchupWhereAmI
     -- - colorize
     -- - trailing white space
-    -- - todo-comments
-    -- - trouble
     -- - vim default diff tools (diffthis and diffoff).
     name = 'Utilities',
     s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
-    u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'}
+    u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
+    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}
   },
 
   -- TODO: delete after trying.
@@ -190,7 +188,8 @@ M.normal_mappings = {
     name = 'System',
     l = {'<Cmd>SearchSession<CR>', 'Load session'},
     s = {'<Cmd>SaveSession<CR>', 'Save session'},
-    u = {'<Cmd>PackerUpdate<CR>', 'Update plugins'}
+    u = {'<Cmd>PackerUpdate<CR>', 'Update plugins'},
+    U = {'<Cmd>PackerSync<CR>', 'Sync plugins'}
   }
 
 }
