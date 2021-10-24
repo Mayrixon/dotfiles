@@ -26,43 +26,51 @@ M.leader = {
           require('telescope.builtin').lsp_code_actions(cursor_theme)
         end, 'Code actions'
       },
+      d = {
+        '<Cmd>TroubleToggle lsp_document_diagnostics<CR>',
+        'Document diagnostics'
+      },
+      D = {
+        '<Cmd>TroubleToggle lsp_workspace_diagnostics<CR>',
+        'Workspace diagnostics'
+      },
       f = {function() vim.lsp.buf.formatting() end, 'Format'},
       o = {'<Cmd>Telescope lsp_document_symbols<CR>', 'Document symbols'},
       r = {function() vim.lsp.buf.rename() end, 'Rename'},
 
-      -- TODO: consider to remove or use Trouble to list.
-      l = {
-        function() vim.lsp.diagnostic.set_loclist() end, 'Buffer diagnostics'
-      },
-      T = {function() vim.lsp.buf.type_definition() end, 'Type definition'},
-
-      -- TODO: consider moving to <leader>-T.
-      e = {'<Cmd>lua vim.lsp.diagnostic.enable()<CR>', 'Enable diagnostics'},
-      x = {'<Cmd>lua vim.lsp.diagnostic.disable()<CR>', 'Disable diagnostics'},
-      t = {'<Cmd>TroubleToggle<CR>', 'Trouble'}
+      w = {
+        name = 'Workspace',
+        a = {
+          function() vim.lsp.buf.add_workspace_folder() end,
+          'Add Workspace folder'
+        },
+        l = {
+          function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+          end, 'List workspace folders'
+        },
+        r = {
+          function() vim.lsp.buf.remove_workspace_folder() end,
+          'Remove Workspace folder'
+        }
+      }
     },
-    w = {
-      name = 'Workspace',
-      a = {
-        function() vim.lsp.buf.add_workspace_folder() end,
-        'Add Workspace folder'
-      },
-      l = {
-        function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, 'List workspace folders'
-      },
-      r = {
-        function() vim.lsp.buf.remove_workspace_folder() end,
-        'Remove Workspace folder'
+
+    T = {
+      d = {
+        function() require('config.lsp.utils').toggle_diagnostics() end,
+        'Diagnostics'
       }
     }
   },
   visual_mode = {
     l = {
       name = 'LSP',
-      -- TODO: change to telescope.
-      a = {function() vim.lsp.buf.range_code_action() end, 'Range action'}
+      a = {
+        function()
+          require('telescope.builtin').lsp_range_code_actions(cursor_theme)
+        end, 'Range action'
+      }
     }
   }
 }
