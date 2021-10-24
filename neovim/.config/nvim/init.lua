@@ -19,20 +19,20 @@ local function packer_init()
   ]]
 end
 
--- local function sys_init()
---   -- Performance
---   -- require 'impatient'
--- end
+local function sys_init()
+  -- Performance
+  require 'impatient'
+end
 
 -------------------------------- Start loading ---------------------------------
 
 packer_init()
 
--- sys_init()
-
 require('defaults').setup()
 
 require('plugins').setup()
+
+sys_init()
 
 require('keymappings').setup()
 

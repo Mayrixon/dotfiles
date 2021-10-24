@@ -126,7 +126,6 @@ function M.setup()
         config = function() require('config.formatter-config').setup() end
       }
       use {'ray-x/lsp_signature.nvim'}
-      -- TODO: add keymappings to which-key hintss
       use {
         'rmagatti/goto-preview',
         config = function()
@@ -283,17 +282,16 @@ function M.setup()
       -- use {'vimwiki/vimwiki', branch = 'dev'}
 
       ---- Trying
-      -- use { "lewis6991/impatient.nvim" }
+      use {'lewis6991/impatient.nvim'}
       -- Embed in browser
       -- use {'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
 
       ---- Profiling
-      -- use {
-      --  'dstein64/vim-startuptime',
-      --  cmd = 'StartupTime',
-      --  config = [[vim.g.startuptime_tries = 10]]
-      -- }
-      -- use{'tweekmonster/startuptime.vim'}
+      use {
+        'dstein64/vim-startuptime',
+        cmd = 'StartupTime',
+        config = [[vim.g.startuptime_tries = 10]]
+      }
 
       ---- Editor interface
       use {
