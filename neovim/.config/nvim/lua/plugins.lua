@@ -238,19 +238,20 @@ function M.setup()
       }
 
       -- LaTeX
-      -- TODO: reconfig ftplugins/tex
       use {
         'lervag/vimtex',
         config = function() require('config.vimtex').setup() end
       }
 
       -- Markdown
-      -- TODO: reconfig change ftplugins/markdown
       use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
+      -- TODO: remove after treesitter supports markdown
       use {'tpope/vim-markdown'}
-      use {'SidOfc/mkdx'}
+      use {
+        'SidOfc/mkdx',
+        config = function() require('config.mkdx').setup() end
+      }
       use {'ellisonleao/glow.nvim'}
-      -- use {'mzlogin/vim-markdown-toc'}
 
       -- Pandoc
       -- use {'vim-pandoc/vim-pandoc'}
