@@ -5,9 +5,8 @@ function M.set_buffer_option(bufnr)
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
-M.set_keymap_1 = require('keymappings').api.set_keymap_1
 
-M.set_keymap_2 = require('keymappings').api.set_keymap_2
+M.set_lsp_keymap = require('keymappings').api.set_lsp_keymap
 
 function M.set_hover_diagnostics()
   vim.cmd [[

@@ -63,8 +63,7 @@ M.on_attach = function(client, bufnr)
 
   utils.set_buffer_option(bufnr)
 
-  utils.set_keymap_1(bufnr)
-  utils.set_keymap_2(client, bufnr)
+  utils.set_lsp_keymap(client, bufnr)
 
   utils.set_hover_diagnostics()
 

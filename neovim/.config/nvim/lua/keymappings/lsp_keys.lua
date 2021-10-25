@@ -75,4 +75,12 @@ M.leader = {
   }
 }
 
+M.capability_mappings = {
+  {
+    'document_range_formatting',
+    {lF = {function() vim.lsp.buf.range_formatting() end, 'Range format'}},
+    '<leader>', 'visual'
+  }
+}
+
 return M
