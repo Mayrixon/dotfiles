@@ -1,13 +1,25 @@
--- TODO: add :Format to <localleader>-f in visual mode.
 local M = {}
 
--- TODO: add yank to <localleader>y
 M.normal_mappings = {
+  e = {
+    name = 'Edit',
+    s = {name = 'Swap with next parameter'},
+    S = {name = 'Swap with previous parameter'}
+  },
+
   f = {'<Cmd>Format<CR>', 'Format'},
 
-  -- TODO: add paste in v mode
+  p = {'"+p', 'Paste after here'},
   P = {'"+P', 'Paste before here'},
-  p = {'"+p', 'Paste after here'}
+  y = {'"+y', 'Yank', noremap = false},
+  Y = {'"+y', 'Yank the line'}
+}
+
+M.visual_mappings = {
+  f = {'<Cmd>Format<CR>', 'Format'},
+  p = {'"+p', 'Paste'},
+  y = {'"+y', 'Yank'},
+  Y = {'"+y', 'Yank the line'}
 }
 
 return M

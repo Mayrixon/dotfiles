@@ -172,15 +172,13 @@ M.normal_mappings = {
 
   u = {
     -- TODO: add plugin or commands:
-    -- - <Cmd>MatchupWhereAmI
     -- - colorize
     -- - trailing white space
-    -- - todo-comments
-    -- - trouble
     -- - vim default diff tools (diffthis and diffoff).
     name = 'Utilities',
     s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
-    u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'}
+    u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
+    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}
   },
 
   -- TODO: delete after trying.

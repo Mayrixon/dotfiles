@@ -29,23 +29,6 @@ function M.setup()
     indent = {enable = true},
     matchup = {enable = true},
     rainbow = {enable = true, extended_mode = true},
-    refactor = {
-      -- TODO: solve the conflict with LSP. Prefer treesitter rather than LSP.
-      highlight_definitions = {enable = true}
-      -- highlight_current_scope = {enable = true}
-      -- smart_rename = {enable = true, keymaps = {smart_rename = 'grr'}},
-      -- navigation = {
-      -- enable = true,
-      -- keymaps = {
-      -- TODO: check if goto_definition is compitable with LSP and <C-t>
-      -- goto_definition = 'gnd',
-      -- list_definitions = 'gnD',
-      -- list_definitions_toc = 'gO',
-      -- goto_next_usage = '<a-*>',
-      -- goto_previous_usage = '<a-#>'
-      -- }
-      -- }
-    },
     textobjects = {
       move = {
         enable = true,

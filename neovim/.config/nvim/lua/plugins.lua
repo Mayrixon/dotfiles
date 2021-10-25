@@ -178,7 +178,6 @@ function M.setup()
         run = ':TSUpdate',
         config = function() require('config.treesitter').setup() end
       }
-      use {'nvim-treesitter/nvim-treesitter-refactor'}
       use {'nvim-treesitter/nvim-treesitter-textobjects'}
       use {'p00f/nvim-ts-rainbow'}
       use {'JoosepAlviste/nvim-ts-context-commentstring'}
@@ -244,7 +243,7 @@ function M.setup()
 
       -- Markdown
       use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
-      -- TODO: remove after treesitter supports markdown
+      -- INFO: remove after treesitter supports markdown
       use {'tpope/vim-markdown'}
       use {
         'SidOfc/mkdx',
