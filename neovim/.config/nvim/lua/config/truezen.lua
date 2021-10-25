@@ -29,15 +29,7 @@ function M.setup()
         bg_configuration = true,
         quit = 'untoggle',
         ignore_floating_windows = true,
-        affected_higroups = {
-          NonText = true,
-          FoldColumn = true,
-          ColorColumn = true,
-          VertSplit = true,
-          StatusLine = true,
-          StatusLineNC = true,
-          SignColumn = true
-        }
+        affected_higroups = {}
       },
       focus = {margin_of_error = 5, focus_method = 'experimental'}
     },
@@ -63,6 +55,33 @@ function M.setup()
       cursor_by_mode = true
     }
   })
+
+  true_zen.after_mode_ataraxis_on = function()
+    vim.opt_local.scrolloff = 999
+    vim.opt_local.linebreak = true
+
+    vim.cmd [[
+      map j gj
+      map k gk
+    ]]
+
+    require('cmp').setup.buffer {enabled = false}
+    require('config.lsp.utils').disable_diagnostics()
+  end
+
+  true_zen.before_mode_ataraxis_off = function()
+    vim.opt_local.scrolloff = -1
+    vim.opt_local.linebreak = vim.opt.linebreak:get()
+
+    vim.cmd [[
+      unmap j
+      unmap k
+    ]]
+
+    require('cmp').setup.buffer {enabled = true}
+    require('config.lsp.utils').enable_diagnostics()
+  end
+
 end
 
 return M
