@@ -9,22 +9,6 @@ M.set_keymap_1 = require('keymappings').api.set_keymap_1
 
 M.set_keymap_2 = require('keymappings').api.set_keymap_2
 
-function M.set_document_highlight(client)
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.cmd [[
-      hi default link LspReferenceText CursorColumn
-      hi default link LspReferenceRead LspReferenceText
-      hi default link LspReferenceWrite LspReferenceText
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-      ]]
-  end
-end
-
 function M.set_hover_diagnostics()
   vim.cmd [[
     augroup lsp_cursor_diagnostics

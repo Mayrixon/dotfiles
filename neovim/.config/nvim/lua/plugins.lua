@@ -132,19 +132,9 @@ function M.setup()
           require('goto-preview').setup({default_mappings = true, height = 30})
         end
       }
-      -- TODO: add keymappings to keymapping config file.
-      -- TODO: set highlight group.
-      -- TODO: set blacklist filetypes.
       use {
         'RRethy/vim-illuminate',
-        config = function()
-          vim.api.nvim_set_keymap('n', '<a-n>',
-                                  '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-                                  {noremap = true})
-          vim.api.nvim_set_keymap('n', '<a-p>',
-                                  '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-                                  {noremap = true})
-        end
+        config = function() require('config.illuminate').setup() end
       }
 
       -- Completion
@@ -185,10 +175,10 @@ function M.setup()
       use {'windwp/nvim-ts-autotag'}
       -- use { 'nvim-telescope/telescope-media-files.nvim' }
       -- use { 'nvim-telescope/telescope-packer.nvim ' }
-      -- use {
-      --     'lewis6991/spellsitter.nvim',
-      --     config = function() require('spellsitter').setup() end
-      -- }
+      use {
+          'lewis6991/spellsitter.nvim',
+          config = function() require('spellsitter').setup() end
+      }
 
       -- Better syntax
       use {
@@ -214,12 +204,11 @@ function M.setup()
       }
 
       -- Dashboard
-      -- TODO: setup
       use {
         'goolord/alpha-nvim',
         requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-          require('alpha').setup(require('alpha.themes.dashboard').opts)
+          require('alpha').setup(require('alpha.themes.startify').opts)
         end
       }
 
@@ -305,7 +294,10 @@ function M.setup()
 
       -- use {'ntpeters/vim-better-whitespace'}
       -- use {'ludovicchabant/vim-gutentags'}
-      -- use {'norcalli/nvim-colorizer.lua'}
+      use {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require('colorizer').setup() end
+      }
 
     end
   })

@@ -172,10 +172,10 @@ M.normal_mappings = {
 
   u = {
     -- TODO: add plugin or commands:
-    -- - colorize
     -- - trailing white space
     -- - vim default diff tools (diffthis and diffoff).
     name = 'Utilities',
+    c = {'<Cmd>ColorizerToggle<CR>', 'Colorizer'},
     s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
     u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
     w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}

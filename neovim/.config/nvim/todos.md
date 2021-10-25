@@ -28,7 +28,6 @@
     - [ ] Goyo and limelight (disable gitsigns)
   - [-] Compare plugins
     - [ ] Colorizer and nvim-colorizer.lua
-- [ ] Spell checker
 - [-] Zen mode
   - [ ] TrueZen
 - [-] Markdown
