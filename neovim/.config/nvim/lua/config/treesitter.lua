@@ -60,8 +60,8 @@ function M.setup()
       },
       swap = {
         enable = true,
-        swap_next = {['<localleader>es'] = '@parameter.inner'},
-        swap_previous = {['<localleader>eS'] = '@parameter.inner'}
+        swap_next = {['<leader>es'] = '@parameter.inner'},
+        swap_previous = {['<leader>eS'] = '@parameter.inner'}
       }
     }
   }

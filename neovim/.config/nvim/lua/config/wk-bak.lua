@@ -5,8 +5,6 @@ local mappings = {
   -- System
   ['z'] = {
     name = 'System',
-    b = {'<Cmd>hi Normal ctermbg=none guibg=none<CR>', 'Transparent background'},
-    c = {'<Cmd>DashboardChangeColorscheme<Cr>', 'Color scheme'},
     h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     t = {'<Cmd>terminal<CR>', 'New terminal'},
     e = {'!!$SHELL<CR>', 'Execute line'},
@@ -67,8 +65,6 @@ local mappings = {
   -- Run
   r = {
     name = 'Run',
-    x = {name = 'Swap next parameter'},
-    X = {name = 'Swap previous parameter'},
     s = {'<Cmd>lua require\'sniprun\'.run()<CR>', 'Run snippets'}
   },
 
@@ -81,11 +77,7 @@ local mappings = {
 }
 
 local vmappings = {
-  s = {
-    name = 'Search',
-    v = {'<Cmd>lua require(\'spectre\').open_visual()<CR>', 'Visual search'},
-    b = {'<Plug>SearchVisual', 'Browser search'}
-  },
+  s = {name = 'Search', b = {'<Plug>SearchVisual', 'Browser search'}},
   r = {
     name = 'Run',
     s = {'<Cmd>lua require\'sniprun\'.run(\'v\')<CR>', 'Run snippets'}
@@ -97,7 +89,8 @@ local lsp_mappings_opts = {
   {
     'document_formatting',
     {['lf'] = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Format'}}
-  }, {
+  },
+  {
     'code_lens',
     {['ll'] = {'<Cmd>lua vim.lsp.codelens.refresh()<CR>', 'Codelens refresh'}}
   }, {
@@ -177,16 +170,6 @@ local dap_vimspector_mappings = {
   --     utils.map_key('n', '<leader>drl',
   --                   '<cmd>lua require"dap".repl.run_last()<CR>')
 }
-
-function M.register_lsp(client)
-  local wk = require 'which-key'
-  wk.register(lsp_mappings, opts)
-
-  for _, m in pairs(lsp_mappings_opts) do
-    local capability, key = unpack(m)
-    if client.resolved_capabilities[capability] then wk.register(key, opts) end
-  end
-end
 
 function M.register_dap_vimspector()
   local wk = require 'which-key'

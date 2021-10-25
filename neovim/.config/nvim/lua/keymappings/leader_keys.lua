@@ -7,7 +7,6 @@ local spectre = require('spectre')
 local M = {}
 
 M.normal_mappings = {
-  -- TODO: add <leader>-e mapping to cover diffview's mapping.
 
   -- TODO: find a cheatsheet plugin
   -- ['?'] = {'<Cmd>Telescope keymaps<CR>', 'Show mappings'},
@@ -46,7 +45,11 @@ M.normal_mappings = {
     }
   },
 
-  e = {name = 'Edit'},
+  e = {
+    name = 'Edit',
+    s = {name = 'Swap with next parameter'},
+    S = {name = 'Swap with previous parameter'}
+  },
 
   f = {
     name = 'File',
@@ -107,13 +110,11 @@ M.normal_mappings = {
 
   n = {
     name = 'Notes',
-    -- TODO: remove :Limelight
-    l = {
-      name = 'Limelight',
-      k = {'<Cmd>Limelight!<CR>', 'turn off'},
-      l = {'<Cmd>Limelight<CR>', 'turn on'}
+    c = {
+      name = 'Highlight',
+      c = {'<Cmd>TwilightEnable<CR>', 'Turn on'},
+      d = {'<Cmd>TwilightDisable<CR>', 'Turn off'}
     },
-    -- TODO: add :Twilight
     z = {'<Cmd>TZAtaraxis<CR>', 'Zen mode'}
   },
 
@@ -159,9 +160,26 @@ M.normal_mappings = {
 
   t = {
     name = 'Tabs',
-    ['1'] = {'1gt', 'tab 1'},
-    -- TODO: change telescope to dropdown
-    t = {'<Cmd>Telescope tele_tabby list<CR>', 'List tabs'}
+    ['1'] = {'1gt', 'Tab 1'},
+    ['2'] = {'2gt', 'Tab 2'},
+    ['3'] = {'3gt', 'Tab 3'},
+    ['4'] = {'4gt', 'Tab 4'},
+    ['5'] = {'5gt', 'Tab 5'},
+    ['6'] = {'6gt', 'Tab 6'},
+    ['7'] = {'7gt', 'Tab 7'},
+    ['8'] = {'8gt', 'Tab 8'},
+    ['9'] = {'9gt', 'Tab 9'},
+    ['0'] = {'10gt', 'Tab 10'},
+    c = {'<Cmd>tabclose<CR>', 'Close tab'},
+    e = {'<Cmd>tabedit<CR>', 'New tab'},
+    n = {'<Cmd>tabnext<CR>', 'Next tab'},
+    p = {'<Cmd>tabprevious<CR>', 'Previous tab'},
+    t = {
+      function()
+        require'telescope'.extensions.tele_tabby.list(
+            require('config.telescope').dropdown_theme)
+      end, 'List tabs'
+    }
   },
 
   T = {
@@ -180,9 +198,6 @@ M.normal_mappings = {
     u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
     w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}
   },
-
-  -- TODO: delete after trying.
-  x = {name = 'Trying area'},
 
   z = {
     name = 'System',
