@@ -1,4 +1,4 @@
--- TODO: pay attention to upcoming updates. -- on 2021-10-11
+-- INFO: pay attention to upcoming updates. -- on 2021-10-11
 local M = {}
 
 function M.setup()

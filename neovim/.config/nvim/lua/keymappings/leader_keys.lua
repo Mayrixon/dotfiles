@@ -7,13 +7,6 @@ local spectre = require('spectre')
 local M = {}
 
 M.normal_mappings = {
-
-  -- TODO: find a cheatsheet plugin
-  -- ['?'] = {'<Cmd>Telescope keymaps<CR>', 'Show mappings'},
-
-  -- w = {'<Cmd>:up<CR>', 'Update file'},
-  -- W = {'<Cmd>:wq<CR>', 'Write file and quit'},
-
   ['<Space>'] = {name = 'EasyMotion'},
 
   b = {
@@ -53,6 +46,7 @@ M.normal_mappings = {
 
   f = {
     name = 'File',
+    d = {'<Cmd>Telescope file_browser<CR>', 'Pop-up file browser'},
     e = {'<Cmd>NvimTreeToggle<CR>', 'Open explorer'},
     F = {'<Cmd>Telescope find_files<CR>', 'Find files'},
     f = {
@@ -60,12 +54,9 @@ M.normal_mappings = {
       'Find project files'
     },
     g = {'<Cmd>Telescope live_grep<CR>', 'Live grep'},
-
+    p = {'<Cmd>Telescope<CR>', 'Pickers'},
     r = {'<Cmd>Telescope frecency<CR>', 'Find recent file'},
-    t = {'<Cmd>TodoTelescope<CR>', 'Find TODOs'},
-
-    -- TODO: remap or delete
-    p = {'<Cmd>Telescope<CR>', 'Pickers'}
+    t = {'<Cmd>TodoTelescope<CR>', 'Find TODOs'}
   },
 
   g = {
@@ -189,20 +180,26 @@ M.normal_mappings = {
   },
 
   u = {
-    -- TODO: add plugin or commands:
-    -- - trailing white space
-    -- - vim default diff tools (diffthis and diffoff).
     name = 'Utilities',
     c = {'<Cmd>ColorizerToggle<CR>', 'Colorizer'},
-    s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
+    s = {'<Cmd>StripWhitespace<CR>', 'Remove trailing whitespace'},
+    S = {'<Cmd>Sleuth<CR>', 'Sleuth'},
     u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
-    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}
+    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'},
+
+    d = {
+      name = 'Diff tool',
+      d = {'<Cmd>diffthis', 'Diff this file'},
+      o = {'<Cmd>diffoff', 'Turn off'}
+    }
   },
 
   z = {
     name = 'System',
+    h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     l = {'<Cmd>SearchSession<CR>', 'Load session'},
     s = {'<Cmd>SaveSession<CR>', 'Save session'},
+    t = {'<Cmd>terminal<CR>', 'New terminal'},
     u = {'<Cmd>PackerUpdate<CR>', 'Update plugins'},
     U = {'<Cmd>PackerSync<CR>', 'Sync plugins'}
   }
@@ -229,6 +226,10 @@ M.visual_mappings = {
   s = {
     name = 'Search',
     v = {function() spectre.open_visual() end, 'Visual search'}
+  },
+  u = {
+    name = 'Utilities',
+    s = {'<Cmd>StripWhitespace<CR>', 'Remove trailing whitespace'}
   }
 }
 

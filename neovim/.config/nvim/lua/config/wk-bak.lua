@@ -2,39 +2,11 @@ local M = {}
 
 local mappings = {
 
-  -- System
-  ['z'] = {
-    name = 'System',
-    h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
-    t = {'<Cmd>terminal<CR>', 'New terminal'},
-    e = {'!!$SHELL<CR>', 'Execute line'},
-    z = {
-      '<Cmd>lua require(\'config.telescope\').search_dotfiles()<CR>',
-      'Configuration'
-    },
-    p = {
-      ':let &runtimepath.=\',\'.escape(expand(\'%:p:h\'), \'\\,\')<Cr>',
-      'Set runtime path'
-    },
-    f = {'<Cmd>FloatermNew<Cr>', 'Floating terminal'}
-  },
-
   -- File
-  f = {
-    name = 'File',
-    p = {'<Cmd>Telescope file_browser<Cr>', 'Pop-up file browser'},
-    x = {'<Cmd>DashboardFindHistory<Cr>', 'History'},
-    m = {'<Cmd>DashboardJumpMark<Cr>', 'Mark'},
-    n = {'<Cmd>DashboardNewFile<Cr>', 'New file'},
-    a = {'<Cmd>xa<Cr>', 'Save all & quit'}
-  },
+  f = {name = 'File', a = {'<Cmd>xa<Cr>', 'Save all & quit'}},
 
   -- Git
-  g = {
-    name = 'Source code',
-    d = {'<Cmd>Gvdiffsplit<Cr>', 'Git diff'},
-    g = {name = 'Generate doc'}
-  },
+  g = {name = 'Source code', g = {name = 'Generate doc'}},
 
   -- Project
   p = {
@@ -83,20 +55,6 @@ local vmappings = {
     s = {'<Cmd>lua require\'sniprun\'.run(\'v\')<CR>', 'Run snippets'}
   },
   g = {name = 'Source code', y = {name = 'Git URL'}}
-}
-
-local lsp_mappings_opts = {
-  {
-    'document_formatting',
-    {['lf'] = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Format'}}
-  },
-  {
-    'code_lens',
-    {['ll'] = {'<Cmd>lua vim.lsp.codelens.refresh()<CR>', 'Codelens refresh'}}
-  }, {
-    'code_lens',
-    {['ls'] = {'<Cmd>lua vim.lsp.codelens.run()<CR>', 'Codelens run'}}
-  }
 }
 
 local dap_nvim_dap_mappings = {
@@ -163,8 +121,7 @@ local dap_vimspector_mappings = {
   --     utils.map_key('n', '<leader>duf',
   --                   "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>")
 
-  --     utils.map_key('n', '<leader>dsbr',
-  --                   '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
+  --     utils.map_key('n', '<leader>dsbr', '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
   --     utils.map_key('n', '<leader>dsbm',
   --                   '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
   --     utils.map_key('n', '<leader>drl',

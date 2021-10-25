@@ -67,6 +67,9 @@ function M.setup()
 
     require('cmp').setup.buffer {enabled = false}
     require('config.lsp.utils').disable_diagnostics()
+    vim.cmd [[
+      DisableWhitespace
+    ]]
   end
 
   true_zen.before_mode_ataraxis_off = function()
@@ -80,6 +83,9 @@ function M.setup()
 
     require('cmp').setup.buffer {enabled = true}
     require('config.lsp.utils').enable_diagnostics()
+    vim.cmd [[
+      EnableWhitespace
+    ]]
   end
 
 end

@@ -176,8 +176,8 @@ function M.setup()
       -- use { 'nvim-telescope/telescope-media-files.nvim' }
       -- use { 'nvim-telescope/telescope-packer.nvim ' }
       use {
-          'lewis6991/spellsitter.nvim',
-          config = function() require('spellsitter').setup() end
+        'lewis6991/spellsitter.nvim',
+        config = function() require('spellsitter').setup() end
       }
 
       -- Better syntax
@@ -292,7 +292,10 @@ function M.setup()
         end
       }
 
-      -- use {'ntpeters/vim-better-whitespace'}
+      use {
+        'ntpeters/vim-better-whitespace',
+        config = function() require('config.whitespace').setup() end
+      }
       -- use {'ludovicchabant/vim-gutentags'}
       use {
         'norcalli/nvim-colorizer.lua',
