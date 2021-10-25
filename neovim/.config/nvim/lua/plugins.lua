@@ -243,7 +243,7 @@ function M.setup()
 
       -- Markdown
       use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
-      -- TODO: remove after treesitter supports markdown
+      -- INFO: remove after treesitter supports markdown
       use {'tpope/vim-markdown'}
       use {
         'SidOfc/mkdx',

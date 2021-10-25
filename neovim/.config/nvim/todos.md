@@ -19,7 +19,6 @@
 - [ ] LSP
   - [ ] Set up servers
   - [ ] Setup CodeLens
-  - [ ] Set up code actions
 - [ ] Set up formatters
 - [-] Add old plugins and configs
   - [-] Plugins
@@ -33,7 +32,6 @@
 - [-] Zen mode
   - [ ] TrueZen
 - [-] Markdown
-  - [-] Highlight (waiting for tree-sitter)
   - [-] Edit
     - [ ] mkdx newline settings
 - [ ] DAP
