@@ -22,10 +22,10 @@
 - [ ] Set up formatters
 - [-] Add old plugins and configs
   - [-] Plugins
-    - [-] undotree
-    - [ ] better-whitespace
+    - [x] undotree
+    - [x] better-whitespace
     - [ ] gutentags
-    - [ ] Goyo and limelight (disable gitsigns)
+    - [x] Goyo and limelight (disable gitsigns)
   - [-] Compare plugins
     - [ ] Colorizer and nvim-colorizer.lua
 - [-] Zen mode
@@ -35,11 +35,11 @@
     - [ ] mkdx newline settings
 - [ ] DAP
   - [ ] rust-tools
-- [ ] Optimise startup time
-  - [ ] Profile:
-    - [ ] packer's profile
-- [ ] Setup startup screen
+- [x] Optimise startup time
+  - [x] Profile:
+    - [x] packer's profile
+- [x] Setup startup screen
 - [ ] Setup REPL
-- [ ] Setup filetype-based keybindings to <localleader>-l
+- [-] Setup filetype-based keybindings to <localleader>-l
   - [ ] Use settings defined in which-key.lua.
-  - [ ] Rust tools
+  - [x] Rust tools

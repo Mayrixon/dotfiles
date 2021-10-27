@@ -5,10 +5,7 @@ function M.setup()
   local packer = require 'packer'
 
   packer.startup({
-    -- config = {
-    --  display = {open_fn = require('packer.util').float},
-    --  profile = {enable = true}
-    -- },
+    config = {profile = {enable = true}},
     function(use)
       use {'wbthomason/packer.nvim', opt = true}
 
@@ -102,6 +99,7 @@ function M.setup()
         },
         config = function() require('config.telescope').setup() end
       }
+      use {'nvim-telescope/telescope-packer.nvim'}
       use {
         'rmagatti/session-lens',
         requires = {
@@ -135,6 +133,10 @@ function M.setup()
       use {
         'RRethy/vim-illuminate',
         config = function() require('config.illuminate').setup() end
+      }
+      use {
+        'mfussenegger/nvim-lint',
+        config = function() require('config.lint').setup() end
       }
 
       -- Completion
@@ -173,8 +175,6 @@ function M.setup()
       use {'JoosepAlviste/nvim-ts-context-commentstring'}
       use {'romgrk/nvim-treesitter-context'}
       use {'windwp/nvim-ts-autotag'}
-      -- use { 'nvim-telescope/telescope-media-files.nvim' }
-      -- use { 'nvim-telescope/telescope-packer.nvim ' }
       use {
         'lewis6991/spellsitter.nvim',
         config = function() require('spellsitter').setup() end
@@ -190,6 +190,23 @@ function M.setup()
       -- Editor
       use {'junegunn/vim-easy-align'}
       use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+          require('indent_blankline').setup {
+            show_current_context = true,
+            use_treesitter = true
+          }
+        end
+      }
+      use {
+        'ntpeters/vim-better-whitespace',
+        config = function() require('config.whitespace').setup() end
+      }
+      use {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require('colorizer').setup() end
+      }
+      use {
         'folke/trouble.nvim',
         config = function() require('trouble').setup {} end
       }
@@ -202,6 +219,7 @@ function M.setup()
         },
         config = function() require('config.truezen').setup() end
       }
+      use {'google/vim-searchindex'}
 
       -- Dashboard
       use {
@@ -210,6 +228,13 @@ function M.setup()
         config = function()
           require('alpha').setup(require('alpha.themes.startify').opts)
         end
+      }
+
+      -- Cheat sheet
+      use {
+        'sudormrfbin/cheatsheet.nvim',
+
+        requires = {'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim'}
       }
 
       -- Status line
@@ -223,6 +248,19 @@ function M.setup()
         requires = 'nvim-treesitter/nvim-treesitter',
         config = function() require('nvim-gps').setup({}) end
       }
+
+      ---- Debugging
+      -- use { "puremourning/vimspector", event = "BufWinEnter" }
+      -- use { "nvim-telescope/telescope-vimspector.nvim", event = "BufWinEnter" }
+
+      ---- DAP
+      use {'mfussenegger/nvim-dap'}
+      use {'nvim-telescope/telescope-dap.nvim'}
+      -- use { "mfussenegger/nvim-dap-python" }
+      -- use { "theHamsta/nvim-dap-virtual-text" }
+      -- use { "rcarriga/nvim-dap-ui" }
+      -- use { "Pocco81/DAPInstall.nvim" }
+      -- use { "jbyuki/one-small-step-for-vimkind" }
 
       -- LaTeX
       use {
@@ -249,19 +287,6 @@ function M.setup()
       -- use {'rust-lang/rust.vim'}
       use {'simrat39/rust-tools.nvim'}
 
-      ---- Debugging
-      -- use { "puremourning/vimspector", event = "BufWinEnter" }
-      -- use { "nvim-telescope/telescope-vimspector.nvim", event = "BufWinEnter" }
-
-      ---- DAP
-      -- use { "mfussenegger/nvim-dap" }
-      -- use { "nvim-telescope/telescope-dap.nvim" }
-      -- use { "mfussenegger/nvim-dap-python" }
-      -- use { "theHamsta/nvim-dap-virtual-text" }
-      -- use { "rcarriga/nvim-dap-ui" }
-      -- use { "Pocco81/DAPInstall.nvim" }
-      -- use { "jbyuki/one-small-step-for-vimkind" }
-
       ---- TypeScript
       -- use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
 
@@ -279,27 +304,6 @@ function M.setup()
         'dstein64/vim-startuptime',
         cmd = 'StartupTime',
         config = [[vim.g.startuptime_tries = 10]]
-      }
-
-      ---- Editor interface
-      use {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function()
-          require('indent_blankline').setup {
-            show_current_context = true,
-            use_treesitter = true
-          }
-        end
-      }
-
-      use {
-        'ntpeters/vim-better-whitespace',
-        config = function() require('config.whitespace').setup() end
-      }
-      -- use {'ludovicchabant/vim-gutentags'}
-      use {
-        'norcalli/nvim-colorizer.lua',
-        config = function() require('colorizer').setup() end
       }
 
     end
@@ -355,3 +359,4 @@ return M
 -- use {'sbdchd/neoformat'}
 
 -- use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
+-- use {'ludovicchabant/vim-gutentags'}

@@ -1,5 +1,8 @@
 local server_settings = {
+  bashls = {},
   clangd = {},
+  cmake = {},
+  diagnosticls = {},
   pyright = {},
   sumneko_lua = {
     cmd = {'lua-language-server'},
@@ -17,6 +20,7 @@ local server_settings = {
       }
     }
   },
+  tailwindcss = {},
   texlab = {
     settings = {
       latex = {
@@ -28,7 +32,8 @@ local server_settings = {
     }
   },
   tsserver = {},
-  vimls = {}
+  vimls = {},
+  zk = {filetypes = {'markdown', 'text'}}
 }
 
 local M = {}

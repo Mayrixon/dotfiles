@@ -9,6 +9,8 @@ local M = {}
 M.normal_mappings = {
   ['<Space>'] = {name = 'EasyMotion'},
 
+  ['?'] = {'<Cmd>Cheatsheet<CR>', 'Cheat sheet'},
+
   b = {
     name = 'Buffer',
     -- a = {'<Cmd>%bd|e#<Cr>', 'Delete all buffers'},
@@ -40,6 +42,7 @@ M.normal_mappings = {
 
   e = {
     name = 'Edit',
+    l = {function() require('lint').try_lint() end, 'Lint'},
     s = {name = 'Swap with next parameter'},
     S = {name = 'Swap with previous parameter'}
   },
@@ -198,6 +201,9 @@ M.normal_mappings = {
     name = 'System',
     h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     l = {'<Cmd>SearchSession<CR>', 'Load session'},
+    p = {
+      function() require('telescope').extensions.packer.plugins() end, 'Packer'
+    },
     s = {'<Cmd>SaveSession<CR>', 'Save session'},
     t = {'<Cmd>terminal<CR>', 'New terminal'},
     u = {'<Cmd>PackerUpdate<CR>', 'Update plugins'},
