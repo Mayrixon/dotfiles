@@ -63,6 +63,7 @@ function M.setup()
       - '2' -- I'm not in gradeschool anymore
       + 'j' -- Auto-remove comments if possible.
 
+  opt.undofile = true
 end
 
 return M
