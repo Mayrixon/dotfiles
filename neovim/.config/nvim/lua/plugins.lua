@@ -1,8 +1,33 @@
 -- TODO: clean up all commented lines
+
+-- BUG: When bootstrapping, the plugin Telescope must not in lazy load. It
+-- seems is caused by plugin which-key registers uninstalled plugins.
+
 local M = {}
 
-function M.setup()
-  local packer = require 'packer'
+local function bootstrap(packer_bootstrap)
+  if packer_bootstrap then require('packer').sync() end
+end
+
+local function init()
+  local fn = vim.fn
+
+  local packer_bootstrap = false
+  local install_path = fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    local output = fn.system({
+      'git', 'clone', '--depth', '1',
+      'https://github.com/wbthomason/packer.nvim', install_path
+    })
+    if output ~= '' then packer_bootstrap = true end
+  end
+  vim.cmd [[packadd packer.nvim]]
+
+  return packer_bootstrap
+end
+
+local function startup()
+  local packer = require('packer')
 
   packer.startup({
     config = {profile = {enable = true}},
@@ -109,7 +134,8 @@ function M.setup()
           'nvim-telescope/telescope-project.nvim',
           'TC72/telescope-tele-tabby.nvim'
         },
-        cmd = 'Telescope',
+        -- cmd = 'Telescope',
+        -- module = 'telescope',
         config = function() require('config.telescope').setup() end
       }
       use {'nvim-telescope/telescope-packer.nvim'}
@@ -170,6 +196,7 @@ function M.setup()
         'tzachar/cmp-tabnine',
         run = './install.sh',
         requires = 'hrsh7th/nvim-cmp',
+        event = 'BufWinEnter',
         config = function() require('config.tabnine').setup() end
       }
 
@@ -327,6 +354,14 @@ function M.setup()
 
     end
   })
+end
+
+function M.setup()
+  local packer_bootstrap = init()
+
+  startup(packer_bootstrap)
+
+  bootstrap(packer_bootstrap)
 end
 
 return M
