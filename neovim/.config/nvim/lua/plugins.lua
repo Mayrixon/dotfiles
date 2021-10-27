@@ -24,6 +24,10 @@ function M.setup()
       use {
         'kyazdani42/nvim-tree.lua',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        cmd = {
+          'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile',
+          'NvimTreeFindFileToggle', 'NvimTreeFocus'
+        },
         config = function() require('config.nvim-tree').setup() end
 
       }
@@ -53,16 +57,24 @@ function M.setup()
       use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
+        event = 'BufReadPre',
         config = function() require('config.gitsigns').setup() end
       }
       use {
         'TimUntersberger/neogit',
         requires = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
+        cmd = 'Neogit',
         config = function()
           require('neogit').setup({integrations = {diffview = true}})
         end
       }
-      use {'sindrets/diffview.nvim'}
+      use {
+        'sindrets/diffview.nvim',
+        cmd = {
+          'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles',
+          'DiffviewFocusFiles'
+        }
+      }
 
       -- Colorscheme
       use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
@@ -97,6 +109,7 @@ function M.setup()
           'nvim-telescope/telescope-project.nvim',
           'TC72/telescope-tele-tabby.nvim'
         },
+        cmd = 'Telescope',
         config = function() require('config.telescope').setup() end
       }
       use {'nvim-telescope/telescope-packer.nvim'}
@@ -110,6 +123,7 @@ function M.setup()
             end
           }, 'nvim-telescope/telescope.nvim'
         },
+        event = 'VimEnter',
         config = function() require('session-lens').setup {} end
       }
 
@@ -126,6 +140,7 @@ function M.setup()
       use {'ray-x/lsp_signature.nvim'}
       use {
         'rmagatti/goto-preview',
+        event = 'BufWinEnter',
         config = function()
           require('goto-preview').setup({default_mappings = true, height = 30})
         end
@@ -148,6 +163,7 @@ function M.setup()
           'octaltree/cmp-look', 'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
           'f3fora/cmp-spell', 'hrsh7th/cmp-emoji', 'ray-x/cmp-treesitter'
         },
+        event = 'BufWinEnter',
         config = function() require('config.cmp').setup() end
       }
       use {
@@ -160,6 +176,7 @@ function M.setup()
       -- Snippets
       use {
         'L3MON4D3/LuaSnip',
+        event = 'VimEnter',
         config = function() require('config.luasnip').setup() end
       }
       use {'rafamadriz/friendly-snippets'}
@@ -167,17 +184,18 @@ function M.setup()
       -- Treesitter
       use {
         'nvim-treesitter/nvim-treesitter',
+        require = {
+          {'nvim-treesitter/nvim-treesitter-textobjects'},
+          {'p00f/nvim-ts-rainbow'},
+          {'JoosepAlviste/nvim-ts-context-commentstring'},
+          {'romgrk/nvim-treesitter-context'}, {'windwp/nvim-ts-autotag'}, {
+            'lewis6991/spellsitter.nvim',
+            config = function() require('spellsitter').setup() end
+          }
+        },
         run = ':TSUpdate',
+        event = 'BufRead',
         config = function() require('config.treesitter').setup() end
-      }
-      use {'nvim-treesitter/nvim-treesitter-textobjects'}
-      use {'p00f/nvim-ts-rainbow'}
-      use {'JoosepAlviste/nvim-ts-context-commentstring'}
-      use {'romgrk/nvim-treesitter-context'}
-      use {'windwp/nvim-ts-autotag'}
-      use {
-        'lewis6991/spellsitter.nvim',
-        config = function() require('spellsitter').setup() end
       }
 
       -- Better syntax
@@ -204,6 +222,7 @@ function M.setup()
       }
       use {
         'norcalli/nvim-colorizer.lua',
+        event = 'BufWinEnter',
         config = function() require('colorizer').setup() end
       }
       use {
@@ -233,7 +252,7 @@ function M.setup()
       -- Cheat sheet
       use {
         'sudormrfbin/cheatsheet.nvim',
-
+        cmd = 'Cheatsheet',
         requires = {'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim'}
       }
 
@@ -276,7 +295,7 @@ function M.setup()
         'SidOfc/mkdx',
         config = function() require('config.mkdx').setup() end
       }
-      use {'ellisonleao/glow.nvim'}
+      use {'ellisonleao/glow.nvim', cmd = 'Glow'}
 
       -- Pandoc
       -- use {'vim-pandoc/vim-pandoc'}
