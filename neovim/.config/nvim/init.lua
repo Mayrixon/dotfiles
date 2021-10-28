@@ -1,3 +1,4 @@
+-- TODO: refactor plugin loading for better bootstrap experience.
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 

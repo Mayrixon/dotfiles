@@ -1,12 +1,26 @@
 -- TODO: clean up all commented lines
-
--- BUG: When bootstrapping, the plugin Telescope must not in lazy load. It
--- seems is caused by plugin which-key registers uninstalled plugins.
-
-local M = {}
-
 local function bootstrap(packer_bootstrap)
-  if packer_bootstrap then require('packer').sync() end
+  local packer = require('packer')
+  if packer_bootstrap then
+    function _G.add_patch_file()
+      local patch_file_path = vim.fn.stdpath('config') .. '/plugin/patch.lua'
+      local added_command = 'local patch_file_path = ' .. '\'' ..
+                                patch_file_path .. '\'' .. '\n' ..
+                                'for package, _ in pairs(_G.packer_plugins) do require(\'packer\').loader(package) end\n' ..
+                                'require(\'packer\').compile()\n' ..
+                                'os.remove(patch_file_path)'
+      vim.cmd('edit $MYVIMRC')
+      packer.compile()
+      local file = io.open(patch_file_path, 'a')
+      file:write(added_command)
+      file:close()
+    end
+    vim.cmd [[
+      autocmd User PackerComplete call v:lua.add_patch_file()
+      autocmd User PackerCompileDone sleep 100m
+    ]]
+    packer.sync()
+  end
 end
 
 local function init()
@@ -134,8 +148,8 @@ local function startup()
           'nvim-telescope/telescope-project.nvim',
           'TC72/telescope-tele-tabby.nvim'
         },
-        -- cmd = 'Telescope',
-        -- module = 'telescope',
+        cmd = 'Telescope',
+        module = 'telescope',
         config = function() require('config.telescope').setup() end
       }
       use {'nvim-telescope/telescope-packer.nvim'}
@@ -356,10 +370,12 @@ local function startup()
   })
 end
 
+local M = {}
+
 function M.setup()
   local packer_bootstrap = init()
 
-  startup(packer_bootstrap)
+  startup()
 
   bootstrap(packer_bootstrap)
 end
