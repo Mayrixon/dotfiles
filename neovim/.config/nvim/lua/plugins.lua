@@ -315,12 +315,12 @@ local function startup()
 
       ---- DAP
       use {'mfussenegger/nvim-dap'}
+      use {'Pocco81/DAPInstall.nvim'}
+      use {'rcarriga/nvim-dap-ui'}
+      use {'theHamsta/nvim-dap-virtual-text'}
       use {'nvim-telescope/telescope-dap.nvim'}
+      use {'jbyuki/one-small-step-for-vimkind'}
       -- use { "mfussenegger/nvim-dap-python" }
-      -- use { "theHamsta/nvim-dap-virtual-text" }
-      -- use { "rcarriga/nvim-dap-ui" }
-      -- use { "Pocco81/DAPInstall.nvim" }
-      -- use { "jbyuki/one-small-step-for-vimkind" }
 
       -- LaTeX
       use {

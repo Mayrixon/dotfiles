@@ -15,7 +15,8 @@
 
 ## TODOs
 
-- [ ] Consider the process between telescope -> quickfix and telescope -> trouble.
+- [ ] Consider the process between telescope -> quickfix and telescope ->
+  trouble.
 - [ ] LSP
   - [ ] Set up servers
   - [ ] Setup CodeLens
@@ -34,6 +35,7 @@
   - [-] Edit
     - [ ] mkdx newline settings
 - [ ] DAP
+  - [ ] initial settings
   - [ ] rust-tools
 - [x] Optimise startup time
   - [x] Profile:
@@ -43,3 +45,6 @@
 - [-] Setup filetype-based keybindings to <localleader>-l
   - [ ] Use settings defined in which-key.lua.
   - [x] Rust tools
+- [ ] Re-config vim.opt.formatoptions. Markdown lists cannot be inserted
+  automatically now.
+- [ ] Add spell indicator to statusline.

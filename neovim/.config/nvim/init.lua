@@ -21,6 +21,6 @@ require('settings').setup()
 
 require('config.lsp').setup()
 
--- require('config.dap').setup()
+require('config.dap').setup()
 
 --------------------------------- End loading ----------------------------------

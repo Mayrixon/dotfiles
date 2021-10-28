@@ -1,4 +1,5 @@
 local api = require('keymappings.api')
+local dap_keys = require('keymappings.dap_keys')
 local leader_keys = require('keymappings.leader_keys')
 local localleader_keys = require('keymappings.localleader_keys')
 local lsp_keys = require('keymappings.lsp_keys')
@@ -46,6 +47,7 @@ end
 
 local M = {
   api = api,
+  dap_keys = dap_keys,
   lsp_keys = lsp_keys,
   non_leader_keys = non_leader_keys,
   opts = opts
