@@ -133,6 +133,15 @@ M.normal_mappings = {
 
   i = {name = 'Insert', s = {'<Cmd>Telescope symbols<CR>', 'Symbols'}},
 
+  k = {
+    name = 'Test',
+    f = {'<Cmd>w<CR>:TestFile<CR>', 'Test file'},
+    l = {'<Cmd>w<CR>:TestLast<CR>', 'Test last'},
+    n = {'<Cmd>w<CR>:TestNearest<CR>', 'Test nearest'},
+    s = {'<Cmd>w<CR>:TestSuite<CR>', 'Test suite'},
+    v = {'<Cmd>w<CR>:TestVisit<CR>', 'Test visit'}
+  },
+
   n = {
     name = 'Notes',
     c = {
@@ -165,6 +174,7 @@ M.normal_mappings = {
   s = {
     name = 'Search',
     ['/'] = {'<Cmd>Telescope search_history<CR>', 'Search history'},
+    b = {'<Plug>SearchNormal', 'Browser search'},
     c = {'<Cmd>Telescope command_history<CR>', 'Command history'},
     f = {
       function()
@@ -262,6 +272,7 @@ M.visual_mappings = {
   },
   s = {
     name = 'Search',
+    b = {'<Plug>SearchVisual', 'Browser search'},
     v = {function() spectre.open_visual() end, 'Visual search'}
   },
   u = {

@@ -1,4 +1,3 @@
--- TODO: clean up all commented lines
 local function bootstrap(packer_bootstrap)
   local packer = require('packer')
   if packer_bootstrap then
@@ -56,6 +55,7 @@ local function startup()
       use {'easymotion/vim-easymotion'}
       use {'voldikss/vim-floaterm'}
       use {'windwp/nvim-spectre'}
+      use {'voldikss/vim-browser-search'}
       use {
         'folke/which-key.nvim',
         config = function() require('config.which-key').setup() end
@@ -125,12 +125,12 @@ local function startup()
       }
 
       -- Testing
-      --    use {
-      --      "rcarriga/vim-ultest",
-      --      config = "require('config.test').setup()",
-      --      run = ":UpdateRemotePlugins",
-      --      requires = { "vim-test/vim-test" },
-      --    }
+      use {
+        'rcarriga/vim-ultest',
+        config = function() require('config.test').setup() end,
+        run = ':UpdateRemotePlugins',
+        requires = {'vim-test/vim-test'}
+      }
 
       -- Telescope
       use {
@@ -335,16 +335,15 @@ local function startup()
       use {'ellisonleao/glow.nvim', cmd = 'Glow'}
 
       -- Pandoc
-      -- use {'vim-pandoc/vim-pandoc'}
-      -- use {'vim-pandoc/vim-pandoc-syntax'}
-      -- use {'vim-pandoc/vim-pandoc-after'}
+      use {'vim-pandoc/vim-pandoc'}
+      use {'vim-pandoc/vim-pandoc-syntax'}
+      use {'vim-pandoc/vim-pandoc-after'}
 
       -- Rust
-      -- use {'rust-lang/rust.vim'}
       use {'simrat39/rust-tools.nvim'}
 
       ---- TypeScript
-      -- use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
+      use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
 
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
