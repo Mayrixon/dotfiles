@@ -300,18 +300,15 @@ local function startup()
       -- Status line
       use {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        requires = {
+          {'kyazdani42/nvim-web-devicons', opt = true}, {
+            'SmiteshP/nvim-gps',
+            requires = 'nvim-treesitter/nvim-treesitter',
+            config = function() require('nvim-gps').setup({}) end
+          }
+        },
         config = function() require('config.lualine').setup() end
       }
-      use {
-        'SmiteshP/nvim-gps',
-        requires = 'nvim-treesitter/nvim-treesitter',
-        config = function() require('nvim-gps').setup({}) end
-      }
-
-      ---- Debugging
-      -- use { "puremourning/vimspector", event = "BufWinEnter" }
-      -- use { "nvim-telescope/telescope-vimspector.nvim", event = "BufWinEnter" }
 
       ---- DAP
       use {'mfussenegger/nvim-dap'}
@@ -320,7 +317,6 @@ local function startup()
       use {'theHamsta/nvim-dap-virtual-text'}
       use {'nvim-telescope/telescope-dap.nvim'}
       use {'jbyuki/one-small-step-for-vimkind'}
-      -- use { "mfussenegger/nvim-dap-python" }
 
       -- LaTeX
       use {

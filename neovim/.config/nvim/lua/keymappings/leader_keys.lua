@@ -40,33 +40,35 @@ M.normal_mappings = {
     }
   },
 
-  -- TODO: reconfig
   d = {
     name = 'DAP',
-    b = {
-      '<Cmd>lua require(\'dap\').toggle_breakpoint()<CR>', 'Toggle breakpoint'
-    },
-    c = {'<Cmd>lua require(\'dap\').continue()<CR>', 'Continue'},
-    s = {'<Cmd>lua require(\'dap\').step_over()<CR>', 'Step over'},
-    i = {'<Cmd>lua require(\'dap\').step_into()<CR>', 'Step into'},
-    o = {'<Cmd>lua require(\'dap\').step_out()<CR>', 'Step out'},
-    u = {'<Cmd>lua require(\'dapui\').toggle()<CR>', 'Toggle UI'},
-    p = {'<Cmd>lua require(\'dap\').repl.open()<CR>', 'REPL'},
+    b = {function() require('dap').toggle_breakpoint() end, 'Toggle breakpoint'},
+    c = {function() require('dap').continue() end, 'Continue'},
+    d = {function() require('dapui').toggle() end, 'Toggle UI'},
     e = {
-      '<Cmd>lua require"telescope".extensions.dap.commands{}<CR>', 'Commands'
+      function() require'telescope'.extensions.dap.commands {} end, 'Commands'
     },
     f = {
-      '<Cmd>lua require"telescope".extensions.dap.configurations{}<CR>',
+      function() require'telescope'.extensions.dap.configurations {} end,
       'Configurations'
     },
-    r = {
-      '<Cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>',
-      'List breakpoints'
-    },
-    v = {
-      '<Cmd>lua require"telescope".extensions.dap.variables{}<CR>', 'Variables'
-    },
-    m = {'<Cmd>lua require"telescope".extensions.dap.frames{}<CR>', 'Frames'}
+    i = {function() require('dap').step_into() end, 'Step into'},
+    m = {function() require'telescope'.extensions.dap.frames {} end, 'Frames'},
+    o = {function() require('dap').step_out() end, 'Step out'},
+    p = {function() require('dap').repl.open() end, 'REPL'},
+    s = {function() require('dap').step_over() end, 'Step over'},
+
+    l = {
+      name = 'Lists',
+      r = {
+        function() require'telescope'.extensions.dap.list_breakpoints {} end,
+        'List breakpoints'
+      },
+      v = {
+        function() require'telescope'.extensions.dap.variables {} end,
+        'Variables'
+      }
+    }
   },
 
   e = {
