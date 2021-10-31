@@ -1,8 +1,26 @@
--- TODO: complete selection from alpha2phi's config.
--- TODO: config mappings according to spacevim's.
 -- TODO: clear all unmapped mappings.
 local gitsigns = require('gitsigns')
 local spectre = require('spectre')
+
+vim.cmd [[
+function! DeleteHiddenBuffers()
+let tpbl=[]
+call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+if getbufvar(buf, '&mod') == 0
+silent execute 'bwipeout' buf
+endif
+endfor
+endfunction
+]]
+
+vim.cmd [[
+  function! Scratch()
+    noswapfile hide enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+  endfunction
+]]
 
 local M = {}
 
@@ -16,27 +34,30 @@ M.normal_mappings = {
     -- a = {'<Cmd>%bd|e#<Cr>', 'Delete all buffers'},
 
     b = {'<Cmd>Telescope buffers<CR>', 'List buffers'},
-    c = {'', 'Clear all saved buffers(Unmapped)'},
+    c = {'<Cmd>call DeleteHiddenBuffers()<CR>', 'Clear all saved buffers'},
     d = {'<Cmd>bd<CR>', 'Delete current buffer'},
     f = {'<Cmd>bd!<CR>', 'Force delete current buffer'},
-    e = {'Safe erase buffer(unmapped)'},
-    m = {'Open message buffer(unmapped)'},
+    e = {'<Cmd>%d<CR>', 'Erase buffer'},
+    m = {
+      '<Cmd>call Scratch() | put = execute(\'messages\')<CR>',
+      'Open message buffer'
+    },
     n = {'<Cmd>bn<CR>', 'Next buffer'},
-    P = {'Paste clipboard to whole buffer(Unmapped)'},
+    P = {'<Cmd>%d | put+<CR>', 'Paste clipboard to whole buffer'},
     p = {'<Cmd>bp<CR>', 'Previous buffer'},
     R = {'Safe revert buffer(unmapped)'},
-    s = {'Scratch buffer(unmapped)'},
+    s = {'<Cmd>call Scratch()<CR>', 'Scratch buffer'},
     t = {'Show file tree at buffer dir(unmapped)'},
-    w = {'Read-only mode(unmapped)'},
-    Y = {'Yank whole buffer to clipboard(Unmapped)'},
+    w = {'<Cmd>setlocal readonly!<CR>', 'Toggle Read-only mode'},
+    Y = {'<Cmd>%y+<CR>', 'Yank whole buffer to clipboard'},
 
     N = {
-      name = 'New empty buffer(Unmapped)',
-      h = {'New empty buffer left(Unmapped)'},
-      j = {'New empty buffer below(Unmapped)'},
-      k = {'New empty buffer above(Unmapped)'},
-      l = {'New empty buffer right(Unmapped)'},
-      n = {'', 'New empty buffer(Unmapped)'}
+      name = 'New empty buffer',
+      h = {'<Cmd>aboveleft vsplit enew<CR>', 'New empty buffer left'},
+      j = {'<Cmd>belowright split enew<CR>', 'New empty buffer below'},
+      k = {'<Cmd>aboveleft split enew<CR>', 'New empty buffer above'},
+      l = {'<Cmd>belowright vsplit enew<CR>', 'New empty buffer right'},
+      n = {'<Cmd>enew<CR>', 'New empty buffer'}
     }
   },
 

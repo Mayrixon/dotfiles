@@ -334,11 +334,6 @@ local function startup()
       }
       use {'ellisonleao/glow.nvim', cmd = 'Glow'}
 
-      -- Pandoc
-      use {'vim-pandoc/vim-pandoc'}
-      use {'vim-pandoc/vim-pandoc-syntax'}
-      use {'vim-pandoc/vim-pandoc-after'}
-
       -- Rust
       use {'simrat39/rust-tools.nvim'}
 
