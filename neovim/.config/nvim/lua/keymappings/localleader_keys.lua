@@ -1,12 +1,6 @@
 local M = {}
 
 M.normal_mappings = {
-  e = {
-    name = 'Edit',
-    s = {name = 'Swap with next parameter'},
-    S = {name = 'Swap with previous parameter'}
-  },
-
   f = {'<Cmd>Format<CR>', 'Format'},
 
   p = {'"+p', 'Paste after here'},

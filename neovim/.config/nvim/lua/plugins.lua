@@ -1,14 +1,49 @@
--- TODO: clean up all commented lines
-local M = {}
+local function bootstrap(packer_bootstrap)
+  local packer = require('packer')
+  if packer_bootstrap then
+    function _G.add_patch_file()
+      local patch_file_path = vim.fn.stdpath('config') .. '/plugin/patch.lua'
+      local added_command = 'local patch_file_path = ' .. '\'' ..
+                                patch_file_path .. '\'' .. '\n' ..
+                                'for package, _ in pairs(_G.packer_plugins) do require(\'packer\').loader(package) end\n' ..
+                                'require(\'packer\').compile()\n' ..
+                                'os.remove(patch_file_path)'
+      vim.cmd('edit $MYVIMRC')
+      packer.compile()
+      local file = io.open(patch_file_path, 'a')
+      file:write(added_command)
+      file:close()
+    end
+    vim.cmd [[
+      autocmd User PackerComplete call v:lua.add_patch_file()
+      autocmd User PackerCompileDone sleep 100m
+    ]]
+    packer.sync()
+  end
+end
 
-function M.setup()
-  local packer = require 'packer'
+local function init()
+  local fn = vim.fn
+
+  local packer_bootstrap = false
+  local install_path = fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    local output = fn.system({
+      'git', 'clone', '--depth', '1',
+      'https://github.com/wbthomason/packer.nvim', install_path
+    })
+    if output ~= '' then packer_bootstrap = true end
+  end
+  vim.cmd [[packadd packer.nvim]]
+
+  return packer_bootstrap
+end
+
+local function startup()
+  local packer = require('packer')
 
   packer.startup({
-    -- config = {
-    --  display = {open_fn = require('packer.util').float},
-    --  profile = {enable = true}
-    -- },
+    config = {profile = {enable = true}},
     function(use)
       use {'wbthomason/packer.nvim', opt = true}
 
@@ -20,6 +55,7 @@ function M.setup()
       use {'easymotion/vim-easymotion'}
       use {'voldikss/vim-floaterm'}
       use {'windwp/nvim-spectre'}
+      use {'voldikss/vim-browser-search'}
       use {
         'folke/which-key.nvim',
         config = function() require('config.which-key').setup() end
@@ -27,6 +63,10 @@ function M.setup()
       use {
         'kyazdani42/nvim-tree.lua',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        cmd = {
+          'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile',
+          'NvimTreeFindFileToggle', 'NvimTreeFocus'
+        },
         config = function() require('config.nvim-tree').setup() end
 
       }
@@ -56,16 +96,24 @@ function M.setup()
       use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
+        event = 'BufReadPre',
         config = function() require('config.gitsigns').setup() end
       }
       use {
         'TimUntersberger/neogit',
         requires = {'nvim-lua/plenary.nvim', 'sindrets/diffview.nvim'},
+        cmd = 'Neogit',
         config = function()
           require('neogit').setup({integrations = {diffview = true}})
         end
       }
-      use {'sindrets/diffview.nvim'}
+      use {
+        'sindrets/diffview.nvim',
+        cmd = {
+          'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles',
+          'DiffviewFocusFiles'
+        }
+      }
 
       -- Colorscheme
       use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
@@ -77,12 +125,12 @@ function M.setup()
       }
 
       -- Testing
-      --    use {
-      --      "rcarriga/vim-ultest",
-      --      config = "require('config.test').setup()",
-      --      run = ":UpdateRemotePlugins",
-      --      requires = { "vim-test/vim-test" },
-      --    }
+      use {
+        'rcarriga/vim-ultest',
+        config = function() require('config.test').setup() end,
+        run = ':UpdateRemotePlugins',
+        requires = {'vim-test/vim-test'}
+      }
 
       -- Telescope
       use {
@@ -100,8 +148,11 @@ function M.setup()
           'nvim-telescope/telescope-project.nvim',
           'TC72/telescope-tele-tabby.nvim'
         },
+        cmd = 'Telescope',
+        module = 'telescope',
         config = function() require('config.telescope').setup() end
       }
+      use {'nvim-telescope/telescope-packer.nvim'}
       use {
         'rmagatti/session-lens',
         requires = {
@@ -112,6 +163,7 @@ function M.setup()
             end
           }, 'nvim-telescope/telescope.nvim'
         },
+        event = 'VimEnter',
         config = function() require('session-lens').setup {} end
       }
 
@@ -128,23 +180,18 @@ function M.setup()
       use {'ray-x/lsp_signature.nvim'}
       use {
         'rmagatti/goto-preview',
+        event = 'BufWinEnter',
         config = function()
           require('goto-preview').setup({default_mappings = true, height = 30})
         end
       }
-      -- TODO: add keymappings to keymapping config file.
-      -- TODO: set highlight group.
-      -- TODO: set blacklist filetypes.
       use {
         'RRethy/vim-illuminate',
-        config = function()
-          vim.api.nvim_set_keymap('n', '<a-n>',
-                                  '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-                                  {noremap = true})
-          vim.api.nvim_set_keymap('n', '<a-p>',
-                                  '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-                                  {noremap = true})
-        end
+        config = function() require('config.illuminate').setup() end
+      }
+      use {
+        'mfussenegger/nvim-lint',
+        config = function() require('config.lint').setup() end
       }
 
       -- Completion
@@ -156,18 +203,21 @@ function M.setup()
           'octaltree/cmp-look', 'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
           'f3fora/cmp-spell', 'hrsh7th/cmp-emoji', 'ray-x/cmp-treesitter'
         },
+        event = 'BufWinEnter',
         config = function() require('config.cmp').setup() end
       }
       use {
         'tzachar/cmp-tabnine',
         run = './install.sh',
         requires = 'hrsh7th/nvim-cmp',
+        event = 'BufWinEnter',
         config = function() require('config.tabnine').setup() end
       }
 
       -- Snippets
       use {
         'L3MON4D3/LuaSnip',
+        event = 'VimEnter',
         config = function() require('config.luasnip').setup() end
       }
       use {'rafamadriz/friendly-snippets'}
@@ -175,20 +225,19 @@ function M.setup()
       -- Treesitter
       use {
         'nvim-treesitter/nvim-treesitter',
+        require = {
+          {'nvim-treesitter/nvim-treesitter-textobjects'},
+          {'p00f/nvim-ts-rainbow'},
+          {'JoosepAlviste/nvim-ts-context-commentstring'},
+          {'romgrk/nvim-treesitter-context'}, {'windwp/nvim-ts-autotag'}, {
+            'lewis6991/spellsitter.nvim',
+            config = function() require('spellsitter').setup() end
+          }
+        },
         run = ':TSUpdate',
+        event = 'BufRead',
         config = function() require('config.treesitter').setup() end
       }
-      use {'nvim-treesitter/nvim-treesitter-textobjects'}
-      use {'p00f/nvim-ts-rainbow'}
-      use {'JoosepAlviste/nvim-ts-context-commentstring'}
-      use {'romgrk/nvim-treesitter-context'}
-      use {'windwp/nvim-ts-autotag'}
-      -- use { 'nvim-telescope/telescope-media-files.nvim' }
-      -- use { 'nvim-telescope/telescope-packer.nvim ' }
-      -- use {
-      --     'lewis6991/spellsitter.nvim',
-      --     config = function() require('spellsitter').setup() end
-      -- }
 
       -- Better syntax
       use {
@@ -199,6 +248,24 @@ function M.setup()
 
       -- Editor
       use {'junegunn/vim-easy-align'}
+      use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+          require('indent_blankline').setup {
+            show_current_context = true,
+            use_treesitter = true
+          }
+        end
+      }
+      use {
+        'ntpeters/vim-better-whitespace',
+        config = function() require('config.whitespace').setup() end
+      }
+      use {
+        'norcalli/nvim-colorizer.lua',
+        event = 'BufWinEnter',
+        config = function() require('colorizer').setup() end
+      }
       use {
         'folke/trouble.nvim',
         config = function() require('trouble').setup {} end
@@ -212,28 +279,44 @@ function M.setup()
         },
         config = function() require('config.truezen').setup() end
       }
+      use {'google/vim-searchindex'}
 
       -- Dashboard
-      -- TODO: setup
       use {
         'goolord/alpha-nvim',
         requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-          require('alpha').setup(require('alpha.themes.dashboard').opts)
+          require('alpha').setup(require('alpha.themes.startify').opts)
         end
+      }
+
+      -- Cheat sheet
+      use {
+        'sudormrfbin/cheatsheet.nvim',
+        cmd = 'Cheatsheet',
+        requires = {'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim'}
       }
 
       -- Status line
       use {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        requires = {
+          {'kyazdani42/nvim-web-devicons', opt = true}, {
+            'SmiteshP/nvim-gps',
+            requires = 'nvim-treesitter/nvim-treesitter',
+            config = function() require('nvim-gps').setup({}) end
+          }
+        },
         config = function() require('config.lualine').setup() end
       }
-      use {
-        'SmiteshP/nvim-gps',
-        requires = 'nvim-treesitter/nvim-treesitter',
-        config = function() require('nvim-gps').setup({}) end
-      }
+
+      ---- DAP
+      use {'mfussenegger/nvim-dap'}
+      use {'Pocco81/DAPInstall.nvim'}
+      use {'rcarriga/nvim-dap-ui'}
+      use {'theHamsta/nvim-dap-virtual-text'}
+      use {'nvim-telescope/telescope-dap.nvim'}
+      use {'jbyuki/one-small-step-for-vimkind'}
 
       -- LaTeX
       use {
@@ -249,32 +332,13 @@ function M.setup()
         'SidOfc/mkdx',
         config = function() require('config.mkdx').setup() end
       }
-      use {'ellisonleao/glow.nvim'}
-
-      -- Pandoc
-      -- use {'vim-pandoc/vim-pandoc'}
-      -- use {'vim-pandoc/vim-pandoc-syntax'}
-      -- use {'vim-pandoc/vim-pandoc-after'}
+      use {'ellisonleao/glow.nvim', cmd = 'Glow'}
 
       -- Rust
-      -- use {'rust-lang/rust.vim'}
       use {'simrat39/rust-tools.nvim'}
 
-      ---- Debugging
-      -- use { "puremourning/vimspector", event = "BufWinEnter" }
-      -- use { "nvim-telescope/telescope-vimspector.nvim", event = "BufWinEnter" }
-
-      ---- DAP
-      -- use { "mfussenegger/nvim-dap" }
-      -- use { "nvim-telescope/telescope-dap.nvim" }
-      -- use { "mfussenegger/nvim-dap-python" }
-      -- use { "theHamsta/nvim-dap-virtual-text" }
-      -- use { "rcarriga/nvim-dap-ui" }
-      -- use { "Pocco81/DAPInstall.nvim" }
-      -- use { "jbyuki/one-small-step-for-vimkind" }
-
       ---- TypeScript
-      -- use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
+      use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
 
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
@@ -292,23 +356,18 @@ function M.setup()
         config = [[vim.g.startuptime_tries = 10]]
       }
 
-      ---- Editor interface
-      use {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function()
-          require('indent_blankline').setup {
-            show_current_context = true,
-            use_treesitter = true
-          }
-        end
-      }
-
-      -- use {'ntpeters/vim-better-whitespace'}
-      -- use {'ludovicchabant/vim-gutentags'}
-      -- use {'norcalli/nvim-colorizer.lua'}
-
     end
   })
+end
+
+local M = {}
+
+function M.setup()
+  local packer_bootstrap = init()
+
+  startup()
+
+  bootstrap(packer_bootstrap)
 end
 
 return M
@@ -360,3 +419,4 @@ return M
 -- use {'sbdchd/neoformat'}
 
 -- use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
+-- use {'ludovicchabant/vim-gutentags'}

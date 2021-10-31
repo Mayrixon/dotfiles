@@ -1,6 +1,4 @@
-local cursor_theme = require('telescope.themes').get_cursor({
-  layout_config = {width = 80, height = 14}
-})
+local cursor_theme = require('config.telescope').cursor_theme
 
 local M = {}
 
@@ -72,6 +70,25 @@ M.leader = {
         end, 'Range action'
       }
     }
+  }
+}
+
+M.capability_mappings = {
+  {
+    'document_range_formatting',
+    {lF = {function() vim.lsp.buf.range_formatting() end, 'Range format'}},
+    '<leader>', 'visual'
+  }, {
+    'code_lens', {
+      l = {
+        l = {
+          name = 'Code lens',
+
+          l = {'<Cmd>lua vim.lsp.codelens.refresh()<CR>', 'Codelens refresh'},
+          r = {'<Cmd>lua vim.lsp.codelens.run()<CR>', 'Codelens run'}
+        }
+      }
+    }, '<leader>', 'normal'
   }
 }
 

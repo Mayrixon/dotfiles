@@ -1,55 +1,107 @@
--- TODO: complete selection from alpha2phi's config.
--- TODO: config mappings according to spacevim's.
 -- TODO: clear all unmapped mappings.
 local gitsigns = require('gitsigns')
 local spectre = require('spectre')
 
+vim.cmd [[
+function! DeleteHiddenBuffers()
+let tpbl=[]
+call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+if getbufvar(buf, '&mod') == 0
+silent execute 'bwipeout' buf
+endif
+endfor
+endfunction
+]]
+
+vim.cmd [[
+  function! Scratch()
+    noswapfile hide enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+  endfunction
+]]
+
 local M = {}
 
 M.normal_mappings = {
-  -- TODO: add <leader>-e mapping to cover diffview's mapping.
-
-  -- TODO: find a cheatsheet plugin
-  -- ['?'] = {'<Cmd>Telescope keymaps<CR>', 'Show mappings'},
-
-  -- w = {'<Cmd>:up<CR>', 'Update file'},
-  -- W = {'<Cmd>:wq<CR>', 'Write file and quit'},
-
   ['<Space>'] = {name = 'EasyMotion'},
+
+  ['?'] = {'<Cmd>Cheatsheet<CR>', 'Cheat sheet'},
 
   b = {
     name = 'Buffer',
     -- a = {'<Cmd>%bd|e#<Cr>', 'Delete all buffers'},
 
     b = {'<Cmd>Telescope buffers<CR>', 'List buffers'},
-    c = {'', 'Clear all saved buffers(Unmapped)'},
+    c = {'<Cmd>call DeleteHiddenBuffers()<CR>', 'Clear all saved buffers'},
     d = {'<Cmd>bd<CR>', 'Delete current buffer'},
     f = {'<Cmd>bd!<CR>', 'Force delete current buffer'},
-    e = {'Safe erase buffer(unmapped)'},
-    m = {'Open message buffer(unmapped)'},
+    e = {'<Cmd>%d<CR>', 'Erase buffer'},
+    m = {
+      '<Cmd>call Scratch() | put = execute(\'messages\')<CR>',
+      'Open message buffer'
+    },
     n = {'<Cmd>bn<CR>', 'Next buffer'},
-    P = {'Paste clipboard to whole buffer(Unmapped)'},
+    P = {'<Cmd>%d | put+<CR>', 'Paste clipboard to whole buffer'},
     p = {'<Cmd>bp<CR>', 'Previous buffer'},
     R = {'Safe revert buffer(unmapped)'},
-    s = {'Scratch buffer(unmapped)'},
+    s = {'<Cmd>call Scratch()<CR>', 'Scratch buffer'},
     t = {'Show file tree at buffer dir(unmapped)'},
-    w = {'Read-only mode(unmapped)'},
-    Y = {'Yank whole buffer to clipboard(Unmapped)'},
+    w = {'<Cmd>setlocal readonly!<CR>', 'Toggle Read-only mode'},
+    Y = {'<Cmd>%y+<CR>', 'Yank whole buffer to clipboard'},
 
     N = {
-      name = 'New empty buffer(Unmapped)',
-      h = {'New empty buffer left(Unmapped)'},
-      j = {'New empty buffer below(Unmapped)'},
-      k = {'New empty buffer above(Unmapped)'},
-      l = {'New empty buffer right(Unmapped)'},
-      n = {'', 'New empty buffer(Unmapped)'}
+      name = 'New empty buffer',
+      h = {'<Cmd>aboveleft vsplit enew<CR>', 'New empty buffer left'},
+      j = {'<Cmd>belowright split enew<CR>', 'New empty buffer below'},
+      k = {'<Cmd>aboveleft split enew<CR>', 'New empty buffer above'},
+      l = {'<Cmd>belowright vsplit enew<CR>', 'New empty buffer right'},
+      n = {'<Cmd>enew<CR>', 'New empty buffer'}
     }
   },
 
-  e = {name = 'Edit'},
+  d = {
+    name = 'DAP',
+    b = {function() require('dap').toggle_breakpoint() end, 'Toggle breakpoint'},
+    c = {function() require('dap').continue() end, 'Continue'},
+    d = {function() require('dapui').toggle() end, 'Toggle UI'},
+    e = {
+      function() require'telescope'.extensions.dap.commands {} end, 'Commands'
+    },
+    f = {
+      function() require'telescope'.extensions.dap.configurations {} end,
+      'Configurations'
+    },
+    i = {function() require('dap').step_into() end, 'Step into'},
+    m = {function() require'telescope'.extensions.dap.frames {} end, 'Frames'},
+    o = {function() require('dap').step_out() end, 'Step out'},
+    p = {function() require('dap').repl.open() end, 'REPL'},
+    s = {function() require('dap').step_over() end, 'Step over'},
+
+    l = {
+      name = 'Lists',
+      r = {
+        function() require'telescope'.extensions.dap.list_breakpoints {} end,
+        'List breakpoints'
+      },
+      v = {
+        function() require'telescope'.extensions.dap.variables {} end,
+        'Variables'
+      }
+    }
+  },
+
+  e = {
+    name = 'Edit',
+    l = {function() require('lint').try_lint() end, 'Lint'},
+    s = {name = 'Swap with next parameter'},
+    S = {name = 'Swap with previous parameter'}
+  },
 
   f = {
     name = 'File',
+    d = {'<Cmd>Telescope file_browser<CR>', 'Pop-up file browser'},
     e = {'<Cmd>NvimTreeToggle<CR>', 'Open explorer'},
     F = {'<Cmd>Telescope find_files<CR>', 'Find files'},
     f = {
@@ -57,12 +109,9 @@ M.normal_mappings = {
       'Find project files'
     },
     g = {'<Cmd>Telescope live_grep<CR>', 'Live grep'},
-
+    p = {'<Cmd>Telescope<CR>', 'Pickers'},
     r = {'<Cmd>Telescope frecency<CR>', 'Find recent file'},
-    t = {'<Cmd>TodoTelescope<CR>', 'Find TODOs'},
-
-    -- TODO: remap or delete
-    p = {'<Cmd>Telescope<CR>', 'Pickers'}
+    t = {'<Cmd>TodoTelescope<CR>', 'Find TODOs'}
   },
 
   g = {
@@ -105,15 +154,22 @@ M.normal_mappings = {
 
   i = {name = 'Insert', s = {'<Cmd>Telescope symbols<CR>', 'Symbols'}},
 
+  k = {
+    name = 'Test',
+    f = {'<Cmd>w<CR>:TestFile<CR>', 'Test file'},
+    l = {'<Cmd>w<CR>:TestLast<CR>', 'Test last'},
+    n = {'<Cmd>w<CR>:TestNearest<CR>', 'Test nearest'},
+    s = {'<Cmd>w<CR>:TestSuite<CR>', 'Test suite'},
+    v = {'<Cmd>w<CR>:TestVisit<CR>', 'Test visit'}
+  },
+
   n = {
     name = 'Notes',
-    -- TODO: remove :Limelight
-    l = {
-      name = 'Limelight',
-      k = {'<Cmd>Limelight!<CR>', 'turn off'},
-      l = {'<Cmd>Limelight<CR>', 'turn on'}
+    c = {
+      name = 'Highlight',
+      c = {'<Cmd>TwilightEnable<CR>', 'Turn on'},
+      d = {'<Cmd>TwilightDisable<CR>', 'Turn off'}
     },
-    -- TODO: add :Twilight
     z = {'<Cmd>TZAtaraxis<CR>', 'Zen mode'}
   },
 
@@ -139,6 +195,7 @@ M.normal_mappings = {
   s = {
     name = 'Search',
     ['/'] = {'<Cmd>Telescope search_history<CR>', 'Search history'},
+    b = {'<Plug>SearchNormal', 'Browser search'},
     c = {'<Cmd>Telescope command_history<CR>', 'Command history'},
     f = {
       function()
@@ -159,9 +216,26 @@ M.normal_mappings = {
 
   t = {
     name = 'Tabs',
-    ['1'] = {'1gt', 'tab 1'},
-    -- TODO: change telescope to dropdown
-    t = {'<Cmd>Telescope tele_tabby list<CR>', 'List tabs'}
+    ['1'] = {'1gt', 'Tab 1'},
+    ['2'] = {'2gt', 'Tab 2'},
+    ['3'] = {'3gt', 'Tab 3'},
+    ['4'] = {'4gt', 'Tab 4'},
+    ['5'] = {'5gt', 'Tab 5'},
+    ['6'] = {'6gt', 'Tab 6'},
+    ['7'] = {'7gt', 'Tab 7'},
+    ['8'] = {'8gt', 'Tab 8'},
+    ['9'] = {'9gt', 'Tab 9'},
+    ['0'] = {'10gt', 'Tab 10'},
+    c = {'<Cmd>tabclose<CR>', 'Close tab'},
+    e = {'<Cmd>tabedit<CR>', 'New tab'},
+    n = {'<Cmd>tabnext<CR>', 'Next tab'},
+    p = {'<Cmd>tabprevious<CR>', 'Previous tab'},
+    t = {
+      function()
+        require'telescope'.extensions.tele_tabby.list(
+            require('config.telescope').dropdown_theme)
+      end, 'List tabs'
+    }
   },
 
   T = {
@@ -171,23 +245,29 @@ M.normal_mappings = {
   },
 
   u = {
-    -- TODO: add plugin or commands:
-    -- - colorize
-    -- - trailing white space
-    -- - vim default diff tools (diffthis and diffoff).
     name = 'Utilities',
-    s = {'<Cmd>Sleuth<CR>', 'Sleuth'},
+    c = {'<Cmd>ColorizerToggle<CR>', 'Colorizer'},
+    s = {'<Cmd>StripWhitespace<CR>', 'Remove trailing whitespace'},
+    S = {'<Cmd>Sleuth<CR>', 'Sleuth'},
     u = {'<Cmd>UndotreeToggle<CR>', 'Undotree'},
-    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'}
-  },
+    w = {'<Cmd>MatchupWhereAmI??<CR>', 'Where am I'},
 
-  -- TODO: delete after trying.
-  x = {name = 'Trying area'},
+    d = {
+      name = 'Diff tool',
+      d = {'<Cmd>diffthis', 'Diff this file'},
+      o = {'<Cmd>diffoff', 'Turn off'}
+    }
+  },
 
   z = {
     name = 'System',
+    h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     l = {'<Cmd>SearchSession<CR>', 'Load session'},
+    p = {
+      function() require('telescope').extensions.packer.plugins() end, 'Packer'
+    },
     s = {'<Cmd>SaveSession<CR>', 'Save session'},
+    t = {'<Cmd>terminal<CR>', 'New terminal'},
     u = {'<Cmd>PackerUpdate<CR>', 'Update plugins'},
     U = {'<Cmd>PackerSync<CR>', 'Sync plugins'}
   }
@@ -213,7 +293,12 @@ M.visual_mappings = {
   },
   s = {
     name = 'Search',
+    b = {'<Plug>SearchVisual', 'Browser search'},
     v = {function() spectre.open_visual() end, 'Visual search'}
+  },
+  u = {
+    name = 'Utilities',
+    s = {'<Cmd>StripWhitespace<CR>', 'Remove trailing whitespace'}
   }
 }
 

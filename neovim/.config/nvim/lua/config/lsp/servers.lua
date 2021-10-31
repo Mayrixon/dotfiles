@@ -1,5 +1,8 @@
 local server_settings = {
+  bashls = {},
   clangd = {},
+  cmake = {},
+  diagnosticls = {},
   pyright = {},
   sumneko_lua = {
     cmd = {'lua-language-server'},
@@ -17,6 +20,7 @@ local server_settings = {
       }
     }
   },
+  tailwindcss = {},
   texlab = {
     settings = {
       latex = {
@@ -28,7 +32,8 @@ local server_settings = {
     }
   },
   tsserver = {},
-  vimls = {}
+  vimls = {},
+  zk = {filetypes = {'markdown', 'text'}}
 }
 
 local M = {}
@@ -63,8 +68,7 @@ M.on_attach = function(client, bufnr)
 
   utils.set_buffer_option(bufnr)
 
-  utils.set_keymap_1(bufnr)
-  utils.set_keymap_2(client, bufnr)
+  utils.set_lsp_keymap(client, bufnr)
 
   utils.set_hover_diagnostics()
 

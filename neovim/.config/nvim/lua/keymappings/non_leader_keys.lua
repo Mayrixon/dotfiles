@@ -18,7 +18,7 @@ M.mappings = {
     ['ga'] = {'<Plug>(EasyAlign)', {noremap = false, silent = false}},
     ['<F1>'] = '<Cmd>FloatermToggle<CR>',
     ['<F2>'] = '<Cmd>Vista!!<CR>',
-    ['<C-l>'] = '<Cmd>noh<CR>',
+    ['<C-l>'] = '<Cmd>noh | echo ""<CR>',
 
     ['<M-H>'] = '<C-w>h',
     ['<M-L>'] = '<C-w>l',

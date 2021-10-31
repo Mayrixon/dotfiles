@@ -1,4 +1,3 @@
--- TODO: check the theme settings.
 local M = {}
 
 function M.setup()
@@ -61,4 +60,15 @@ function M.find_project_files()
   if not ok then require'telescope.builtin'.find_files(opts) end
 end
 
+M.cursor_theme = require('telescope.themes').get_cursor({
+  layout_config = {width = 80, height = 14}
+})
+
+M.dropdown_theme = require('telescope.themes').get_dropdown({
+  winblend = 10,
+  border = true,
+  previewer = false,
+  shorten_path = false,
+  layout_config = {width = 120, height = 20}
+})
 return M
