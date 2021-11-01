@@ -116,7 +116,7 @@ local function startup()
       }
 
       -- Colorscheme
-      use {'npxbr/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
+      use {'ellisonleao/gruvbox.nvim', requires = {'rktjmp/lush.nvim'}}
       use {
         'kyazdani42/nvim-web-devicons',
         config = function()
