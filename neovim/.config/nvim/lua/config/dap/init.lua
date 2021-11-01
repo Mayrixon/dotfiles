@@ -4,7 +4,7 @@ local adapters = require('config.dap.adapters')
 
 local function cosmetics()
   -- nvim-dap-virtual-text. Show virtual text for current frame
-  vim.g.dap_virtual_text = true
+  require('nvim-dap-virtual-text').setup()
 
   -- nvim-dap-ui
   require('dapui').setup {}

@@ -254,8 +254,8 @@ M.normal_mappings = {
 
     d = {
       name = 'Diff tool',
-      d = {'<Cmd>diffthis', 'Diff this file'},
-      o = {'<Cmd>diffoff', 'Turn off'}
+      d = {'<Cmd>diffthis<CR>', 'Diff this file'},
+      o = {'<Cmd>diffoff<CR>', 'Turn off'}
     }
   },
 
