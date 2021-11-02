@@ -7,9 +7,9 @@ wk.register({
     name = 'Markdown',
     p = {
       name = 'preview',
-      g = {'<cmd>Glow<CR>', 'glow-preview'},
-      p = {'<cmd>MarkdownPreview<CR>', 'preview'},
-      k = {'<cmd>MarkdownPreviewStop<CR>', 'stop-preview'}
+      g = {'<Cmd>Glow<CR>', 'glow-preview'},
+      p = {'<Cmd>MarkdownPreview<CR>', 'preview'},
+      k = {'<Cmd>MarkdownPreviewStop<CR>', 'stop-preview'}
     }
   }
 }, {prefix = '<localleader>', mode = 'n'})
