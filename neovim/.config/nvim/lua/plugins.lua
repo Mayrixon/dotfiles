@@ -338,7 +338,7 @@ local function startup()
       use {'simrat39/rust-tools.nvim'}
 
       ---- TypeScript
-      use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
+      use {'jose-elias-alvarez/nvim-lsp-ts-utils'}
 
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
@@ -351,6 +351,7 @@ local function startup()
       }
       use {
         'kristijanhusak/orgmode.nvim',
+        branch = 'tree-sitter',
         config = function()
           require('orgmode').setup {org_default_notes_file = '~/org'}
         end
