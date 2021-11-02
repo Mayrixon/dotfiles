@@ -356,6 +356,11 @@ local function startup()
           require('orgmode').setup {org_default_notes_file = '~/org'}
         end
       }
+      -- use {
+      --   'oberblastmeister/neuron.nvim',
+      --   requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
+      --   config = function() require('neuron').setup {} end
+      -- }
 
       ---- Trying
       use {'lewis6991/impatient.nvim'}
