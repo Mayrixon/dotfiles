@@ -14,4 +14,7 @@ wk.register({
   }
 }, {prefix = '<localleader>', mode = 'n'})
 
-wk.register({l = {name = 'Markdown'}}, {prefix = '<localleader>', mode = 'v'})
+vim.cmd('vnoremap <localleader>lw :call mkdx#WrapText("v", "[[", "]]")<CR>')
+
+wk.register({l = {name = 'Markdown', w = {'Add wiki link'}}},
+            {prefix = '<localleader>', mode = 'v'})
