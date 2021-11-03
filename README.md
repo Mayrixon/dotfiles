@@ -12,4 +12,10 @@
 
 - [ ] Enable autocompletion in zshrc
 - [ ] Add autocompletion command of `gh` into init.sh
-- [ ] Add dotter's local settings template
+- [ ] Dotter
+  - [ ] Add dotter's local settings template
+  - [ ] Add sync dotfiles for more applications:
+    - [ ] According to wbthomason's dotfiles
+    - [ ] alacritty
+    - [ ] i3
+    - [ ] i3status-rust
