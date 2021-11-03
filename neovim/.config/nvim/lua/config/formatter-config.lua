@@ -1,3 +1,8 @@
+-- TODO: add formatter for:
+-- - norg
+-- - org
+-- - plaintext
+
 local function clangformat()
   return {
     exe = 'clang-format',

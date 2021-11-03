@@ -31,9 +31,7 @@ function M.setup()
       frecency = {
         workspaces = {
           ['dotfiles'] = home_dir .. 'dotfiles',
-          ['neorg'] = home_dir .. 'neorg',
-          ['org'] = home_dir .. 'org',
-          ['wiki'] = home_dir .. 'wiki'
+          ['notes'] = home_dir .. 'notes'
         }
       },
       fzf = {

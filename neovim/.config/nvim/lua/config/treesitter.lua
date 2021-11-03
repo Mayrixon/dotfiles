@@ -7,6 +7,14 @@ parser_configs.norg = {
     branch = 'main'
   }
 }
+parser_configs.org = {
+  install_info = {
+    url = 'https://github.com/milisims/tree-sitter-org',
+    revision = 'main',
+    files = {'src/parser.c', 'src/scanner.cc'},
+  },
+  filetype = 'org',
+}
 
 local M = {}
 

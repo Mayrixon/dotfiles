@@ -338,11 +338,29 @@ local function startup()
       use {'simrat39/rust-tools.nvim'}
 
       ---- TypeScript
-      use { "jose-elias-alvarez/nvim-lsp-ts-utils" }
+      use {'jose-elias-alvarez/nvim-lsp-ts-utils'}
 
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
       -- use {'vimwiki/vimwiki', branch = 'dev'}
+      use {
+        'nvim-neorg/neorg',
+        -- TODO: complete configurations according to the main page.
+        config = function() require('config.neorg').setup() end,
+        requires = {'nvim-lua/plenary.nvim', {'nvim-neorg/neorg-telescope'}}
+      }
+      use {
+        'kristijanhusak/orgmode.nvim',
+        branch = 'tree-sitter',
+        config = function()
+          require('orgmode').setup {org_default_notes_file = '~/org'}
+        end
+      }
+      -- use {
+      --   'oberblastmeister/neuron.nvim',
+      --   requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
+      --   config = function() require('neuron').setup {} end
+      -- }
 
       ---- Trying
       use {'lewis6991/impatient.nvim'}

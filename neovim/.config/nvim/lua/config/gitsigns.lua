@@ -8,11 +8,11 @@ function M.setup()
       -- Hunk navigators
       ['n ]h'] = {
         expr = true,
-        '&diff ? \']c\' : \'<cmd>lua require"gitsigns.actions".next_hunk()<CR>\''
+        '&diff ? \']c\' : \'<Cmd>lua require"gitsigns.actions".next_hunk()<CR>\''
       },
       ['n [h'] = {
         expr = true,
-        '&diff ? \'[c\' : \'<cmd>lua require"gitsigns.actions".prev_hunk()<CR>\''
+        '&diff ? \'[c\' : \'<Cmd>lua require"gitsigns.actions".prev_hunk()<CR>\''
       },
 
       -- Text objects
