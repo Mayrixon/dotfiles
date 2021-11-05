@@ -9,3 +9,5 @@
 - [ ] Enable autocompletion in zshrc
 - [ ] Add autocompletion command of `gh` into init.sh
 - [ ] Add dotter's local settings template
+- [ ] Change zsh plugin manager. The original manager zinit was deleted by the
+  author.
