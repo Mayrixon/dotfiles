@@ -64,11 +64,10 @@ PS1="READY >"
 # zinit ice wait'!' lucid
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-
 # # 初始化补全
-# autoload -Uz compinit; compinit
+autoload -Uz compinit; compinit
 # # zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
-# zinit cdreplay -q
+zinit cdreplay -q
 
 
 ################################################################################
