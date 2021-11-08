@@ -351,7 +351,7 @@ local function startup()
       }
       use {
         'kristijanhusak/orgmode.nvim',
-        branch = 'tree-sitter',
+        branch = 'master',
         config = function()
           require('orgmode').setup {org_default_notes_file = '~/org'}
         end
