@@ -109,6 +109,7 @@ local function startup()
       }
       use {
         'sindrets/diffview.nvim',
+        requires = 'nvim-lua/plenary.nvim',
         cmd = {
           'DiffviewOpen', 'DiffviewClose', 'DiffviewToggleFiles',
           'DiffviewFocusFiles'
