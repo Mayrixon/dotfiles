@@ -139,9 +139,6 @@ local function startup()
         'nvim-telescope/telescope.nvim',
         requires = {
           'nvim-lua/plenary.nvim', {
-            'nvim-telescope/telescope-arecibo.nvim',
-            rocks = {'openssl', 'lua-http-parser'}
-          }, {
             'nvim-telescope/telescope-frecency.nvim',
             requires = {
               'tami5/sqlite.lua', {'kyazdani42/nvim-web-devicons', opt = true}
@@ -345,24 +342,6 @@ local function startup()
       ---- Note taking
       -- use {'jbyuki/nabla.nvim'}
       -- use {'vimwiki/vimwiki', branch = 'dev'}
-      use {
-        'nvim-neorg/neorg',
-        -- TODO: complete configurations according to the main page.
-        config = function() require('config.neorg').setup() end,
-        requires = {'nvim-lua/plenary.nvim', {'nvim-neorg/neorg-telescope'}}
-      }
-      use {
-        'kristijanhusak/orgmode.nvim',
-        branch = 'tree-sitter',
-        config = function()
-          require('orgmode').setup {org_default_notes_file = '~/org'}
-        end
-      }
-      -- use {
-      --   'oberblastmeister/neuron.nvim',
-      --   requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
-      --   config = function() require('neuron').setup {} end
-      -- }
 
       ---- Trying
       use {'lewis6991/impatient.nvim'}
@@ -440,3 +419,21 @@ return M
 
 -- use {'junegunn/goyo.vim', requires = {'junegunn/limelight.vim'}}
 -- use {'ludovicchabant/vim-gutentags'}
+
+-- use {
+--   'nvim-neorg/neorg',
+--   config = function() require('config.neorg').setup() end,
+--   requires = {'nvim-lua/plenary.nvim', {'nvim-neorg/neorg-telescope'}}
+-- }
+-- use {
+--   'kristijanhusak/orgmode.nvim',
+--   branch = 'tree-sitter',
+--   config = function()
+--     require('orgmode').setup {org_default_notes_file = '~/org'}
+--   end
+-- }
+-- use {
+--   'oberblastmeister/neuron.nvim',
+--   requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
+--   config = function() require('neuron').setup {} end
+-- }
