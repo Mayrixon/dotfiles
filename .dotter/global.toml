@@ -1,2 +1,5 @@
+[tmux.files]
+"tmux.conf" = "~/.tmux.conf"
+
 [zsh.files]
 zshrc = "~/.zshrc"

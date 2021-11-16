@@ -1,3 +1,6 @@
+[tmux.files]
+"tmux.conf" = {target = "~/.tmux.conf", type = "template", append = "set-option -sa terminal-overrides ',alacritty:RGB'"}
+
 [zsh.files.zshrc]
 target = "~/.zshrc"
 type = "template"

@@ -22,12 +22,6 @@ function M.setup()
       }
     },
     extensions = {
-      arecibo = {
-        ['selected_engine'] = 'google',
-        ['url_open_command'] = 'open',
-        ['show_http_headers'] = false,
-        ['show_domain_icons'] = false
-      },
       frecency = {
         workspaces = {
           ['dotfiles'] = home_dir .. 'dotfiles',
@@ -44,7 +38,6 @@ function M.setup()
     }
   })
 
-  telescope.load_extension('arecibo')
   telescope.load_extension('fzf')
   telescope.load_extension('frecency')
   telescope.load_extension('session-lens')
