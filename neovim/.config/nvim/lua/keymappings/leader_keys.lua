@@ -207,10 +207,6 @@ M.normal_mappings = {
       function()
         spectre.open_visual({cwd = vim.fn.getcwd(), select_word = true})
       end, 'Visual search'
-    },
-    w = {
-      function() require('telescope').extensions.arecibo.websearch() end,
-      'Web search'
     }
   },
 
