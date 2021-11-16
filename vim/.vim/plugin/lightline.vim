@@ -1,5 +1,6 @@
 set noshowmode
 set showtabline=2
+set laststatus=2
 
 let g:bufferline_echo = 0
 let g:bufferline_active_buffer_left = ''
