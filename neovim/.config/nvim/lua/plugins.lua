@@ -42,6 +42,8 @@ end
 local function startup()
   local packer = require('packer')
 
+  packer.init({max_jobs = 20})
+
   packer.startup({
     config = {profile = {enable = true}},
     function(use)
