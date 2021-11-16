@@ -18,3 +18,4 @@ he is very unique.
   - [ ] rust-tools
 - [ ] Setup REPL
 - [ ] Add spell indicator to statusline.
+- [ ] Remove which-key's requirement to keymappings.
