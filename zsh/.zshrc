@@ -1,4 +1,16 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
+
+#TODO: re-organise this file into following sections:
+# - prompt,
+# - command completion,
+# - command correction,
+# - command suggestion,
+# - command highlighting,
+# - output coloring,
+# - aliases,
+# - key bindings,
+# - commands history management,
+# - other miscellaneous interactive tools (auto_cd, manydots-magic)...
 ################################################################################
 # Init
 ################################################################################
@@ -45,7 +57,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice wait lucid atload"!_zsh_autosuggest_start"
 zinit load zsh-users/zsh-autosuggestions
 
-# history-search-multi-word
+# zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
 zinit ice wait"1" lucid
 zinit load zdharma-continuum/history-search-multi-word
@@ -64,9 +76,9 @@ PS1="READY >"
 # zinit ice wait'!' lucid
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# # 初始化补全
+# 初始化补全
 autoload -Uz compinit; compinit
-# # zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
+# zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
 zinit cdreplay -q
 
 
@@ -116,6 +128,20 @@ alias ssh="TERM=xterm-256color ssh"
 unalias zi
 eval "$(zoxide init zsh)"
 
+################################################################################
+# Colorize
+################################################################################
+
+# TODO: complete colorful configurations according to archlinux's wiki.
+# improved less option
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
+export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 
 ################################################################################
 # Keybinds
@@ -272,7 +298,8 @@ HISTORY_IGNORE='([bf]g *|[c]#cat( *)#|cd( ..)#|l[als]#( *)#|ranger|[n]#vim|z[aiq
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-NVIM_LISTEN_ADDRESS="/tmp/nvimsocket"
+#INFO: remove '/' from the default value. Relating to vim-kind navigations.
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 eval $(thefuck --alias)
 fuck-command-line() {
