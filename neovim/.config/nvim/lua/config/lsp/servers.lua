@@ -20,7 +20,6 @@ local server_settings = {
       }
     }
   },
-  tailwindcss = {},
   texlab = {
     settings = {
       latex = {
