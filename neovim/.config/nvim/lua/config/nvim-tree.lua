@@ -2,7 +2,6 @@
 local M = {}
 
 function M.setup()
-  vim.g.nvim_tree_quit_on_open = 1
   vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_highlight_opened_files = 1
@@ -18,11 +17,13 @@ function M.setup()
   }
 
   require('nvim-tree').setup({
+    actions = {open_file = {quit_on_open = true}},
     disable_netrw = false,
     hijack_netrw = true,
     open_on_setup = false,
     ignore_ft_on_setup = {},
     auto_close = false,
+    auto_reload_on_write = true,
     open_on_tab = false,
     hijack_cursor = false,
     update_cwd = true,
