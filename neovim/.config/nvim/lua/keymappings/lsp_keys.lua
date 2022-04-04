@@ -4,8 +4,8 @@ local M = {}
 
 M.non_leader = {
   normal_mode = {
-    ['[d'] = '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-    [']d'] = '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
+    ['[d'] = '<Cmd>lua vim.diagnostic.goto_prev()<CR>',
+    [']d'] = '<Cmd>lua vim.diagnostic.goto_next()<CR>',
     ['gd'] = '<Cmd>lua vim.lsp.buf.definition()<CR>',
     ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
     ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
