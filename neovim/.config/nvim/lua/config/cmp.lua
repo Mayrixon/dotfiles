@@ -17,7 +17,7 @@ function M.setup()
     completion = {completeopt = 'menu,menuone,noselect'},
     formatting = {
       format = lspkind.cmp_format({
-        with_text = true,
+        mode = 'symbol_text',
         -- preset = 'codicons',
         menu = ({
           buffer = '[Buffer]',
