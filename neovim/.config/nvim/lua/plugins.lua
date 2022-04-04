@@ -153,6 +153,7 @@ local function startup()
         config = function() require('config.telescope').setup() end
       }
       use {'nvim-telescope/telescope-packer.nvim'}
+      use {'nvim-telescope/telescope-ui-select.nvim'}
       use {
         'rmagatti/session-lens',
         requires = {
