@@ -2,7 +2,6 @@
 local M = {}
 
 function M.setup()
-  vim.g.nvim_tree_indent_markers = 1
   vim.g.nvim_tree_git_hl = 1
   vim.g.nvim_tree_highlight_opened_files = 1
   vim.g.nvim_tree_add_trailing = 1
@@ -41,7 +40,8 @@ function M.setup()
       side = 'left',
       auto_resize = false,
       mappings = {custom_only = false, list = {}}
-    }
+    },
+    renderer = {indent_markers = {enable = true}}
   })
 end
 
