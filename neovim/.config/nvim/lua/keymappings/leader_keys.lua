@@ -260,7 +260,7 @@ M.normal_mappings = {
     h = {'<Cmd>15sp +term<CR>', 'New horizontal terminal'},
     l = {'<Cmd>SearchSession<CR>', 'Load session'},
     p = {
-      function() require('telescope').extensions.packer.plugins() end, 'Packer'
+      function() require('telescope').extensions.packer.packer() end, 'Packer'
     },
     s = {'<Cmd>SaveSession<CR>', 'Save session'},
     t = {'<Cmd>terminal<CR>', 'New terminal'},
