@@ -19,7 +19,7 @@ end
 vim.g.diagnostics_active = true
 local function disable_diagnostics()
   vim.g.diagnostics_active = false
-  vim.lsp.diagnostic.clear(0)
+  vim.diagnostic.hide()
   vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 end
 M.disable_diagnostics = disable_diagnostics
