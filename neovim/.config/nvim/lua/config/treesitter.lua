@@ -7,7 +7,12 @@ function M.setup()
     autotag = {enable = true},
     context = {enable = true},
     context_commentstring = {enable = true},
-    ensure_installed = 'maintained',
+    -- TODO: seperate these parsers into variaty language-specific config files
+    ensure_installed = {
+      'bash', 'beancount', 'bibtex', 'c', 'css', 'cmake', 'cpp', 'html', 'http',
+      'javascript', 'json', 'json5', 'latex', 'lua', 'make', 'python', 'r',
+      'rust', 'toml', 'vim', 'typescript','yaml'
+    },
     highlight = {enable = true},
     incremental_selection = {
       enable = true,
