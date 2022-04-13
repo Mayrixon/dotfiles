@@ -25,11 +25,11 @@ M.leader = {
         end, 'Code actions'
       },
       d = {
-        '<Cmd>TroubleToggle lsp_document_diagnostics<CR>',
+        '<Cmd>TroubleToggle document_diagnostics<CR>',
         'Document diagnostics'
       },
       D = {
-        '<Cmd>TroubleToggle lsp_workspace_diagnostics<CR>',
+        '<Cmd>TroubleToggle workspace_diagnostics<CR>',
         'Workspace diagnostics'
       },
       f = {function() vim.lsp.buf.formatting() end, 'Format'},
