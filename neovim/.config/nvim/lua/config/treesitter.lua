@@ -9,11 +9,11 @@ function M.setup()
     context_commentstring = {enable = true},
     -- TODO: seperate these parsers into variaty language-specific config files
     ensure_installed = {
-      'bash', 'beancount', 'bibtex', 'c', 'css', 'cmake', 'cpp', 'html', 'http',
-      'javascript', 'json', 'json5', 'latex', 'lua', 'make', 'python', 'r',
-      'rust', 'toml', 'vim', 'typescript','yaml'
+      'bash', 'beancount', 'bibtex', 'c', 'css', 'cmake', 'cpp', 'glsl', 'html',
+      'http', 'javascript', 'json', 'json5', 'latex', 'lua', 'make', 'python',
+      'r', 'rust', 'toml', 'typescript', 'vim', 'wgsl', 'yaml'
     },
-    highlight = {enable = true},
+    highlight = {enable = true, disable = {'latex'}},
     incremental_selection = {
       enable = true,
       keymaps = {
