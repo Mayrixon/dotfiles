@@ -21,7 +21,7 @@ M.leader = {
       name = 'LSP',
       a = {
         function()
-          require('telescope.builtin').lsp_code_actions(cursor_theme)
+          vim.lsp.buf.code_action()
         end, 'Code actions'
       },
       d = {
@@ -66,7 +66,7 @@ M.leader = {
       name = 'LSP',
       a = {
         function()
-          require('telescope.builtin').lsp_range_code_actions(cursor_theme)
+          vim.lsp.buf.range_code_action()
         end, 'Range action'
       }
     }

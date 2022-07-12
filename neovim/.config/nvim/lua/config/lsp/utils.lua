@@ -11,7 +11,7 @@ function M.set_hover_diagnostics()
   vim.cmd [[
     augroup lsp_cursor_diagnostics
       autocmd!
-      autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(0, {scope="line", {focusable=false}})
+      autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(0, {scope="line", {focusable=false, focus=false}})
     augroup END
   ]]
 end
