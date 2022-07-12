@@ -128,6 +128,7 @@ local function startup()
       }
 
       -- Testing
+      -- TODO: use https://github.com/nvim-neotest/neotest instead of this deprecated plugin.
       use {
         'rcarriga/vim-ultest',
         config = function() require('config.test').setup() end,
@@ -303,6 +304,7 @@ local function startup()
         'nvim-lualine/lualine.nvim',
         requires = {
           {'kyazdani42/nvim-web-devicons', opt = true}, {
+            -- TODO: use https://github.com/smiteshp/nvim-navic instead of this deprecated plugin.
             'SmiteshP/nvim-gps',
             requires = 'nvim-treesitter/nvim-treesitter',
             config = function() require('nvim-gps').setup({}) end
@@ -313,7 +315,7 @@ local function startup()
 
       ---- DAP
       use {'mfussenegger/nvim-dap'}
-      use {'Pocco81/DAPInstall.nvim'}
+      use {'Pocco81/DAPInstall.nvim', branch = 'dev'}
       use {'rcarriga/nvim-dap-ui'}
       use {'theHamsta/nvim-dap-virtual-text'}
       use {'nvim-telescope/telescope-dap.nvim'}
