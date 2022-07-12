@@ -4,8 +4,8 @@ local M = {}
 
 M.non_leader = {
   normal_mode = {
-    ['[d'] = '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',
-    [']d'] = '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',
+    ['[d'] = '<Cmd>lua vim.diagnostic.goto_prev()<CR>',
+    [']d'] = '<Cmd>lua vim.diagnostic.goto_next()<CR>',
     ['gd'] = '<Cmd>lua vim.lsp.buf.definition()<CR>',
     ['gD'] = '<Cmd>lua vim.lsp.buf.declaration()<CR>',
     ['gi'] = '<Cmd>lua vim.lsp.buf.implementation()<CR>',
@@ -21,15 +21,15 @@ M.leader = {
       name = 'LSP',
       a = {
         function()
-          require('telescope.builtin').lsp_code_actions(cursor_theme)
+          vim.lsp.buf.code_action()
         end, 'Code actions'
       },
       d = {
-        '<Cmd>TroubleToggle lsp_document_diagnostics<CR>',
+        '<Cmd>TroubleToggle document_diagnostics<CR>',
         'Document diagnostics'
       },
       D = {
-        '<Cmd>TroubleToggle lsp_workspace_diagnostics<CR>',
+        '<Cmd>TroubleToggle workspace_diagnostics<CR>',
         'Workspace diagnostics'
       },
       f = {function() vim.lsp.buf.formatting() end, 'Format'},
@@ -66,7 +66,7 @@ M.leader = {
       name = 'LSP',
       a = {
         function()
-          require('telescope.builtin').lsp_range_code_actions(cursor_theme)
+          vim.lsp.buf.range_code_action()
         end, 'Range action'
       }
     }

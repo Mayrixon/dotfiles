@@ -22,6 +22,11 @@ function M.setup()
       }
     },
     extensions = {
+      ['ui-select'] = {
+        require('telescope.themes').get_dropdown {
+          -- even more opts
+        }
+      },
       frecency = {
         workspaces = {
           ['dotfiles'] = home_dir .. 'dotfiles',
@@ -42,6 +47,7 @@ function M.setup()
   telescope.load_extension('frecency')
   telescope.load_extension('session-lens')
   telescope.load_extension('project')
+  telescope.load_extension('ui-select')
 end
 
 -- TODO: move to user-define function file.

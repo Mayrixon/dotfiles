@@ -2,7 +2,6 @@
 -- - norg
 -- - org
 -- - plaintext
-
 local function clangformat()
   return {
     exe = 'clang-format',
@@ -19,7 +18,7 @@ local function prettier()
     exe = 'prettier',
     args = {
       '--stdin-filepath', vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
-      '--single-quote'
+      '--single-quote', '--tab-width', vim.bo.shiftwidth
     },
     stdin = true
   }

@@ -25,7 +25,7 @@ function M.setup()
       lualine_a = {'mode', paste_indicator},
       lualine_b = {
         'branch', 'diff', 'require(\'lsp-status\').status_progress()',
-        {'diagnostics', sources = {'nvim_lsp', 'coc'}}
+        {'diagnostics', sources = {'nvim_diagnostic', 'coc'}}
       },
       lualine_c = {'filename', {gps.get_location, cond = gps.is_available}},
       lualine_x = {'encoding', 'fileformat', 'filetype', sleuth_indicator},

@@ -11,7 +11,7 @@ function M.set_hover_diagnostics()
   vim.cmd [[
     augroup lsp_cursor_diagnostics
       autocmd!
-      autocmd CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
+      autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(0, {scope="line", {focusable=false, focus=false}})
     augroup END
   ]]
 end
@@ -19,7 +19,7 @@ end
 vim.g.diagnostics_active = true
 local function disable_diagnostics()
   vim.g.diagnostics_active = false
-  vim.lsp.diagnostic.clear(0)
+  vim.diagnostic.hide()
   vim.lsp.handlers['textDocument/publishDiagnostics'] = function() end
 end
 M.disable_diagnostics = disable_diagnostics
