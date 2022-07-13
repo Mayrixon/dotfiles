@@ -1,20 +1,19 @@
-local wk = require('which-key')
+local wk = require("which-key")
 
-vim.g.markdown_fenced_languages = {'python', 'rust'}
+vim.g.markdown_fenced_languages = { "python", "rust" }
 
 wk.register({
   l = {
-    name = 'Markdown',
+    name = "Markdown",
     p = {
-      name = 'preview',
-      g = {'<Cmd>Glow<CR>', 'glow-preview'},
-      p = {'<Cmd>MarkdownPreview<CR>', 'preview'},
-      k = {'<Cmd>MarkdownPreviewStop<CR>', 'stop-preview'}
-    }
-  }
-}, {prefix = '<localleader>', mode = 'n'})
+      name = "preview",
+      g = { "<Cmd>Glow<CR>", "glow-preview" },
+      p = { "<Cmd>MarkdownPreview<CR>", "preview" },
+      k = { "<Cmd>MarkdownPreviewStop<CR>", "stop-preview" },
+    },
+  },
+}, { prefix = "<localleader>", mode = "n" })
 
 vim.cmd('vnoremap <localleader>lw :call mkdx#WrapText("v", "[[", "]]")<CR>')
 
-wk.register({l = {name = 'Markdown', w = {'Add wiki link'}}},
-            {prefix = '<localleader>', mode = 'v'})
+wk.register({ l = { name = "Markdown", w = { "Add wiki link" } } }, { prefix = "<localleader>", mode = "v" })
