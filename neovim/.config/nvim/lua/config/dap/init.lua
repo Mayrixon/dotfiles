@@ -1,43 +1,43 @@
-local dap_install = require('dap-install')
+local dap_install = require("dap-install")
 
-local adapters = require('config.dap.adapters')
+local adapters = require("config.dap.adapters")
 
 local function cosmetics()
   -- nvim-dap-virtual-text. Show virtual text for current frame
-  require('nvim-dap-virtual-text').setup()
+  require("nvim-dap-virtual-text").setup()
 
   -- nvim-dap-ui
-  require('dapui').setup {}
+  require("dapui").setup({})
 end
 
 local M = {}
 
 function M.dap_update()
   for adapter, _ in pairs(adapters.adapter_settings) do
-    require('dap-install.core.install').install_debugger(adapter)
+    require("dap-install.core.install").install_debugger(adapter)
   end
 end
 
 function M.setup()
   dap_install.setup({
-    installation_path = vim.fn.stdpath('data') .. '/dapinstall/'
+    installation_path = vim.fn.stdpath("data") .. "/dapinstall/",
   })
 
   -- telescope-dap
-  require('telescope').load_extension('dap')
+  require("telescope").load_extension("dap")
 
   cosmetics()
 
   adapters.set_adapters()
 
   -- TODO: move to keymapping files.
-  vim.cmd [[
+  vim.cmd([[
     vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
-  ]]
+  ]])
 
-  vim.cmd [[
+  vim.cmd([[
     command DAPUpdate call v:lua.require'config.dap'.dap_update()
-  ]]
+  ]])
 end
 
 return M

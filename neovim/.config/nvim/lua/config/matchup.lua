@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  vim.cmd [[
+  vim.cmd([[
     augroup matchup_matchparen_disable_ft
       autocmd!
       autocmd FileType tex let [b:matchup_matchparen_fallback,
@@ -12,7 +12,7 @@ function M.setup()
       autocmd!
       autocmd CmdWinEnter * let b:matchup_enabled = 0
     augroup END
-  ]]
+  ]])
 end
 
 return M

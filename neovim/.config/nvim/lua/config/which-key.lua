@@ -1,5 +1,5 @@
-local wk = require('which-key')
-local keymappings = require('keymappings')
+local wk = require("which-key")
+local keymappings = require("keymappings")
 
 local M = {}
 
@@ -8,10 +8,10 @@ function M.setup()
   wk.setup({
     operators = wk_operators,
     key_labels = {
-      ['<space>'] = '<Space>',
-      ['<cr>'] = '<CR>',
-      ['<tab>'] = '<Tab>'
-    }
+      ["<space>"] = "<Space>",
+      ["<cr>"] = "<CR>",
+      ["<tab>"] = "<Tab>",
+    },
   })
 end
 

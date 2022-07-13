@@ -1,7 +1,7 @@
-local dap = require 'dap'
-local dap_install = require('dap-install')
+local dap = require("dap")
+local dap_install = require("dap-install")
 
-local adapter_settings = {python = {}, codelldb = {}}
+local adapter_settings = { python = {}, codelldb = {} }
 
 local M = {}
 
@@ -13,24 +13,26 @@ function M.set_adapters()
   -- one-small-step-for-vimkind
   dap.configurations.lua = {
     {
-      type = 'nlua',
-      request = 'attach',
-      name = 'Attach to running Neovim instance',
+      type = "nlua",
+      request = "attach",
+      name = "Attach to running Neovim instance",
       host = function()
-        local value = vim.fn.input('Host [127.0.0.1]: ')
-        if value ~= '' then return value end
-        return '127.0.0.1'
+        local value = vim.fn.input("Host [127.0.0.1]: ")
+        if value ~= "" then
+          return value
+        end
+        return "127.0.0.1"
       end,
       port = function()
-        local val = tonumber(vim.fn.input('Port: '))
-        assert(val, 'Please provide a port number')
+        local val = tonumber(vim.fn.input("Port: "))
+        assert(val, "Please provide a port number")
         return val
-      end
-    }
+      end,
+    },
   }
 
   dap.adapters.nlua = function(callback, config)
-    callback({type = 'server', host = config.host, port = config.port})
+    callback({ type = "server", host = config.host, port = config.port })
   end
 end
 
