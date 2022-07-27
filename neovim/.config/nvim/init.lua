@@ -1,26 +1,13 @@
--- TODO: refactor plugin loading for better bootstrap experience.
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+require("packer_init")
+require("core/options")
+require("core/autocmds")
+require("core/keymaps")
+require("core/colors")
+require("core/statusline")
+require("lsp")
 
-local function sys_init()
-  -- Performance
-  require 'impatient'
+-- INFO: consider move to a system-based config file.
+local function provider_settings()
+  vim.g.loaded_python_provider = 0
+  -- vim.g.python3_host_prog = '/usr/bin/python3'
 end
-
--------------------------------- Start loading ---------------------------------
-
-require('defaults').setup()
-
-require('plugins').setup()
-
-sys_init()
-
-require('keymappings').setup()
-
-require('settings').setup()
-
-require('config.lsp').setup()
-
-require('config.dap').setup()
-
---------------------------------- End loading ----------------------------------
