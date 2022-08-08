@@ -55,11 +55,11 @@ M.normal = {
     name = "Buffer",
     A = { "<Cmd>%bd|e#<CR>", "Delete all buffers" },
     a = { "<Cmd>Alpha<CR>", "Open Dashboard" },
-    b = { "<Cmd>Telescope buffers<CR>", "List buffers" },
     c = { "<Cmd>call DeleteHiddenBuffers()<CR>", "Clear all saved buffers" },
     d = { "<Cmd>bd<CR>", "Delete current buffer" },
     f = { "<Cmd>bd!<CR>", "Force delete current buffer" },
     e = { "<Cmd>%d<CR>", "Erase buffer" },
+    l = { "<Cmd>Telescope buffers<CR>", "List buffers" },
     m = {
       "<Cmd>call Scratch() | put = execute('messages')<CR>",
       "Open message buffer",
@@ -75,13 +75,19 @@ M.normal = {
     n = { "<Cmd>bn<CR>", "Next buffer" },
     P = { "<Cmd>%d | put+<CR>", "Paste clipboard to whole buffer" },
     p = { "<Cmd>bp<CR>", "Previous buffer" },
-    -- TODO:
-    -- R = { "Safe revert buffer(unmapped)" },
     s = { "<Cmd>call Scratch()<CR>", "Scratch buffer" },
-    -- TODO:
-    -- t = { "Show file tree at buffer dir(unmapped)" },
     w = { "<Cmd>setlocal readonly!<CR>", "Toggle Read-only mode" },
     Y = { "<Cmd>%y+<CR>", "Yank whole buffer to clipboard" },
+  },
+
+  c = {
+    name = "Quickfix",
+    c = { "<Cmd>cclose<CR>", "Close quickfix" },
+    n = { "<Cmd>cnext<CR>", "Next quickfix" },
+    o = { "<Cmd>copen<CR>", "Open quickfix" },
+    t = { "<Cmd>BqfAutoToggle<CR>", "Toggle preview" },
+    p = { "<Cmd>cprev<CR>", "Previous quickfix" },
+    x = { "<Cmd>cex []<CR>", "Clear quickfix" },
   },
 
   e = {
@@ -103,6 +109,7 @@ M.normal = {
     F = { "<Cmd>Telescope git_files<CR>", "Find git files" },
     f = { "<Cmd>Telescope find_files<CR>", "Find files" },
     g = { "<Cmd>Telescope live_grep<CR>", "Live grep" },
+    m = { "<Cmd>Telescope marks<CR>", "Mark" },
     p = { "<Cmd>Telescope<CR>", "Pickers" },
     r = { "<Cmd>Telescope frecency<CR>", "Find recent file" },
     t = { "<Cmd>TodoTelescope<CR>", "Find TODOs" },
@@ -120,7 +127,7 @@ M.normal = {
       d = { "<Cmd>DiffviewOpen<Cr>", "Diffview open" },
       h = { "<Cmd>DiffviewFileHistory<CR>", "Open file git history" },
     },
-    f = { "<Cmd>Git fetch --all<CR>", "Git fetch" },
+    f = { "<Cmd>Git fetch --all<CR>", "Fetch" },
     h = {
       name = "Hunks",
       b = {
@@ -162,7 +169,8 @@ M.normal = {
       "Reset buffer",
     },
     s = { "<Cmd>Git<CR>", "Open git status" },
-    p = { "<Cmd>Git push<CR>", "Git push" },
+    P = { "<Cmd>Git push<CR>", "Push" },
+    p = { "<Cmd>Git pull<CR>", "Pull" },
     u = {
       function()
         gitsigns.reset_buffer_index()
@@ -181,13 +189,30 @@ M.normal = {
 
   i = {
     name = "Insert",
-    s = {
-      "<Cmd>Telescope symbols<CR>",
-      "Symbols",
-    },
+    d = { "<Cmd>Neogen<CR>", "Document" },
+    s = { "<Cmd>Telescope symbols<CR>", "Symbols" },
   },
 
-  n = { name = "Notes", z = { "<Cmd>ZenMode<CR>", "Zen mode" } },
+  K = { name = "Cheat.sh" },
+
+  -- TODO: add test plugins.
+  -- k = {
+  --   name = "Test",
+  --   f = { "<Cmd>w<CR>:TestFile<CR>", "Test file" },
+  --   l = { "<Cmd>w<CR>:TestLast<CR>", "Test last" },
+  --   n = { "<Cmd>w<CR>:TestNearest<CR>", "Test nearest" },
+  --   s = { "<Cmd>w<CR>:TestSuite<CR>", "Test suite" },
+  --   v = { "<Cmd>w<CR>:TestVisit<CR>", "Test visit" },
+  -- },
+
+  n = {
+    name = "Notes",
+    h = { "<Cmd>Twilight<CR>", "Toggle zen-mode highlight" },
+
+    -- TODO: requiring rhysd/vim-grammarous and LanguageTool. Maybe can use LSP and LanguageTool.
+    -- g = { "<Cmd>GrammarousCheck<Cr>", "Grammar check" },
+    z = { "<Cmd>ZenMode<CR>", "Zen mode" },
+  },
 
   p = {
     name = "Project",
@@ -206,44 +231,38 @@ M.normal = {
     },
   },
 
-  q = {
-    name = "Quickfix",
-    c = { "<Cmd>cclose<CR>", "Close quickfix" },
-    n = { "<Cmd>cnext<CR>", "Next quickfix" },
-    o = { "<Cmd>copen<CR>", "Open quickfix" },
-    p = { "<Cmd>cprev<CR>", "Previous quickfix" },
-    x = { "<Cmd>cex []<CR>", "Clear quickfix" },
-  },
-
   s = {
     name = "Search",
     ["/"] = { "<Cmd>Telescope search_history<CR>", "Search history" },
-    b = { "<Plug>SearchNormal", "Browser search" },
+    b = { "<Cmd>Telescope current_buffer_fuzzy_find<CR>", "Search current buffer" },
     c = { "<Cmd>Telescope command_history<CR>", "Command history" },
     f = {
       function()
-        spectre.open({ cwd = vim.fn.getcwd(), path = vim.fn.expand("%:p:.") })
+        spectre.open_file_search()
       end,
       "Open file search",
     },
     s = {
       function()
-        spectre.open({ cwd = vim.fn.getcwd() })
+        spectre.open()
       end,
       "Search file",
     },
+    -- TODO: try telescope ultisnips.
+    -- u = { "<Cmd>Telescope ultisnips<CR>", "Search snippets" },
     v = {
       function()
-        spectre.open_visual({ cwd = vim.fn.getcwd(), select_word = true })
+        spectre.open_visual({ select_word = true })
       end,
       "Visual search",
     },
+    z = { "<Plug>SearchNormal", "Browser search" },
   },
 
   T = {
     name = "Toggle",
+    c = { "<Cmd>ColorizerToggle<CR>", "Colorizer" },
     d = {
-      -- TODO: find a way to disable hover on diagnostics.
       name = "Diagnostics",
       d = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable" },
       e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable" },
@@ -276,6 +295,12 @@ M.normal = {
     },
   },
 
+  -- TODO: add REPLs
+  r = {
+    name = "Run",
+    -- s = { "<Cmd>SnipRun<CR>", "Run snippets" },
+  },
+
   u = {
     name = "Utilities",
     c = { "<Cmd>ColorizerToggle<CR>", "Colorizer" },
@@ -292,6 +317,8 @@ M.normal = {
   z = {
     name = "System",
     h = { "<Cmd>15sp +term<CR>", "New horizontal terminal" },
+    M = { "<Cmd>messages clear<CR>", "Clear messages" },
+    m = { "<Cmd>messages<CR>", "Messages" },
     p = {
       function()
         telescope.extensions.packer.packer()
@@ -323,16 +350,28 @@ M.visual = {
       },
     },
   },
+
+  K = { name = "Cheat.sh" },
+
+  -- TODO: check and uncomment.
+  -- r = {
+  --   name = "Run",
+  --   s = { "<Cmd>lua require'sniprun'.run('v')<CR>", "Run snippets" },
+  --   r = { "<Esc><Cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Refactor" },
+  -- },
+
   s = {
     name = "Search",
-    b = { "<Plug>SearchVisual", "Browser search" },
+    -- TODO: check this function.
     v = {
       function()
         spectre.open_visual()
       end,
       "Visual search",
     },
+    z = { "<Plug>SearchVisual", "Browser search" },
   },
+
   u = {
     name = "Utilities",
     s = { "<Cmd>StripWhitespace<CR>", "Remove trailing whitespace" },

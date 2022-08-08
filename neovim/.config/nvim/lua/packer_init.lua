@@ -103,6 +103,7 @@ packer.startup(function(use)
     { "nanozuki/tabby.nvim" },
     {
       "j-hui/fidget.nvim",
+      event = "BufReadPre",
       config = function()
         require("fidget").setup()
       end,
@@ -195,6 +196,7 @@ packer.startup(function(use)
       end,
     },
   })
+  use({ "kevinhwang91/nvim-bqf", event = "BufWinEnter" })
 
   -- -- Completion
   use({
@@ -223,6 +225,15 @@ packer.startup(function(use)
     { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
   })
 
+  -- -- Document generation
+  use({
+    "danymat/neogen",
+    config = function()
+      require("neogen").setup({ snippet_engine = "luasnip" })
+    end,
+    requires = { "nvim-treesitter/nvim-treesitter", "L3MON4D3/LuaSnip" },
+  })
+
   -- -- Formatter
   use({
     "mhartington/formatter.nvim",
@@ -247,6 +258,25 @@ packer.startup(function(use)
     end,
   })
   use({ "rafamadriz/friendly-snippets" })
+
+  -- Development
+  -- -- REPLs
+  -- TODO: setup
+  -- use({
+  --   "michaelb/sniprun",
+  --   cmd = { "SnipRun" },
+  --   run = "bash install.sh",
+  --   config = function()
+  --     require("config.sniprun").setup()
+  --   end,
+  -- })
+  -- TODO: compare with sniprun
+  -- use({
+  --   "hkupty/iron.nvim",
+  --   setup = [[vim.g.iron_map_defaults = 0]],
+  --   config = [[require('config.iron')]],
+  --   cmd = { "IronRepl", "IronSend", "IronReplHere" },
+  -- })
 
   -- Git
   use({
@@ -311,6 +341,9 @@ packer.startup(function(use)
       end,
     },
   })
+  -- INFO: a plugin under testing.
+  use({ "dbeniamine/cheat.sh-vim" })
+
   -- -- Telescope
   use({
     {
@@ -342,6 +375,7 @@ packer.startup(function(use)
       },
     },
     { "nvim-telescope/telescope-symbols.nvim" },
+    { "nvim-telescope/telescope-file-browser.nvim" },
     { "TC72/telescope-tele-tabby.nvim" },
     { "nvim-telescope/telescope-packer.nvim" },
     { "nvim-telescope/telescope-ui-select.nvim" },
@@ -411,7 +445,16 @@ packer.startup(function(use)
   })
 
   -- -- Rust
-  use({ "simrat39/rust-tools.nvim" })
+  use({
+    { "simrat39/rust-tools.nvim" },
+    {
+      "Saecki/crates.nvim",
+      event = { "BufRead Cargo.toml" },
+      config = function()
+        require("crates").setup()
+      end,
+    },
+  })
 
   -- -- TypeScript
   use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })
