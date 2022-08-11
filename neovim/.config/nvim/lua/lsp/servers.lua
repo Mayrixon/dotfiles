@@ -5,6 +5,7 @@ M.server_settings = {
   clangd = {},
   cmake = {},
   diagnosticls = {},
+  ltex = { settings = { ltex = { language = { "en-GB", "zh-CN" } } } },
   pyright = {},
   sumneko_lua = {
     cmd = { "lua-language-server" },

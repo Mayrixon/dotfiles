@@ -1,6 +1,6 @@
 local wk = require("which-key")
 
-vim.g.markdown_fenced_languages = { "python", "rust" }
+-- vim.g.markdown_fenced_languages = { "python", "rust", "tex" }
 
 wk.register({
   l = {

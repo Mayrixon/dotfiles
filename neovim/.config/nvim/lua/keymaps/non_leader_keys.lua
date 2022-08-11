@@ -78,10 +78,4 @@ M.hints = {
 
 -- TODO: add visual mode hints.
 
--- TODO: check the difference between hints and operators.
--- TODO: add following operator hints.
--- gc{,A,c,O,o}
--- gb[,c]
-M.wk_operators = { ga = "EasyAlign", gc = "Comments" }
-
 return M

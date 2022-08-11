@@ -23,7 +23,6 @@ local wk_ok, wk = pcall(require, "which-key")
 if wk_ok then
   wk.setup({
     plugins = { registers = false },
-    -- operators = keymaps.non_leader_keys.wk_operators,
     key_labels = {
       ["<space>"] = "<Space>",
       ["<cr>"] = "<CR>",

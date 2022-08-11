@@ -30,7 +30,6 @@ function M.setup()
 
   adapters.set_adapters()
 
-  -- TODO: move to keymapping files.
   vim.cmd([[
     vnoremap <M-k> <Cmd>lua require("dapui").eval()<CR>
   ]])

@@ -143,7 +143,6 @@ packer.startup(function(use)
       requires = "nvim-lua/plenary.nvim",
       event = "VimEnter",
       config = function()
-        -- TODO: check config.
         require("todo-comments").setup({})
       end,
     },
@@ -261,22 +260,14 @@ packer.startup(function(use)
 
   -- Development
   -- -- REPLs
-  -- TODO: setup
-  -- use({
-  --   "michaelb/sniprun",
-  --   cmd = { "SnipRun" },
-  --   run = "bash install.sh",
-  --   config = function()
-  --     require("config.sniprun").setup()
-  --   end,
-  -- })
-  -- TODO: compare with sniprun
-  -- use({
-  --   "hkupty/iron.nvim",
-  --   setup = [[vim.g.iron_map_defaults = 0]],
-  --   config = [[require('config.iron')]],
-  --   cmd = { "IronRepl", "IronSend", "IronReplHere" },
-  -- })
+  use({
+    "michaelb/sniprun",
+    cmd = { "SnipRun" },
+    run = "bash install.sh",
+    config = function()
+      require("plugins.sniprun").setup()
+    end,
+  })
 
   -- Git
   use({
@@ -341,7 +332,6 @@ packer.startup(function(use)
       end,
     },
   })
-  -- INFO: a plugin under testing.
   use({ "dbeniamine/cheat.sh-vim" })
 
   -- -- Telescope
@@ -433,8 +423,14 @@ packer.startup(function(use)
   -- -- Markdown
   use({
     { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" },
-    -- INFO: remove after treesitter supports markdown
-    { "tpope/vim-markdown" },
+    -- { "tpope/vim-markdown" },
+    -- TODO: check the problem.
+    -- {
+    --   "lukas-reineke/headlines.nvim",
+    --   config = function()
+    --     require("headlines").setup()
+    --   end,
+    -- },
     {
       "SidOfc/mkdx",
       config = function()

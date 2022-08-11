@@ -1,4 +1,3 @@
--- TODO: check this file.
 vim.g.ultest_use_pty = 1
 
 local M = {}

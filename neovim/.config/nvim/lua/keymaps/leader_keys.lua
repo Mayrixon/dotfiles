@@ -208,9 +208,6 @@ M.normal = {
   n = {
     name = "Notes",
     h = { "<Cmd>Twilight<CR>", "Toggle zen-mode highlight" },
-
-    -- TODO: requiring rhysd/vim-grammarous and LanguageTool. Maybe can use LSP and LanguageTool.
-    -- g = { "<Cmd>GrammarousCheck<Cr>", "Grammar check" },
     z = { "<Cmd>ZenMode<CR>", "Zen mode" },
   },
 
@@ -248,8 +245,6 @@ M.normal = {
       end,
       "Search file",
     },
-    -- TODO: try telescope ultisnips.
-    -- u = { "<Cmd>Telescope ultisnips<CR>", "Search snippets" },
     v = {
       function()
         spectre.open_visual({ select_word = true })
@@ -295,10 +290,12 @@ M.normal = {
     },
   },
 
-  -- TODO: add REPLs
   r = {
     name = "Run",
-    -- s = { "<Cmd>SnipRun<CR>", "Run snippets" },
+    c = { "<Cmd>SnipClose", "Close results" },
+    K = { "<Cmd>SnipReset", "Restart SnipRun" },
+    k = { "<Cmd>SnipTerminate", "Kill SnipRun" },
+    s = { "<Cmd>SnipRun<CR>", "Run snippets" },
   },
 
   u = {
@@ -353,20 +350,15 @@ M.visual = {
 
   K = { name = "Cheat.sh" },
 
-  -- TODO: check and uncomment.
-  -- r = {
-  --   name = "Run",
-  --   s = { "<Cmd>lua require'sniprun'.run('v')<CR>", "Run snippets" },
-  --   r = { "<Esc><Cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Refactor" },
-  -- },
+  r = {
+    name = "Run",
+    s = { "<Plug>SnipRun", "Run snippets" },
+  },
 
   s = {
     name = "Search",
-    -- TODO: check this function.
     v = {
-      function()
-        spectre.open_visual()
-      end,
+      "<Esc>:lua require('spectre').open_visual()<CR>",
       "Visual search",
     },
     z = { "<Plug>SearchVisual", "Browser search" },
