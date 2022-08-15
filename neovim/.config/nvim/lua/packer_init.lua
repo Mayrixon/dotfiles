@@ -34,7 +34,9 @@ vim.cmd([[packadd packer.nvim]])
 packer.startup(function(use)
   use({ "wbthomason/packer.nvim" })
 
+  -- Faster startup
   use({ "lewis6991/impatient.nvim" })
+  use({ "nathom/filetype.nvim" })
 
   -- General
   use({ "tpope/vim-sleuth" })
@@ -412,6 +414,9 @@ packer.startup(function(use)
 
   -- Language
 
+  -- -- Lisp, Clojure, and Scheme
+  use({ "eraserhd/parinfer-rust", run = "cargo build --release" })
+
   -- -- LaTeX
   use({
     "lervag/vimtex",
@@ -433,6 +438,7 @@ packer.startup(function(use)
     -- },
     {
       "SidOfc/mkdx",
+      ft = { "markdown", "rmarkdown", "rmd" },
       config = function()
         require("plugins.mkdx").setup()
       end,

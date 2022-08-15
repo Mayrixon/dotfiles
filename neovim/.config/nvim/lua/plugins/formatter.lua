@@ -1,6 +1,3 @@
--- TODO: add formatter for:
--- - norg
--- - org
 -- INFO: there is a formatter taplo could be used for toml.
 local filetypes = require("formatter.filetypes")
 

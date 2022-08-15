@@ -77,9 +77,6 @@ function M.setup()
       end,
     })
 
-    -- Better configuration
-    use({ "nathom/filetype.nvim" })
-
     use({ { "nvim-orgmode/orgmode.nvim", config = [[require('config.orgmode')]] }, "akinsho/org-bullets.nvim" })
     -- use {
     --   'nvim-neorg/neorg',
