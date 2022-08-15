@@ -34,7 +34,9 @@ vim.cmd([[packadd packer.nvim]])
 packer.startup(function(use)
   use({ "wbthomason/packer.nvim" })
 
+  -- Faster startup
   use({ "lewis6991/impatient.nvim" })
+  use({ "nathom/filetype.nvim" })
 
   -- General
   use({ "tpope/vim-sleuth" })
@@ -103,6 +105,7 @@ packer.startup(function(use)
     { "nanozuki/tabby.nvim" },
     {
       "j-hui/fidget.nvim",
+      event = "BufReadPre",
       config = function()
         require("fidget").setup()
       end,
@@ -142,7 +145,6 @@ packer.startup(function(use)
       requires = "nvim-lua/plenary.nvim",
       event = "VimEnter",
       config = function()
-        -- TODO: check config.
         require("todo-comments").setup({})
       end,
     },
@@ -195,6 +197,7 @@ packer.startup(function(use)
       end,
     },
   })
+  use({ "kevinhwang91/nvim-bqf", event = "BufWinEnter" })
 
   -- -- Completion
   use({
@@ -223,6 +226,15 @@ packer.startup(function(use)
     { "hrsh7th/cmp-nvim-lsp-document-symbol", after = "nvim-cmp" },
   })
 
+  -- -- Document generation
+  use({
+    "danymat/neogen",
+    config = function()
+      require("neogen").setup({ snippet_engine = "luasnip" })
+    end,
+    requires = { "nvim-treesitter/nvim-treesitter", "L3MON4D3/LuaSnip" },
+  })
+
   -- -- Formatter
   use({
     "mhartington/formatter.nvim",
@@ -247,6 +259,17 @@ packer.startup(function(use)
     end,
   })
   use({ "rafamadriz/friendly-snippets" })
+
+  -- Development
+  -- -- REPLs
+  use({
+    "michaelb/sniprun",
+    cmd = { "SnipRun" },
+    run = "bash install.sh",
+    config = function()
+      require("plugins.sniprun").setup()
+    end,
+  })
 
   -- Git
   use({
@@ -311,6 +334,8 @@ packer.startup(function(use)
       end,
     },
   })
+  use({ "dbeniamine/cheat.sh-vim" })
+
   -- -- Telescope
   use({
     {
@@ -342,6 +367,7 @@ packer.startup(function(use)
       },
     },
     { "nvim-telescope/telescope-symbols.nvim" },
+    { "nvim-telescope/telescope-file-browser.nvim" },
     { "TC72/telescope-tele-tabby.nvim" },
     { "nvim-telescope/telescope-packer.nvim" },
     { "nvim-telescope/telescope-ui-select.nvim" },
@@ -388,6 +414,9 @@ packer.startup(function(use)
 
   -- Language
 
+  -- -- Lisp, Clojure, and Scheme
+  use({ "eraserhd/parinfer-rust", run = "cargo build --release" })
+
   -- -- LaTeX
   use({
     "lervag/vimtex",
@@ -399,10 +428,17 @@ packer.startup(function(use)
   -- -- Markdown
   use({
     { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" },
-    -- INFO: remove after treesitter supports markdown
-    { "tpope/vim-markdown" },
+    -- { "tpope/vim-markdown" },
+    -- TODO: check the problem.
+    -- {
+    --   "lukas-reineke/headlines.nvim",
+    --   config = function()
+    --     require("headlines").setup()
+    --   end,
+    -- },
     {
       "SidOfc/mkdx",
+      ft = { "markdown", "rmarkdown", "rmd" },
       config = function()
         require("plugins.mkdx").setup()
       end,
@@ -411,7 +447,16 @@ packer.startup(function(use)
   })
 
   -- -- Rust
-  use({ "simrat39/rust-tools.nvim" })
+  use({
+    { "simrat39/rust-tools.nvim" },
+    {
+      "Saecki/crates.nvim",
+      event = { "BufRead Cargo.toml" },
+      config = function()
+        require("crates").setup()
+      end,
+    },
+  })
 
   -- -- TypeScript
   use({ "jose-elias-alvarez/nvim-lsp-ts-utils" })

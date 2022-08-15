@@ -1,3 +1,4 @@
+-- INFO: there is a new function vim.keymap.set() provided in neovim v0.7 which could substitute vim.api.nvim_set_keymap() and vim.api.nvim_buf_set_keymap().
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -22,7 +23,6 @@ local wk_ok, wk = pcall(require, "which-key")
 if wk_ok then
   wk.setup({
     plugins = { registers = false },
-    -- operators = keymaps.non_leader_keys.wk_operators,
     key_labels = {
       ["<space>"] = "<Space>",
       ["<cr>"] = "<CR>",
@@ -32,13 +32,13 @@ if wk_ok then
 
   -- Map leader keymaps.
   local leader_keys = keymaps.leader_keys
-  wk.register(leader_keys.normal, keymaps.get_opts(keymaps.opts.leader.normal, "<leader>"))
-  wk.register(leader_keys.visual, keymaps.get_opts(keymaps.opts.leader.visual, "<leader>"))
+  wk.register(leader_keys.normal, keymaps.get_wk_opts(keymaps.opts.leader.normal, "<leader>"))
+  wk.register(leader_keys.visual, keymaps.get_wk_opts(keymaps.opts.leader.visual, "<leader>"))
 
   -- Map local leader keymaps.
   local localleader_keys = keymaps.localleader_keys
-  wk.register(localleader_keys.normal, keymaps.get_opts(keymaps.opts.leader.normal, "<localleader>"))
-  wk.register(localleader_keys.visual, keymaps.get_opts(keymaps.opts.leader.visual, "<localleader>"))
+  wk.register(localleader_keys.normal, keymaps.get_wk_opts(keymaps.opts.leader.normal, "<localleader>"))
+  wk.register(localleader_keys.visual, keymaps.get_wk_opts(keymaps.opts.leader.visual, "<localleader>"))
 
   -- Add key hints.
   wk.register(non_leader_keys.hints)

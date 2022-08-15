@@ -1,4 +1,3 @@
--- TODO: add spell indicator.
 local lualine_ok, lualine = pcall(require, "lualine")
 if not lualine_ok then
   return
@@ -23,7 +22,15 @@ local function sleuth_indicator()
   return vim.fn.SleuthIndicator()
 end
 
---local gps = require("nvim-gps")
+local function spell_indicator()
+  local indicator = ""
+
+  if vim.o.spell == true then
+    indicator = "SPELL"
+  end
+
+  return indicator
+end
 
 lualine.setup({
   options = {
@@ -45,7 +52,7 @@ lualine.setup({
       -- INFO: move to winbar after nvim v0.8.
       { navic.get_location, cond = navic.is_available },
     },
-    lualine_x = { "encoding", "fileformat", "filetype", sleuth_indicator },
+    lualine_x = { spell_indicator, "encoding", "fileformat", "filetype", sleuth_indicator },
     lualine_y = { "progress" },
     lualine_z = { "location" },
   },

@@ -19,14 +19,14 @@ function M.set_lsp_keymaps(client, bufnr)
   end
 
   -- Set leader keymaps
-  wk.register(keymaps.lsp_keys.leader.normal, keymaps.get_opts(keymaps.opts.leader.normal, "<leader>", bufnr))
-  wk.register(keymaps.lsp_keys.leader.visual, keymaps.get_opts(keymaps.opts.leader.visual, "<leader>", bufnr))
+  wk.register(keymaps.lsp_keys.leader.normal, keymaps.get_wk_opts(keymaps.opts.leader.normal, "<leader>", bufnr))
+  wk.register(keymaps.lsp_keys.leader.visual, keymaps.get_wk_opts(keymaps.opts.leader.visual, "<leader>", bufnr))
 
   -- Set keymaps according to LSP server capabilities
   for _, m in pairs(keymaps.lsp_keys.capability_mappings) do
     local capability, key, prefix, mode = unpack(m)
     if client.resolved_capabilities[capability] then
-      wk.register(key, keymaps.get_opts(keymaps.opts.leader[mode], prefix, bufnr))
+      wk.register(key, keymaps.get_wk_opts(keymaps.opts.leader[mode], prefix, bufnr))
     end
   end
 

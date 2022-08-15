@@ -18,7 +18,7 @@ local M = {
 -- @param[opt=""] prefix The prefix of keybindings.
 -- @param[opt=nil] bufnr The buffer number.
 -- @return wk_opts The which-key register options.
-function M.get_opts(wk_opts, prefix, bufnr)
+function M.get_wk_opts(wk_opts, prefix, bufnr)
   prefix = prefix or ""
   bufnr = bufnr or nil
   return vim.tbl_extend("force", wk_opts, { prefix = prefix, buffer = bufnr })

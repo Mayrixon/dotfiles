@@ -7,7 +7,6 @@ function M.setup()
     autotag = { enable = true },
     context = { enable = true },
     context_commentstring = { enable = true },
-    -- TODO: seperate these parsers into variaty language-specific config files
     ensure_installed = {
       "bash",
       "beancount",
@@ -25,6 +24,10 @@ function M.setup()
       "latex",
       "lua",
       "make",
+      "markdown",
+      "markdown_inline",
+      "norg",
+      "org",
       "python",
       "r",
       "rust",
