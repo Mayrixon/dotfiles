@@ -2,8 +2,8 @@
 
 ## File locations
 
-The dotfiles are seperated into folders named as applicaions' names. In this
-way, it's convenient for `stow` to create soft links. However, softlinks cannot
+The dotfiles are separated into folders named as applications' names. In this
+way, it's convenient for `stow` to create soft links. However, soft links cannot
 modify configures without touching original files. In order to solve this
 problem, [`dotter`](https://github.com/SuperCuber/dotter) is an optional
 application.
@@ -32,7 +32,7 @@ configures with `stow`.
     - [ ] alacritty
     - [ ] i3
     - [ ] i3status-rust
-  - [-] Seperate file zshrc into multiple files, according to [this
+  - [-] Separate file zshrc into multiple files, according to [this
     answer](https://apple.stackexchange.com/a/388623):
     - [ ] zshrc
     - [ ] zprofile/zlogin
