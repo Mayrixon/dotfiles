@@ -49,8 +49,6 @@ lualine.setup({
     },
     lualine_c = {
       "filename",
-      -- INFO: move to winbar after nvim v0.8.
-      { navic.get_location, cond = navic.is_available },
     },
     lualine_x = { spell_indicator, "encoding", "fileformat", "filetype", sleuth_indicator },
     lualine_y = { "progress" },
@@ -86,5 +84,4 @@ lualine.setup({
 --   print("Missing tabby.")
 -- end
 
--- INFO: winbar will be available in neovim v0.8.
--- vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"

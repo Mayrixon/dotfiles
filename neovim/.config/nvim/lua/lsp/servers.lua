@@ -4,7 +4,6 @@ M.server_settings = {
   bashls = {},
   clangd = {},
   cmake = {},
-  diagnosticls = {},
   ltex = { settings = { ltex = { language = { "en-GB", "zh-CN" } } } },
   pyright = {},
   sumneko_lua = {

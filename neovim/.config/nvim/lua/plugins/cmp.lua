@@ -24,6 +24,7 @@ local M = {}
 
 function M.setup()
   cmp.setup({
+    performance = { debounce = 500 },
     completion = { completeopt = "menu,menuone,noselect" },
     formatting = {
       format = lspkind.cmp_format({

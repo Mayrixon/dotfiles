@@ -25,7 +25,7 @@ function M.set_lsp_keymaps(client, bufnr)
   -- Set keymaps according to LSP server capabilities
   for _, m in pairs(keymaps.lsp_keys.capability_mappings) do
     local capability, key, prefix, mode = unpack(m)
-    if client.resolved_capabilities[capability] then
+    if client.server_capabilities[capability] then
       wk.register(key, keymaps.get_wk_opts(keymaps.opts.leader[mode], prefix, bufnr))
     end
   end
