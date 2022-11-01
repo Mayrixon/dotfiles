@@ -72,7 +72,7 @@ packer.startup(function(use)
 
   -- -- File explorer
   use({
-    "kyazdani42/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     cmd = {
       "NvimTreeToggle",
@@ -323,7 +323,12 @@ packer.startup(function(use)
 
   -- Search
   use({
-    { "kevinhwang91/nvim-hlslens" },
+    {
+      "kevinhwang91/nvim-hlslens",
+      config = function()
+        require("plugins.hlslens").setup()
+      end,
+    },
     { "windwp/nvim-spectre" },
     { "voldikss/vim-browser-search" },
     {
@@ -438,7 +443,7 @@ packer.startup(function(use)
     -- },
     {
       "SidOfc/mkdx",
-      ft = { "markdown", "rmarkdown", "rmd" },
+      ft = { "markdown", "md", "rmarkdown", "rmd" },
       config = function()
         require("plugins.mkdx").setup()
       end,

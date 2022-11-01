@@ -27,7 +27,7 @@ M.leader = {
         "<Cmd>TroubleToggle document_diagnostics<CR>",
         "Document diagnostics",
       },
-      f = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
+      f = { "<Cmd>lua vim.lsp.buf.format({async = true})<CR>", "Format" },
       r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
       o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },
       w = {
