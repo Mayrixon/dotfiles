@@ -42,7 +42,7 @@ opt.listchars = "tab:> ,trail:-,extends:>,precedes:<,nbsp:+"
 opt.scrolloff = 4
 opt.sidescrolloff = 4
 opt.conceallevel = 1
-opt.concealcursor = "nc"
+opt.concealcursor = ""
 opt.wildmode = "longest,full"
 
 -----------------------------------------------------------
