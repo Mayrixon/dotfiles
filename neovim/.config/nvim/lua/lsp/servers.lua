@@ -6,19 +6,25 @@ M.server_settings = {
   cmake = {},
   ltex = { settings = { ltex = { language = { "en-GB", "zh-CN" } } } },
   pyright = {},
-  sumneko_lua = {
-    cmd = { "lua-language-server" },
+  lua_ls = {
     settings = {
       Lua = {
-        diagnostics = { globals = { "vim" } },
-        runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-        workspace = {
-          library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-          },
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = "LuaJIT",
         },
-        telemetry = { enable = false },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = { "vim" },
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files
+          library = vim.api.nvim_get_runtime_file("", true),
+        },
+        -- Do not send telemetry data containing a randomized but unique identifier
+        telemetry = {
+          enable = false,
+        },
       },
     },
   },
