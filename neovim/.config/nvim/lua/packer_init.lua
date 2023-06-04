@@ -433,14 +433,13 @@ packer.startup(function(use)
   -- -- Markdown
   use({
     { "iamcco/markdown-preview.nvim", run = "cd app && yarn install" },
-    -- { "tpope/vim-markdown" },
-    -- TODO: check the problem.
-    -- {
-    --   "lukas-reineke/headlines.nvim",
-    --   config = function()
-    --     require("headlines").setup()
-    --   end,
-    -- },
+    {
+      "lukas-reineke/headlines.nvim",
+      after = 'nvim-treesitter',
+      config = function()
+        require("headlines").setup()
+      end,
+    },
     {
       "SidOfc/mkdx",
       ft = { "markdown", "md", "rmarkdown", "rmd" },
@@ -448,7 +447,13 @@ packer.startup(function(use)
         require("plugins.mkdx").setup()
       end,
     },
-    { "ellisonleao/glow.nvim", cmd = "Glow" },
+    {
+      "ellisonleao/glow.nvim",
+      cmd = "Glow",
+      config = function()
+        require("glow").setup()
+      end
+    },
   })
 
   -- -- Rust
