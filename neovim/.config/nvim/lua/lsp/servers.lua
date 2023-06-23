@@ -28,6 +28,9 @@ M.server_settings = {
       },
     },
   },
+  sourcekit = {
+    filetypes = { "swift", "objective-c", "objective-cpp" }
+  },
   texlab = {
     settings = {
       latex = {
