@@ -29,7 +29,7 @@ function M.setup()
     formatting = {
       format = lspkind.cmp_format({
         mode = "symbol_text",
-        -- preset = 'codicons',
+        preset = 'codicons',
         menu = {
           buffer = "[Buffer]",
           nvim_lsp = "[LSP]",

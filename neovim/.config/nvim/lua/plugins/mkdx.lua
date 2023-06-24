@@ -6,7 +6,7 @@ function M.setup()
     enter = { shift = 1 },
     links = { external = { enable = 1 } },
     map = { prefix = "<localleader>l", enable = 1 },
-    toc = { text = "Table of Contents", update_on_write = 1 },
+    toc = { update_on_write = 1 },
     fold = { enable = 1 },
   }
 end

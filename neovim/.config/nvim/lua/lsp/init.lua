@@ -60,10 +60,10 @@ end
 
 -- Config diagnostic column signs.
 local diagnostic_signs = {
-  Error = "",
-  Warn = "",
-  Hint = "",
-  Info = "",
+  Error = "",
+  Warn = "",
+  Hint = "",
+  Info = "",
 }
 
 for name, sign in pairs(diagnostic_signs) do
