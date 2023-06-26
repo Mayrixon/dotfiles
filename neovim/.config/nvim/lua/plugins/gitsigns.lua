@@ -2,23 +2,30 @@ local M = {}
 
 function M.setup()
   require("gitsigns").setup({
-    keymaps = {
-      noremap = true,
+    on_attach = function(bufnr)
+      local gs = package.loaded.gitsigns
 
-      -- Hunk navigators
-      ["n ]h"] = {
-        expr = true,
-        "&diff ? ']c' : '<Cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'",
-      },
-      ["n [h"] = {
-        expr = true,
-        "&diff ? '[c' : '<Cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'",
-      },
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
+      -- Navigation
+      map('n', ']h', function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+      end, { expr = true })
 
-      -- Text objects
-      ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-      ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-    },
+      map('n', '[h', function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+      end, { expr = true })
+
+      -- Text object
+      map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end,
     current_line_blame = true,
     current_line_blame_opts = {
       virt_text = true,
