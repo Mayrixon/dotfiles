@@ -2,7 +2,7 @@ local wk = require("which-key")
 
 local mappings = {
   l = {
-    name = "Rust analyzer",
+    name = "+Rust Analyzer",
     c = { "<Cmd>RustOpenCargo<CR>", "Open cargo.toml" },
     g = { "<Cmd>RustViewCrateGraph<CR>", "View crate graph" },
     m = { "<Cmd>RustExpandMacro<CR>", "Expand macro" },
@@ -21,4 +21,4 @@ local mappings = {
   },
 }
 
-wk.register(mappings, { prefix = "<localleader>", mode = "n" })
+wk.register(mappings, { prefix = "<LocalLeader>", mode = "n" })
