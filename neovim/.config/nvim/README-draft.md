@@ -1,6 +1,6 @@
 ## About
 
-This configuration is heavily inspired by [LazyVim](https://github.com/LazyVim/LazyVim) v6.1.0.
+This configuration is heavily inspired by [LazyVim](https://github.com/LazyVim/LazyVim) v6.2.0.
 
 Mainly considered working on Linux and macOS. Working on Windows may meet minor problems.
 
