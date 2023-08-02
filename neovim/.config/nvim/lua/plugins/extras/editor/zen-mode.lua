@@ -1,7 +1,7 @@
 return {
   {
     "folke/zen-mode.nvim",
-    events = "VeryLazy",
+    event = "VeryLazy",
     keys = {
       { "<Leader>uz", "<Cmd>ZenMode<CR>", desc = "Zen Mode" },
     },
@@ -50,7 +50,7 @@ return {
 
   {
     "folke/twilight.nvim",
-    events = "VeryLazy",
+    event = "VeryLazy",
     keys = {
       { "<Leader>uh", "<Cmd>Twilight<CR>", desc = "Toggle zen-mode highlight" },
     },

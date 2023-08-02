@@ -74,7 +74,18 @@ return {
     "linux-cultist/venv-selector.nvim",
     cmd = "VenvSelect",
     opts = {},
-    keys = { { "<LocalLeader>v", "<Cmd>:VenvSelect<CR>", desc = "Select VirtualEnv" } },
+    config = function(_, opts)
+      require("venv-selector").setup(opts)
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "python",
+        callback = function()
+          vim.keymap.set("n", "<LocalLeader>v", function()
+            vim.cmd("VenvSelect")
+          end, { desc = "Select VirtualEnv", buffer = true })
+        end,
+      })
+    end,
   },
 
   {

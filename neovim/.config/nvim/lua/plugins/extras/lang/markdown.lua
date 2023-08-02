@@ -22,9 +22,9 @@ return {
     build = "cd app && yarn install",
     ft = "markdown",
     keys = {
-      { "<LocalLeader>p", "<Cmd>MarkdownPrevewToggle<CR>", desc = "Preview" },
+      { "<LocalLeader>p", "<Cmd>MarkdownPreviewToggle<CR>", desc = "Preview" },
     },
-    setup = function()
+    config = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
   },
@@ -59,8 +59,13 @@ return {
       -- Add shortcut to add wikilinks
       vim.keymap.set("n", "<LocalLeader>lw", function()
         vim.fn["mkdx#WrapText"]("n", "[[", "]]")
-      end, { desc = "Add Wiki Link to Current Word" })
-      vim.keymap.set("v", "<LocalLeader>lw", ':call mkdx#WrapText("v", "[[", "]]")<CR>', { desc = "Add Wiki Link" })
+      end, { desc = "Add Wiki Link to Current Word", buffer = true })
+      vim.keymap.set(
+        "v",
+        "<LocalLeader>lw",
+        ':call mkdx#WrapText("v", "[[", "]]")<CR>',
+        { desc = "Add Wiki Link", buffer = true }
+      )
     end,
   },
   {
