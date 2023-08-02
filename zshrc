@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 ################################################################################
 # Init
 ################################################################################
@@ -45,7 +45,7 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice wait lucid atload"!_zsh_autosuggest_start"
 zinit load zsh-users/zsh-autosuggestions
 
-# history-search-multi-word
+# zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
 zinit ice wait"1" lucid
 zinit load zdharma-continuum/history-search-multi-word
@@ -54,7 +54,7 @@ zinit ice pick"h.sh"
 zinit light paoloantinori/hhighlighter
 
 # diff-so-fancy
-zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
+zinit ice as"program" pick"bin/git-dsf"
 zinit load zdharma-continuum/zsh-diff-so-fancy
 
 zinit snippet PZTM::completion/init.zsh
@@ -64,9 +64,9 @@ PS1="READY >"
 # zinit ice wait'!' lucid
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# # 初始化补全
+# 初始化补全
 autoload -Uz compinit; compinit
-# # zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
+# zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
 zinit cdreplay -q
 
 
