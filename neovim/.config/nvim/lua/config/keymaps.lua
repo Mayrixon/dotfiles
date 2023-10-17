@@ -56,7 +56,7 @@ end
 
 -- formatting
 map({ "n", "v" }, "<leader>cf", function()
-  require("lazyvim.plugins.lsp.format").format({ force = true })
+  require("plugins.lsp.format").format({ force = true })
 end, { desc = "Format" })
 
 -- Fast copy/paste

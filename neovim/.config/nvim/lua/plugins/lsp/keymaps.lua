@@ -45,9 +45,6 @@ function M.get()
       desc = "Source Action",
       has = "codeAction",
     },
-    -- TODO: solve this part. 'format' cannot be resolved.
-    -- { "<Leader>cf", format, desc = "Format Document", has = "formatting" },
-    -- { "<Leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
   }
 
   if require("util").has("inc-rename.nvim") then
