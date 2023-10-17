@@ -1,41 +1,41 @@
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
+local function augroup(name)
+  return vim.api.nvim_create_augroup("userdef_" .. name, { clear = true })
+end
+
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+  group = augroup("checktime"),
+  command = "checktime",
+})
 
 -- Highlight on yank
-augroup("highlight_yank", { clear = true })
-autocmd("TextYankPost", {
-  group = "highlight_yank",
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = augroup("highlight_yank"),
   callback = function()
     vim.highlight.on_yank()
   end,
 })
 
--- Check if we need to reload the file when it changed
-augroup("checktime", { clear = true })
-autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = "checktime",
-  command = "checktime",
-})
-
 -- Resize splits if window got resized
-augroup("resize_splits", { clear = true })
 vim.api.nvim_create_autocmd({ "VimResized" }, {
-  group = "resize_splits",
+  group = augroup("resize_splits"),
   callback = function()
+    local current_tab = vim.fn.tabpagenr()
     vim.cmd("tabdo wincmd =")
+    vim.cmd("tabnext " .. current_tab)
   end,
 })
 
 -- Go to last loc when opening a buffer
-augroup("last_loc", { clear = true })
-autocmd("BufReadPost", {
-  group = "last_loc",
-  callback = function()
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = augroup("last_loc"),
+  callback = function(event)
     local exclude = { "gitcommit" }
-    local buf = vim.api.nvim_get_current_buf()
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+    local buf = event.buf
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
       return
     end
+    vim.b[buf].lazyvim_last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
     if mark[1] > 0 and mark[1] <= lcount then
@@ -44,10 +44,9 @@ autocmd("BufReadPost", {
   end,
 })
 
--- close some filetypes with <q>
-augroup("close_with_q", { clear = true })
-autocmd("FileType", {
-  group = "close_with_q",
+-- Close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
     "checkhealth",
@@ -60,6 +59,7 @@ autocmd("FileType", {
     "notify",
     "oil",
     "qf",
+    "query",
     "spectre_panel",
     "startuptime",
     "tsplayground",
@@ -70,10 +70,19 @@ autocmd("FileType", {
   end,
 })
 
+-- wrap and check for spell in text filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("wrap_spell"),
+  pattern = { "gitcommit", "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-augroup("auto_create_dir", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = "auto_create_dir",
+  group = augroup("auto_create_dir"),
   callback = function(event)
     if event.match:match("^%w%w+://") then
       return
@@ -84,9 +93,8 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- Terminal settings
-augroup("auto_terminal", { clear = true })
-autocmd("TermOpen", {
-  group = "auto_terminal",
+vim.api.nvim_create_autocmd("TermOpen", {
+  group = augroup("auto_terminal"),
   pattern = "*",
   desc = "Enter insert mode when switching to terminal",
   callback = function()
@@ -97,28 +105,9 @@ autocmd("TermOpen", {
     vim.cmd.startinsert()
   end,
 })
-autocmd("BufLeave", {
-  group = "auto_terminal",
+vim.api.nvim_create_autocmd("BufLeave", {
+  group = augroup("auto_terminal"),
   pattern = "term://*",
   desc = "Close terminal buffer on process exit",
   command = "stopinsert",
-})
-
--- Set indentation to 2 spaces
-augroup("setIndent", { clear = true })
-autocmd("Filetype", {
-  group = "setIndent",
-  pattern = { "xml", "html", "xhtml", "css", "scss", "javascript", "typescript", "yaml", "lua" },
-  command = "setlocal shiftwidth=2 tabstop=2",
-})
-
--- Wrap and check for spell in text filetypes
-augroup("wrap_spell", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  group = "wrap_spell",
-  pattern = { "gitcommit", "markdown", "tex" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
 })

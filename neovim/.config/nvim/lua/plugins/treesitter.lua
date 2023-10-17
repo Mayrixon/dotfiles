@@ -1,35 +1,66 @@
-local load_textobjects = false
 return {
+  -- Treesitter is a new parser generator tool that we can
+  -- use in Neovim to power faster and more accurate
+  -- syntax highlighting.
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      init = function()
-        -- disable rtp plugin, as we only need its queries for mini.ai
-        -- In case other textebject modules are enabled, we will load them
-        -- once nvim-treesitter is loaded
-        require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-        load_textobjects = true
-      end,
-    },
+    version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TSUpdateSync" },
+    event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+    dependencies = {
+      {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        config = function()
+          -- When in diff mode, we want to use the default
+          -- vim text objects c & C instead of the treesitter ones.
+          local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
+          local configs = require("nvim-treesitter.configs")
+          for name, fn in pairs(move) do
+            if name:find("goto") == 1 then
+              move[name] = function(q, ...)
+                if vim.wo.diff then
+                  local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
+                  for key, query in pairs(config or {}) do
+                    if q == query and key:find("[%]%[][cC]") then
+                      vim.cmd("normal! " .. key)
+                      return
+                    end
+                  end
+                end
+                return fn(q, ...)
+              end
+            end
+          end
+        end,
+      },
+    },
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<C-Space>", desc = "Increment selection" },
       { "<BS>", desc = "Decrement selection", mode = "x" },
     },
-    init = function()
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-      vim.opt.foldenable = false
-    end,
     ---@type TSConfig
+    ---@diagnostic disable-next-line: missing-fields
     opts = {
-      -- TODO: sync with README
+      highlight = { enable = true },
+      indent = { enable = true },
+      -- Disable for large files
+      disable = function(lang, buf)
+        local max_filesize = 500 * 1024 -- 500 KB
+        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        if ok and stats and stats.size > max_filesize then
+          return true
+        end
+      end,
       ensure_installed = {
         "bash",
-        "jsonc", -- for plugin neodev.nvim which is loaded earlier than treesitter
+        "c",
+        "diff",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "jsonc",
         "lua",
         "luadoc",
         "luap",
@@ -39,24 +70,12 @@ return {
         "query",
         "regex",
         "toml",
+        "tsx",
+        "typescript",
         "vim",
         "vimdoc",
         "yaml",
       },
-
-      highlight = {
-        enable = true,
-        disable = {},
-      },
-      -- Disable for large files
-      disable = function(lang, buf)
-        local max_filesize = 500 * 1024 -- 500 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-          return true
-        end
-      end,
-      indent = { enable = true },
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -64,6 +83,15 @@ return {
           node_incremental = "<C-Space>",
           scope_incremental = false,
           node_decremental = "<BS>",
+        },
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer" },
+          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer" },
+          goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer" },
+          goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer" },
         },
       },
     },
@@ -81,21 +109,6 @@ return {
         end, opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
-
-      if load_textobjects then
-        -- PERF: no need to load the plugin, if we only need its queries for mini.ai
-        if opts.textobjects then
-          for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-            if opts.textobjects[mod] and opts.textobjects[mod].enable then
-              local Loader = require("lazy.core.loader")
-              Loader.disabled_rtp_plugins["nvim-treesitter-textobjects"] = nil
-              local plugin = require("lazy.core.config").plugins["nvim-treesitter-textobjects"]
-              require("lazy.core.loader").source_runtime(plugin.dir, "plugin")
-              break
-            end
-          end
-        end
-      end
     end,
   },
 }

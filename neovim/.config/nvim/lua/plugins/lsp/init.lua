@@ -4,36 +4,20 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- TODO: may move to a file for plugins managing projects
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } }, -- Manage global and project-local settings
-      {
-        -- Automatically configures lua-language-server for Neovim config
-        { "folke/neodev.nvim", version = "*", opts = {} },
-        {
-          "neovim/nvim-lspconfig",
-          optional = true,
-          opts = {
-            servers = {
-              jsonls = {},
-            },
-          },
-        },
-      },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
+      -- Automatically configures lua-language-server for Neovim config
+      { "folke/neodev.nvim", opts = {} },
       {
         "williamboman/mason-lspconfig.nvim",
         dependencies = { "williamboman/mason.nvim" },
-      },
-      {
-        "hrsh7th/cmp-nvim-lsp",
-        cond = function()
-          return require("util").has("nvim-cmp")
-        end,
       },
     },
     ---@class PluginLspOpts
     opts = {
       -- options for vim.diagnostic.config()
       diagnostics = {
+        underline = true,
+        update_in_insert = false,
         virtual_text = {
           spacing = 4,
           source = "if_many",
@@ -54,9 +38,6 @@ return {
       capabilities = {},
       -- Automatically format on save
       autoformat = false,
-      -- Enable this to show formatters used in a notification
-      -- Useful for debugging formatter issues
-      format_notify = true,
       -- options for vim.lsp.buf.format
       -- `bufnr` and `filter` is handled by the LazyVim formatter,
       -- but can be also overridden when specified
@@ -67,13 +48,12 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        -- TODO: sync with README
         bashls = {},
         lua_ls = {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
           -- Use this to add any additional keymaps
           -- for specific lsp servers
-          ---@type LazyKeys[]
+          ---@type LazyKeysSpec[]
           -- keys = {},
           settings = {
             Lua = {
@@ -186,7 +166,7 @@ return {
         require("lspconfig")[server].setup(server_opts)
       end
 
-      -- get all the servers that are available thourgh mason-lspconfig
+      -- get all the servers that are available through mason-lspconfig
       local have_mason, mlsp = pcall(require, "mason-lspconfig")
       local all_mslp_servers = {}
       if have_mason then
@@ -209,13 +189,22 @@ return {
       if have_mason then
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
+
+      if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
+        local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+        Util.lsp_disable("tsserver", is_deno)
+        Util.lsp_disable("denols", function(root_dir)
+          return not is_deno(root_dir)
+        end)
+      end
     end,
   },
 
   -- formatters
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = { "mason.nvim" },
     opts = function()
       local nls = require("null-ls")
       return {
@@ -223,10 +212,48 @@ return {
         sources = {
           nls.builtins.diagnostics.zsh,
           nls.builtins.formatting.shellharden,
-          nls.builtins.formatting.shfmt,
           nls.builtins.formatting.stylua,
+          nls.builtins.formatting.shfmt,
         },
       }
+    end,
+  },
+
+  -- cmdline tools and lsp servers
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    keys = { { "<Leader>cm", "<Cmd>Mason<CR>", desc = "Mason" } },
+    build = ":MasonUpdate",
+    opts = {
+      PATH = "append",
+      ensure_installed = {
+        -- LSP servers
+        -- "lua-language-server",
+        -- "vim-language-server",
+        -- "marksman",
+        -- Formatters
+        "stylua",
+        "shfmt",
+      },
+    },
+    ---@param opts MasonSettings | {ensure_installed: string[]}
+    config = function(_, opts)
+      require("mason").setup(opts)
+      local mr = require("mason-registry")
+      local function ensure_installed()
+        for _, tool in ipairs(opts.ensure_installed) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end
+      if mr.refresh then
+        mr.refresh(ensure_installed)
+      else
+        ensure_installed()
+      end
     end,
   },
 }

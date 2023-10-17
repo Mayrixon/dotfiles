@@ -13,30 +13,29 @@ return {
   {
     "p00f/clangd_extensions.nvim",
     lazy = true,
+    config = function() end,
     opts = {
-      extensions = {
-        inlay_hints = {
-          inline = vim.fn.has("nvim-0.10") == 1,
+      inlay_hints = {
+        inline = vim.fn.has("nvim-0.10") == 1,
+      },
+      ast = {
+        --These require codicons (https://github.com/microsoft/vscode-codicons)
+        role_icons = {
+          type = "",
+          declaration = "",
+          expression = "",
+          specifier = "",
+          statement = "",
+          ["template argument"] = "",
         },
-        ast = {
-          --These require codicons (https://github.com/microsoft/vscode-codicons)
-          role_icons = {
-            type = "",
-            declaration = "",
-            expression = "",
-            specifier = "",
-            statement = "",
-            ["template argument"] = "",
-          },
-          kind_icons = {
-            Compound = "",
-            Recovery = "",
-            TranslationUnit = "",
-            PackExpansion = "",
-            TemplateTypeParm = "",
-            TemplateTemplateParm = "",
-            TemplateParamObject = "",
-          },
+        kind_icons = {
+          Compound = "",
+          Recovery = "",
+          TranslationUnit = "",
+          PackExpansion = "",
+          TemplateTypeParm = "",
+          TemplateTemplateParm = "",
+          TemplateParamObject = "",
         },
       },
     },
@@ -45,7 +44,6 @@ return {
   -- Correctly setup lspconfig for clangd 🚀
   {
     "neovim/nvim-lspconfig",
-    optional = true,
     opts = {
       servers = {
         -- Ensure mason installs the server
@@ -56,7 +54,6 @@ return {
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern(
               "Makefile",
-              "CMakeLists.txt",
               "configure.ac",
               "configure.in",
               "config.h.in",
@@ -90,7 +87,7 @@ return {
         clangd = function(_, opts)
           local clangd_ext_opts = require("util").opts("clangd_extensions.nvim")
           require("clangd_extensions").setup(vim.tbl_deep_extend("force", clangd_ext_opts or {}, { server = opts }))
-          return true
+          return false
         end,
       },
     },
@@ -98,7 +95,6 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    optional = true,
     opts = function(_, opts)
       table.insert(opts.sorting.comparators, 1, require("clangd_extensions.cmp_scores"))
     end,

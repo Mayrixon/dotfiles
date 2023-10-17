@@ -1,7 +1,6 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    optional = true,
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml" })
@@ -15,16 +14,16 @@ return {
         pyright = {},
         ruff_lsp = {},
       },
-    },
-    setup = {
-      ruff_lsp = function()
-        require("util").on_attach(function(client, _)
-          if client.name == "ruff_lsp" then
-            -- Disable hover in favor of Pyright
-            client.server_capabilities.hoverProvider = false
-          end
-        end)
-      end,
+      setup = {
+        ruff_lsp = function()
+          require("util").on_attach(function(client, _)
+            if client.name == "ruff_lsp" then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
+          end)
+        end,
+      },
     },
   },
   {
@@ -73,7 +72,6 @@ return {
   {
     "linux-cultist/venv-selector.nvim",
     cmd = "VenvSelect",
-    opts = {},
     config = function(_, opts)
       require("venv-selector").setup(opts)
 
@@ -86,10 +84,25 @@ return {
         end,
       })
     end,
+    opts = function(_, opts)
+      if require("util").has("nvim-dap-python") then
+        opts.dap_enabled = true
+      end
+      return vim.tbl_deep_extend("force", opts, {
+        name = {
+          "venv",
+          ".venv",
+          "env",
+          ".env",
+        },
+      })
+    end,
+    keys = { { "<LocalLeader>v", "<Cmd>VenvSelect<CR>", desc = "Select VirtualEnv" } },
   },
 
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
+    optional = true,
     opts = function(_, opts)
       local nls = require("null-ls")
       opts.sources = opts.sources or {}
