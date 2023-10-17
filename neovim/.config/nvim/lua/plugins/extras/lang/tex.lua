@@ -7,6 +7,7 @@ return {
       },
     },
   },
+
   -- Add BibTeX/LaTeX to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -16,6 +17,8 @@ return {
       end
       if type(opts.highlight.disable) == "table" then
         vim.list_extend(opts.highlight.disable, { "latex" })
+      else
+        opts.highlight.disable = { "latex" }
       end
     end,
   },

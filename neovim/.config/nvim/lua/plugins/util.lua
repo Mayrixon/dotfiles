@@ -1,4 +1,5 @@
 return {
+
   -- Measure startuptime
   {
     "dstein64/vim-startuptime",
@@ -8,11 +9,13 @@ return {
     end,
   },
 
-  -- Session management
+  -- Session management. This saves your session in the background,
+  -- keeping track of open buffers, window arrangement, and more.
+  -- You can restore sessions when returning through the dashboard.
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
-    opts = { options = { "buffers", "curdir", "globals", "help", "skiprtp", "tabpages", "winsize" } },
+    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
     keys = {
       {
         "<Leader>qs",
@@ -38,46 +41,6 @@ return {
     },
   },
 
-  -- Linters, formatters, and LSP/DAP servers
-  {
-    "williamboman/mason.nvim",
-    build = ":MasonUpdate",
-    cmd = "Mason",
-    event = "BufReadPre",
-    -- TODO: may remap to Leader-z
-    keys = { { "<Leader>cm", "<Cmd>Mason<CR>", desc = "Mason" } },
-    opts = {
-      PATH = "append",
-      ensure_installed = {
-        -- LSP servers
-        -- "lua-language-server",
-        -- "vim-language-server",
-        -- "marksman",
-        -- Formatters
-        "stylua",
-        "shfmt",
-      },
-    },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      local function ensure_installed()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
-            p:install()
-          end
-        end
-      end
-      if mr.refresh then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
-      end
-    end,
-  },
-
   -- Auto set buffer indent
   {
     "tpope/vim-sleuth",
@@ -86,4 +49,7 @@ return {
       { "<Leader>uS", "<Cmd>Sleuth<CR>", desc = "Sleuth" },
     },
   },
+
+  -- library used by other plugins
+  { "nvim-lua/plenary.nvim", lazy = true },
 }

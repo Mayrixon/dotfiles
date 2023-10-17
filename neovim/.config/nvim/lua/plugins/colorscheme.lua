@@ -14,14 +14,13 @@ return {
   -- tokyonight
   {
     "folke/tokyonight.nvim",
-    version = "*",
     lazy = true,
+    opts = { style = "moon" },
   },
 
   -- catppuccin
   {
     "catppuccin/nvim",
-    version = "*",
     lazy = true,
     name = "catppuccin",
     opts = {
@@ -55,11 +54,5 @@ return {
         which_key = true,
       },
     },
-  },
-
-  -- kanagawa
-  {
-    "rebelot/kanagawa.nvim",
-    lazy = true,
   },
 }

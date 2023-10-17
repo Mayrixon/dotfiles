@@ -1,12 +1,11 @@
-local Util = require("util")
-
 return {
+
   -- add typescript to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx" })
+        vim.list_extend(opts.ensure_installed, { "typescript", "tsx" })
       end
     end,
   },
@@ -14,16 +13,25 @@ return {
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "jose-elias-alvarez/typescript.nvim" },
     opts = {
       -- make sure mason installs the server
       servers = {
-        denols = { mason = false },
         ---@type lspconfig.options.tsserver
         tsserver = {
           keys = {
-            { "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", desc = "Organize Imports" },
-            { "<leader>cR", "<cmd>TypescriptRenameFile<CR>", desc = "Rename File" },
+            {
+              "<leader>co",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports.ts" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
           },
           settings = {
             typescript = {
@@ -46,32 +54,7 @@ return {
           },
         },
       },
-      setup = {
-        denols = function(_, _)
-          if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
-            local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-            Util.lsp_disable("denols", function(root_dir)
-              return not is_deno(root_dir)
-            end)
-          end
-          return true
-        end,
-        tsserver = function(_, opts)
-          require("typescript").setup({ server = opts })
-          if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
-            local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-            Util.lsp_disable("tsserver", is_deno)
-          end
-          return true
-        end,
-      },
     },
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sources, require("typescript.extensions.null-ls.code-actions"))
-    end,
   },
   {
     "mfussenegger/nvim-dap",
@@ -103,7 +86,7 @@ return {
           },
         }
       end
-      for _, language in ipairs({ "typescript", "javascript" }) do
+      for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
         if not dap.configurations[language] then
           dap.configurations[language] = {
             {
