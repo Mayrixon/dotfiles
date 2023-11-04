@@ -20,15 +20,3 @@ configures with `stow`.
 - For macOS, `neovim` is disabled now. `homebrew` would install `neovim` with
   `luv` which is not compatible with `treesitter`, which means the advantage to
   use `neovim` does not exist.
-
-## TODOs
-
-- [x] Enable autocompletion in zshrc
-- [ ] Add autocompletion command of `gh` into init.sh
-- [ ] Add dotter's local settings template
-- [-] Seperate file zshrc into multiple files, according to [this
-  answer](https://apple.stackexchange.com/a/388623):
-  - [ ] zshrc
-  - [ ] zprofile/zlogin
-  - [ ] (optional) zshenv
-  - [ ] (optional) zlogout
