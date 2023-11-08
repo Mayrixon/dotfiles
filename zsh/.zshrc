@@ -1,16 +1,4 @@
 #!/usr/bin/env zsh
-
-#TODO: re-organise this file into following sections:
-# - prompt,
-# - command completion,
-# - command correction,
-# - command suggestion,
-# - command highlighting,
-# - output coloring,
-# - aliases,
-# - key bindings,
-# - commands history management,
-# - other miscellaneous interactive tools (auto_cd, manydots-magic)...
 ################################################################################
 # Init
 ################################################################################
@@ -45,47 +33,57 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 ################################################################################
 # Plugins
 ################################################################################
 
-# Autosuggestions & fast-syntax-highlighting
-# zinit ice wait lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zinit light zdharma-continuum/fast-syntax-highlighting
-
-# zsh-autosuggestions
-zinit ice wait lucid atload"!_zsh_autosuggest_start"
-zinit load zsh-users/zsh-autosuggestions
+# Autosuggestion, Completion & fast-syntax-highlighting
+zinit wait lucid for \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+        zdharma-continuum/fast-syntax-highlighting \
+    blockf \
+        zsh-users/zsh-completions \
+    atload"!_zsh_autosuggest_start" \
+       zsh-users/zsh-autosuggestions
 
 # zdharma-continuum/history-search-multi-word
 zstyle ":history-search-multi-word" page-size "11"
-zinit ice wait"1" lucid
-zinit load zdharma-continuum/history-search-multi-word
+zinit ice wait"1" lucid for \
+    zdharma-continuum/history-search-multi-word
 
-zinit ice pick"h.sh"
-zinit light paoloantinori/hhighlighter
+# Oh-My-Zsh Plugins
+zinit wait lucid for OMZP::gpg-agent
+zinit wait lucid for OMZP::ssh-agent
 
-# diff-so-fancy
-zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
-zinit load zdharma-continuum/zsh-diff-so-fancy
-
-zinit snippet PZTM::completion/init.zsh
+zinit wait lucid for PZTM::completion/init.zsh
 
 # Provide A Simple Prompt Till The Theme Loads
 PS1="READY >"
 # zinit ice wait'!' lucid
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# 初始化补全
+# Initialize completion
+if (( $+commands[brew] ))
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
 autoload -Uz compinit; compinit
 # zinit 出于效率考虑会截获 compdef 调用，放到最后再统一应用，可以节省不少时间
 zinit cdreplay -q
-
 
 ################################################################################
 # Alias
 ################################################################################
 
+if (( $+commands[bat] ))
+then
+    alias cat='bat'
+else
+    echo "Recommend to install `bat` for a colorful output."
+fi
 alias ccat='pygmentize -g'
 
 alias cd='nocorrect cd'
@@ -93,6 +91,14 @@ alias cp='nocorrect cp -i'
 alias cpi='nocorrect cp -i'
 
 alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
+
+# use command `lsd` instead of gnu command `ls`
+if (( $+commands[lsd] ))
+then
+    alias ls='lsd'
+else
+    echo "Recommend to install `lsd` as the default `ls` command."
+fi
 
 alias l='ls -1A'
 alias la='ll -A'
@@ -104,7 +110,6 @@ alias ln='nocorrect ln -i'
 alias lni='nocorrect ln -i'
 alias locate='noglob locate'
 alias lr='ll -R'
-alias ls='ls --group-directories-first --color=auto'
 alias lt='ll -tr'
 alias lu='lt -u'
 alias lx='ll -XB'
@@ -132,9 +137,12 @@ eval "$(zoxide init zsh)"
 # Colorize
 ################################################################################
 
-# TODO: complete colorful configurations according to archlinux's wiki.
-# improved less option
-export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS'
+# Set aliases according to https://wiki.archlinux.org/title/Color_output_in_console
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+
+export LESS='--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS --use-color'
 export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
 export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
 export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
@@ -148,8 +156,6 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
 ################################################################################
 
 bindkey -v
-
-bindkey '^I^I' autosuggest-accept
 
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -295,11 +301,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTORY_IGNORE='([bf]g *|[c]#cat( *)#|cd( ..)#|l[als]#( *)#|ranger|[n]#vim|z[aiqr]#( *)#)'
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-#INFO: remove '/' from the default value. Relating to vim-kind navigations.
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+NVIM_LISTEN_ADDRESS="/tmp/nvimsocket"
 
 eval $(thefuck --alias)
 fuck-command-line() {
@@ -310,3 +312,5 @@ fuck-command-line() {
 }
 zle -N fuck-command-line
 bindkey "\e\e" fuck-command-line
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
