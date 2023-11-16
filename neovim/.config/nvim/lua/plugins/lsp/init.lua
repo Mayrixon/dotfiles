@@ -1,11 +1,12 @@
+local Util = require("util")
+
 return {
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "LazyFile",
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-      -- Automatically configures lua-language-server for Neovim config
       { "folke/neodev.nvim", opts = {} },
       {
         "williamboman/mason-lspconfig.nvim",
@@ -36,8 +37,6 @@ return {
       },
       -- add any global capabilities here
       capabilities = {},
-      -- Automatically format on save
-      autoformat = true,
       -- options for vim.lsp.buf.format
       -- `bufnr` and `filter` is handled by the LazyVim formatter,
       -- but can be also overridden when specified
@@ -84,16 +83,22 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      local Util = require("util")
-
       if Util.has("neoconf.nvim") then
         local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
         require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
       end
-      -- Setup autoformat
-      require("plugins.lsp.format").setup(opts)
-      -- setup formatting and keymaps
-      Util.on_attach(function(client, buffer)
+
+      -- setup autoformat
+      Util.format.register(Util.lsp.formatter())
+
+      -- deprectaed options
+      if opts.autoformat ~= nil then
+        vim.g.autoformat = opts.autoformat
+        Util.deprecate("nvim-lspconfig.opts.autoformat", "vim.g.autoformat")
+      end
+
+      -- setup keymaps
+      Util.lsp.on_attach(function(client, buffer)
         require("plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
@@ -118,7 +123,7 @@ return {
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
       if opts.inlay_hints.enabled and inlay_hint then
-        Util.on_attach(function(client, buffer)
+        Util.lsp.on_attach(function(client, buffer)
           if client.supports_method("textDocument/inlayHint") then
             inlay_hint(buffer, true)
           end
@@ -190,37 +195,19 @@ return {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
+      if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
         local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-        Util.lsp_disable("tsserver", is_deno)
-        Util.lsp_disable("denols", function(root_dir)
+        Util.lsp.disable("tsserver", is_deno)
+        Util.lsp.disable("denols", function(root_dir)
           return not is_deno(root_dir)
         end)
       end
     end,
   },
 
-  -- formatters
-  {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
-    opts = function()
-      local nls = require("null-ls")
-      return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-        sources = {
-          nls.builtins.diagnostics.zsh,
-          nls.builtins.formatting.shellharden,
-          nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
-        },
-      }
-    end,
-  },
-
   -- cmdline tools and lsp servers
   {
+
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<Leader>cm", "<Cmd>Mason<CR>", desc = "Mason" } },
@@ -241,6 +228,15 @@ return {
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
+      mr:on("package:install:success", function()
+        vim.defer_fn(function()
+          -- trigger FileType event to possibly load this newly installed LSP server
+          require("lazy.core.handler.event").trigger({
+            event = "FileType",
+            buf = vim.api.nvim_get_current_buf(),
+          })
+        end, 100)
+      end)
       local function ensure_installed()
         for _, tool in ipairs(opts.ensure_installed) do
           local p = mr.get_package(tool)

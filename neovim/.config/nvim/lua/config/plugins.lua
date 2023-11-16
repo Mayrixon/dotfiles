@@ -7,8 +7,8 @@ require("lazy").setup({
     { import = "plugins.extras.formatting" },
     { import = "plugins.extras.lang" },
     { import = "plugins.extras.linting" },
+    { import = "plugins.extras.lsp.none-ls" },
     { import = "plugins.extras.test" },
-    { import = "plugins.extras.treesitter" },
   },
   install = {
     -- try to load one of these colorschemes when starting an installation during startup

@@ -2,13 +2,6 @@ return {
   -- gruvbox
   {
     "ellisonleao/gruvbox.nvim",
-    -- priority = 1000,
-    opts = {
-      -- overrides = {
-      --   LspReferenceText = lsp_highlight_color,
-      --   LspReferenceWrite = lsp_highlight_color,
-      --   LspReferenceRead = lsp_highlight_color,
-    },
   },
 
   -- tokyonight
@@ -25,14 +18,19 @@ return {
     name = "catppuccin",
     opts = {
       integrations = {
+        aerial = true,
         alpha = true,
         cmp = true,
+        dashboard = true,
         flash = true,
         gitsigns = true,
+        headlines = true,
         illuminate = true,
         indent_blankline = { enabled = true },
+        leap = true,
         lsp_trouble = true,
         mason = true,
+        markdown = true,
         mini = true,
         native_lsp = {
           enabled = true,
@@ -45,12 +43,13 @@ return {
         },
         navic = { enabled = true, custom_bg = "lualine" },
         neotest = true,
+        neotree = true,
         noice = true,
         notify = true,
-        neotree = true,
         semantic_tokens = true,
         telescope = true,
         treesitter = true,
+        treesitter_context = true,
         which_key = true,
       },
     },

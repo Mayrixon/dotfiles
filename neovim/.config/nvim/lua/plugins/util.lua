@@ -15,29 +15,12 @@ return {
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
-    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" } },
+    opts = { options = vim.opt.sessionoptions:get() },
+    -- stylua: ignore
     keys = {
-      {
-        "<Leader>qs",
-        function()
-          require("persistence").load()
-        end,
-        desc = "Restore Session",
-      },
-      {
-        "<Leader>ql",
-        function()
-          require("persistence").load({ last = true })
-        end,
-        desc = "Restore Last Session",
-      },
-      {
-        "<Leader>qd",
-        function()
-          require("persistence").stop()
-        end,
-        desc = "Don't Save Current Session",
-      },
+      { "<Leader>qs", function() require("persistence").load() end, desc = "Restore Session" },
+      { "<Leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore Last Session" },
+      { "<Leader>qd", function() require("persistence").stop() end, desc = "Don't Save Current Session" },
     },
   },
 

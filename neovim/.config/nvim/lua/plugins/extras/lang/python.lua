@@ -12,11 +12,27 @@ return {
     opts = {
       servers = {
         pyright = {},
-        ruff_lsp = {},
+        ruff_lsp = {
+          keys = {
+            {
+              "<LocalLeader>o",
+              function()
+                vim.lsp.buf.code_action({
+                  apply = true,
+                  context = {
+                    only = { "source.organizeImports" },
+                    diagnostics = {},
+                  },
+                })
+              end,
+              desc = "Organize Imports",
+            },
+          },
+        },
       },
       setup = {
         ruff_lsp = function()
-          require("util").on_attach(function(client, _)
+          require("util").lsp.on_attach(function(client, _)
             if client.name == "ruff_lsp" then
               -- Disable hover in favor of Pyright
               client.server_capabilities.hoverProvider = false
@@ -60,8 +76,8 @@ return {
       "mfussenegger/nvim-dap-python",
       -- stylua: ignore
       keys = {
-        { "<Leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method" },
-        { "<Leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class" },
+        { "<Leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+        { "<Leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
       },
       config = function()
         local path = require("mason-registry").get_package("debugpy"):get_install_path()

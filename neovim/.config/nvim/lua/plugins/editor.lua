@@ -1,6 +1,7 @@
 local Util = require("util")
 
 return {
+
   -- File explorer
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -12,12 +13,10 @@ return {
       "MunifTanjim/nui.nvim",
     },
     keys = {
-      { "<Leader>e", "<Leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-      { "<Leader>E", "<Leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
       {
         "<Leader>fe",
         function()
-          require("neo-tree.command").execute({ toggle = true, dir = Util.get_root() })
+          require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
         end,
         desc = "Explorer NeoTree (root dir)",
       },
@@ -28,12 +27,28 @@ return {
         end,
         desc = "Explorer NeoTree (cwd)",
       },
+      { "<Leader>e", "<Leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
+      { "<Leader>E", "<Leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+      {
+        "<leader>ge",
+        function()
+          require("neo-tree.command").execute({ source = "git_status", toggle = true })
+        end,
+        desc = "Git explorer",
+      },
+      {
+        "<leader>be",
+        function()
+          require("neo-tree.command").execute({ source = "buffers", toggle = true })
+        end,
+        desc = "Buffer explorer",
+      },
     },
     deactivate = function()
       vim.cmd([[Neotree close]])
     end,
     init = function()
-      if vim.fn.argc() == 1 then
+      if vim.fn.argc(-1) == 1 then
         local stat = vim.loop.fs_stat(vim.fn.argv(0))
         if stat and stat.type == "directory" then
           require("neo-tree")
@@ -44,7 +59,7 @@ return {
       local icons = require("config").icons
       return {
         sources = { "filesystem", "buffers", "git_status" },
-        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "Outline" }, -- when opening files, do not use windows containing these filetypes or buftypes
+        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "Outline" },
         filesystem = {
           bind_to_cwd = false,
           follow_current_file = { enabled = true },
@@ -95,7 +110,7 @@ return {
     end,
     config = function(_, opts)
       local function on_move(data)
-        Util.on_rename(data.source, data.destination)
+        Util.lsp.on_rename(data.source, data.destination)
       end
 
       local events = require("neo-tree.events")
@@ -121,14 +136,9 @@ return {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
+    -- stylua: ignore
     keys = {
-      {
-        "<Leader>sr",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace in files (Spectre)",
-      },
+      { "<Leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
   },
 
@@ -163,12 +173,17 @@ return {
       },
     },
     keys = {
-      { "<Leader>,", "<Cmd>Telescope buffers show_all_buffers=true<CR>", desc = "Switch Buffer" },
+      {
+        "<Leader>,",
+        "<Cmd>Telescope buffers sort_mru=true sort_lastused=true<CR>",
+        desc = "Switch Buffer",
+      },
       { "<Leader>/", Util.telescope("live_grep"), desc = "Grep (root dir)" },
       { "<Leader>:", "<Cmd>Telescope command_history<CR>", desc = "Command History" },
       { "<Leader><Space>", Util.telescope("files"), desc = "Find Files (root dir)" },
       -- Find
-      { "<Leader>fb", "<Cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "<Leader>fb", "<Cmd>Telescope buffers sort_mru=true sort_lastused=true<CR>", desc = "Buffers" },
+      { "<leader>fc", Util.telescope.config_files(), desc = "Find Config File" },
       { "<Leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
       { "<Leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
       { "<Leader>fr", "<Cmd>Telescope frecency<CR>", desc = "Recent" },
@@ -189,8 +204,8 @@ return {
       { "<Leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Help Pages" },
       { "<Leader>sH", "<Cmd>Telescope highlights<CR>", desc = "Search Highlight Groups" },
       { "<Leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Key Maps" },
-      { "<Leader>sm", "<Cmd>Telescope marks<CR>", desc = "Jump to Mark" },
       { "<Leader>sM", "<Cmd>Telescope man_pages<CR>", desc = "Man Pages" },
+      { "<Leader>sm", "<Cmd>Telescope marks<CR>", desc = "Jump to Mark" },
       { "<Leader>so", "<Cmd>Telescope vim_options<CR>", desc = "Options" },
       { "<Leader>sR", "<Cmd>Telescope resume<CR>", desc = "Resume" },
       { "<Leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
@@ -200,42 +215,20 @@ return {
       { "<Leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
       {
         "<Leader>ss",
-        Util.telescope("lsp_document_symbols", {
-          symbols = {
-            "Class",
-            "Function",
-            "Method",
-            "Constructor",
-            "Interface",
-            "Module",
-            "Struct",
-            "Trait",
-            "Field",
-            "Property",
-            "Enum",
-            "Constant",
-          },
-        }),
+        function()
+          require("telescope.builtin").lsp_document_symbols({
+            symbols = require("config").get_kind_filter(),
+          })
+        end,
         desc = "Goto Symbol",
       },
       {
         "<Leader>sS",
-        Util.telescope("lsp_dynamic_workspace_symbols", {
-          symbols = {
-            "Class",
-            "Function",
-            "Method",
-            "Constructor",
-            "Interface",
-            "Module",
-            "Struct",
-            "Trait",
-            "Field",
-            "Property",
-            "Enum",
-            "Constant",
-          },
-        }),
+        function()
+          require("telescope.builtin").lsp_dynamic_workspace_symbols({
+            symbols = require("config").get_kind_filter(),
+          })
+        end,
         desc = "Goto Symbol (Workspace)",
       },
     },
@@ -258,32 +251,45 @@ return {
         local line = action_state.get_current_line()
         Util.telescope("find_files", { hidden = true, default_text = line })()
       end
+
       return {
         defaults = {
+          prompt_prefix = " ",
+          selection_caret = " ",
+          -- open files in the first window that is an actual file.
+          -- use the current window if no other window is available.
+          get_selection_window = function()
+            local wins = vim.api.nvim_list_wins()
+            table.insert(wins, 1, vim.api.nvim_get_current_win())
+            for _, win in ipairs(wins) do
+              local buf = vim.api.nvim_win_get_buf(win)
+              if vim.bo[buf].buftype == "" then
+                return win
+              end
+            end
+            return 0
+          end,
           mappings = {
             i = {
-              ["<C-B>"] = actions.preview_scrolling_up,
-              ["<C-Down>"] = actions.cycle_history_next,
-              ["<C-F>"] = actions.preview_scrolling_down,
-              ["<C-Up>"] = actions.cycle_history_prev,
-              ["<M-h>"] = find_files_with_hidden,
-              ["<M-i>"] = find_files_no_ignore,
               ["<M-t>"] = open_with_trouble,
               ["<M-T>"] = open_selected_with_trouble,
+              ["<M-i>"] = find_files_no_ignore,
+              ["<M-h>"] = find_files_with_hidden,
+              ["<C-Down>"] = actions.cycle_history_next,
+              ["<C-Up>"] = actions.cycle_history_prev,
+              ["<C-F>"] = actions.preview_scrolling_down,
+              ["<C-B>"] = actions.preview_scrolling_up,
             },
             n = {
               ["<M-t>"] = open_with_trouble,
+              ["<M-T>"] = open_selected_with_trouble,
               ["q"] = actions.close,
             },
           },
         },
         extensions = {
           frecency = {
-            -- TODO: move these folder path to lua/config or local settings
-            workspaces = {
-              ["dotfiles"] = vim.env.HOME .. "/" .. "dotfiles",
-              ["notes"] = vim.env.HOME .. "/" .. "notes",
-            },
+            workspaces = require("config").workspaces,
           },
         },
       }
@@ -315,7 +321,7 @@ return {
     "nvim-telescope/telescope.nvim",
     optional = true,
     opts = function(_, opts)
-      if not require("util").has("flash.nvim") then
+      if not Util.has("flash.nvim") then
         return
       end
       local function flash(prompt_bufnr)
@@ -348,17 +354,13 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      plugins = {
-        spelling = true,
-        registers = true,
-      },
+      plugins = { spelling = true },
       defaults = {
         mode = { "n", "v" },
-        ["["] = { name = "+Prev" },
-        ["]"] = { name = "+Next" },
         ["g"] = { name = "+Goto" },
+        ["]"] = { name = "+Next" },
+        ["["] = { name = "+Prev" },
         ["<Leader><Tab>"] = { name = "+Tabs" },
-        ["<Leader>T"] = { name = "+Toggle Options" },
         ["<Leader>b"] = { name = "+Buffer" },
         ["<Leader>c"] = { name = "+Code" },
         ["<Leader>f"] = { name = "+File/Find" },
@@ -366,6 +368,7 @@ return {
         ["<Leader>gh"] = { name = "+Hunks" },
         ["<Leader>q"] = { name = "+Quit/Session" },
         ["<Leader>s"] = { name = "+Search" },
+        ["<Leader>T"] = { name = "+Toggle Options" },
         ["<Leader>u"] = { name = "+Utilities" },
         ["<Leader>w"] = { name = "+Windows" },
         ["<Leader>x"] = { name = "+Diagnostics/Quickfix" },
@@ -383,7 +386,7 @@ return {
   -- hunks in a commit.
   {
     "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    event = "LazyFile",
     opts = {
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
@@ -391,25 +394,11 @@ return {
         local function map(mode, l, r, desc)
           vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
         end
+
+        -- stylua: ignore start
         -- Navigation
-        map("n", "]h", function()
-          if vim.wo.diff then
-            return "]c"
-          end
-          vim.schedule(function()
-            gs.next_hunk()
-          end)
-          return "<Ignore>"
-        end, "Next Hunk")
-        map("n", "[h", function()
-          if vim.wo.diff then
-            return "[c"
-          end
-          vim.schedule(function()
-            gs.prev_hunk()
-          end)
-          return "<Ignore>"
-        end, "Prev Hunk")
+        map("n", "]h", function() if vim.wo.diff then return "]c" end vim.schedule(function() gs.next_hunk() end) return "<Ignore>" end, "Next Hunk")
+        map("n", "[h", function() if vim.wo.diff then return "[c" end vim.schedule(function() gs.prev_hunk() end) return "<Ignore>" end, "Prev Hunk")
 
         -- Actions
         map({ "n", "v" }, "<Leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
@@ -418,13 +407,9 @@ return {
         map("n", "<Leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<Leader>ghR", gs.reset_buffer, "Reset Buffer")
         map("n", "<Leader>ghp", gs.preview_hunk, "Preview Hunk")
-        map("n", "<Leader>ghb", function()
-          gs.blame_line({ full = true })
-        end, "Blame Line")
+        map("n", "<Leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
         map("n", "<Leader>ghd", gs.diffthis, "Diff This")
-        map("n", "<Leader>ghD", function()
-          gs.diffthis("~")
-        end, "Diff This ~")
+        map("n", "<Leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
 
         -- Toggles
         map("n", "<Leader>Tb", gs.toggle_current_line_blame, "Toggle Current Line [B]lame")
@@ -432,6 +417,7 @@ return {
 
         -- Text object
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        -- stylua: ignore end
       end,
     },
   },
@@ -441,7 +427,7 @@ return {
   -- instances.
   {
     "RRethy/vim-illuminate",
-    event = { "BufReadPost", "BufNewFile" },
+    event = "LazyFile",
     opts = {
       delay = 200,
       filetypes_denylist = { "neotree", "terminal" },
@@ -480,6 +466,7 @@ return {
   -- Buffer remove
   {
     "echasnovski/mini.bufremove",
+
     keys = {
       {
         "<Leader>bd",
@@ -499,13 +486,8 @@ return {
         end,
         desc = "Delete Buffer",
       },
-      {
-        "<Leader>bD",
-        function()
-          require("mini.bufremove").delete(0, true)
-        end,
-        desc = "Delete Buffer (Force)",
-      },
+      -- stylua: ignore
+      { "<Leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     },
   },
 
@@ -557,23 +539,12 @@ return {
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
-    event = { "BufReadPost", "BufNewFile" },
+    event = "LazyFile",
     config = true,
+    -- stylua: ignore
     keys = {
-      {
-        "]t",
-        function()
-          require("todo-comments").jump_next()
-        end,
-        desc = "Next todo comment",
-      },
-      {
-        "[t",
-        function()
-          require("todo-comments").jump_prev()
-        end,
-        desc = "Previous todo comment",
-      },
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment", },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment", },
       { "<Leader>xt", "<Cmd>TodoTrouble<CR>", desc = "Todo (Trouble)" },
       { "<Leader>xT", "<Cmd>TodoTrouble keywords=TODO,FIX,FIXME<CR>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<Leader>st", "<Cmd>TodoTelescope<CR>", desc = "Todo" },

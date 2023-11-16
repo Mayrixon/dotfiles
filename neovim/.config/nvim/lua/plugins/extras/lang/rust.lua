@@ -88,7 +88,6 @@ return {
   -- Correctly setup lspconfig for Rust 🚀
   {
     "neovim/nvim-lspconfig",
-    optional = true,
     opts = {
       servers = {
         -- Ensure mason installs the server
