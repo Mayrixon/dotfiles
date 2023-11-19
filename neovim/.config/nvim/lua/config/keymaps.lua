@@ -98,13 +98,13 @@ map("n", "<Leader>bc", "<Cmd>call DeleteHiddenBuffers()<CR>", { desc = "Clear al
 -- toggle options
 map("n", "<Leader>Tf", function() Util.format.toggle() end, { desc = "Toggle auto format (global)" })
 map("n", "<Leader>TF", function() Util.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
-map("n", "<Leader>Ts", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
-map("n", "<Leader>Tw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
-map("n", "<Leader>TL", function() Util.toggle("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
+map("n", "<Leader>Ts", function() Util.toggle.option("spell") end, { desc = "Toggle Spelling" })
+map("n", "<Leader>Tw", function() Util.toggle.option("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<Leader>TL", function() Util.toggle.option("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
 map("n", "<Leader>Tl", function() Util.toggle.number() end, { desc = "Toggle Line Numbers" })
 map("n", "<Leader>Td", function()Util.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
-map("n", "<Leader>Tc", function() Util.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
+map("n", "<Leader>Tc", function() Util.toggle.option("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
 if vim.lsp.inlay_hint then
   map("n", "<Leader>Th", function() vim.lsp.inlay_hint(0, nil) end, { desc = "Toggle Inlay Hints" })
 end

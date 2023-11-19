@@ -5,6 +5,7 @@ local LazyUtil = require("lazy.core.util")
 ---@field lsp util.lsp
 ---@field root util.root
 ---@field telescope util.telescope
+---@field toggle util.toggle
 ---@field format util.format
 ---@field plugin util.plugin
 ---@field inject util.inject
