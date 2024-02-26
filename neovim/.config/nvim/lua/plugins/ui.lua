@@ -99,6 +99,11 @@ return {
           lualine_a = { "mode" },
           lualine_b = { "branch" },
           lualine_c = {
+            -- stylua: ignore
+            {
+              function() return "[noeol]" end,
+              cond = function() return not vim.bo.eol end,
+            },
             Util.lualine.root_dir(),
             {
               "diagnostics",
