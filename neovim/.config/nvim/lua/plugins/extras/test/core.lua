@@ -110,6 +110,7 @@ return {
       { "<Leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run File" },
       { "<Leader>tT", function() require("neotest").run.run(vim.loop.cwd()) end, desc = "Run All Test Files" },
       { "<Leader>tr", function() require("neotest").run.run() end, desc = "Run Nearest" },
+      { "<Leader>tl", function() require("neotest").run.run_last() end, desc = "Run Last" },
       { "<Leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle Summary" },
       { "<Leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
       { "<Leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel" },

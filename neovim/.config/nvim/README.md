@@ -1,7 +1,7 @@
 ## About
 
 This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v9.9.1.
+[LazyVim](https://github.com/LazyVim/LazyVim) v10.10.0.
 
 This configuration is mainly considered for working on Linux and macOS. Working
 on Windows may meet minor problems.

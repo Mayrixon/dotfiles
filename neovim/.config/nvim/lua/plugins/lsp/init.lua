@@ -28,12 +28,20 @@ return {
           -- prefix = "icons",
         },
         severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = require("config").icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = require("config").icons.diagnostics.Warn,
+            [vim.diagnostic.severity.HINT] = require("config").icons.diagnostics.Hint,
+            [vim.diagnostic.severity.INFO] = require("config").icons.diagnostics.Info,
+          },
+        },
       },
       -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the inlay hints.
       inlay_hints = {
-        enabled = false,
+        enabled = true,
       },
       -- add any global capabilities here
       capabilities = {},
@@ -120,12 +128,10 @@ return {
         vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
       end
 
-      local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
-
-      if opts.inlay_hints.enabled and inlay_hint then
+      if opts.inlay_hints.enabled then
         Util.lsp.on_attach(function(client, buffer)
           if client.supports_method("textDocument/inlayHint") then
-            inlay_hint(buffer, true)
+            Util.toggle.inlay_hints(buffer, true)
           end
         end)
       end

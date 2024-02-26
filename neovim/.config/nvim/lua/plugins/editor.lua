@@ -68,6 +68,11 @@ return {
         window = {
           mappings = {
             ["<space>"] = "none",
+            ["Y"] = function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              vim.fn.setreg("+", path, "c")
+            end,
             ["<tab>"] = "toggle_node",
             ["s"] = "open_split",
             ["v"] = "open_vsplit",
@@ -169,7 +174,6 @@ return {
             require("telescope").load_extension("frecency")
           end)
         end,
-        dependencies = { "kkharji/sqlite.lua" },
       },
     },
     keys = {
@@ -186,6 +190,7 @@ return {
       { "<leader>fc", Util.telescope.config_files(), desc = "Find Config File" },
       { "<Leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
       { "<Leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
+      { "<Leader>fg", "<Cmd>Telescope git_files<CR>", desc = "Find Files (git-files)" },
       { "<Leader>fr", "<Cmd>Telescope frecency<CR>", desc = "Recent" },
       { "<Leader>fR", "<Cmd>Telescope frecency workspace=CWD<CR>", desc = "Recent (cwd)" },
       -- Git
@@ -406,7 +411,7 @@ return {
         map("n", "<Leader>ghS", gs.stage_buffer, "Stage Buffer")
         map("n", "<Leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<Leader>ghR", gs.reset_buffer, "Reset Buffer")
-        map("n", "<Leader>ghp", gs.preview_hunk, "Preview Hunk")
+        map("n", "<Leader>ghp", gs.preview_hunk_inline, "Preview Hunk")
         map("n", "<Leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
         map("n", "<Leader>ghd", gs.diffthis, "Diff This")
         map("n", "<Leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
