@@ -2,13 +2,22 @@ return {
   -- gruvbox
   {
     "ellisonleao/gruvbox.nvim",
+    opts = {
+      transparent_mode = true,
+      overrides = {
+        NotifyBackground = { bg = "#000000" },
+      },
+    },
   },
 
   -- tokyonight
   {
     "folke/tokyonight.nvim",
     lazy = true,
-    opts = { style = "moon" },
+    opts = {
+      style = "moon",
+      transparent = true,
+    },
   },
 
   -- catppuccin
@@ -17,6 +26,7 @@ return {
     lazy = true,
     name = "catppuccin",
     opts = {
+      transparent_mode = true,
       integrations = {
         aerial = true,
         alpha = true,
