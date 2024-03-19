@@ -17,10 +17,10 @@ return {
         "DiffviewFileHistory",
       },
       keys = {
-        { "<Leader>gdF", "<Cmd>DiffviewFocusFiles<CR>", desc = "Focus Current File" },
         { "<Leader>gdc", "<Cmd>DiffviewClose<Cr>", desc = "Close Diffview" },
         { "<Leader>gdd", "<Cmd>DiffviewOpen<Cr>", desc = "Open [D]iffview" },
-        { "<Leader>gdf", "<Cmd>DiffviewFileHistory<CR>", desc = "Open [F]iles History" },
+        { "<Leader>gdf", "<Cmd>DiffviewFocusFiles<CR>", desc = "Focus Current File" },
+        { "<Leader>gdh", "<Cmd>DiffviewFileHistory<CR>", desc = "Open Currnet File [H]istory" },
       },
     },
   },

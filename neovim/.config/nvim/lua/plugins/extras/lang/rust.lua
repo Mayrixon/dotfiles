@@ -48,14 +48,13 @@ return {
     ft = { "rust" },
     opts = {
       server = {
-        on_attach = function(client, bufnr)
-          -- register which-key mappings
-          local wk = require("which-key")
-          -- stylua: ignore
-          wk.register({
-            ["<LocalLeader>a"] = { function() vim.cmd.RustLsp("codeAction") end, "Code Action (Rust)", },
-            ["<LocalLeader>d"] = { function() vim.cmd.RustLsp("debuggables") end, "Rust debuggables (Rust)", },
-          }, { mode = "n", buffer = bufnr })
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", "<LocalLeader>a", function()
+            vim.cmd.RustLsp("codeAction")
+          end, { desc = "Code Action", buffer = bufnr })
+          vim.keymap.set("n", "<LocalLeader>d", function()
+            vim.cmd.RustLsp("debuggables")
+          end, { desc = "Rust debuggables", buffer = bufnr })
         end,
         default_settings = {
           -- rust-analyzer language server configuration

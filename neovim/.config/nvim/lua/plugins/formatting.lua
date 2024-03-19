@@ -18,9 +18,7 @@ function M.setup(_, opts)
   for _, key in ipairs({ "format_on_save", "format_after_save" }) do
     if opts[key] then
       Util.warn(
-        ("Don't set `opts.%s` for `conform.nvim`.\n**NeoVim** will use the conform formatter automatically"):format(
-          key
-        )
+        ("Don't set `opts.%s` for `conform.nvim`.\n**NeoVim** will use the conform formatter automatically"):format(key)
       )
       ---@diagnostic disable-next-line: no-unknown
       opts[key] = nil
@@ -84,6 +82,7 @@ return {
           timeout_ms = 3000,
           async = false, -- not recommended to change
           quiet = false, -- not recommended to change
+          lsp_fallback = true, -- not recommended to change
         },
         ---@type table<string, conform.FormatterUnit[]>
         formatters_by_ft = {

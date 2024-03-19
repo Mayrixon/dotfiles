@@ -110,11 +110,27 @@ if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
 end
 map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
 
+-- lazygit
+map("n", "<Leader>gg", function() Util.terminal({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false }) end, { desc = "Lazygit (root dir)" })
+map("n", "<Leader>gG", function() Util.terminal({ "lazygit" }, {esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (cwd)" })
+
+map("n", "<Leader>gf", function()
+  local git_path = vim.fn.system("git ls-files --full-name " .. vim.api.nvim_buf_get_name(0))
+  Util.terminal({ "lazygit", "-f", vim.trim(git_path) }, { esc_esc = false, ctrl_hjkl = false })
+end, { desc = "Lazygit current file history" })
+
 -- quit
 map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
 
 -- highlights under cursor
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+
+-- floating terminal
+local lazyterm = function() Util.terminal(nil, { cwd = Util.root() }) end
+map("n", "<Leader>ft", lazyterm, { desc = "Terminal (root dir)" })
+map("n", "<Leader>fT", function() Util.terminal() end, { desc = "Terminal (cwd)" })
+map("n", "<C-/>", lazyterm, { desc = "Terminal (root dir)" })
+map("n", "<C-_>", lazyterm, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<Esc><Esc>", "<C-\\><C-N>", { desc = "Enter Normal Mode" })

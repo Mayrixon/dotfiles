@@ -68,11 +68,14 @@ return {
         window = {
           mappings = {
             ["<space>"] = "none",
-            ["Y"] = function(state)
-              local node = state.tree:get_node()
-              local path = node:get_id()
-              vim.fn.setreg("+", path, "c")
-            end,
+            ["Y"] = {
+              function(state)
+                local node = state.tree:get_node()
+                local path = node:get_id()
+                vim.fn.setreg("+", path, "c")
+              end,
+              desc = "copy path to clipboard",
+            },
             ["<tab>"] = "toggle_node",
             ["s"] = "open_split",
             ["v"] = "open_vsplit",
@@ -363,6 +366,7 @@ return {
       defaults = {
         mode = { "n", "v" },
         ["g"] = { name = "+Goto" },
+        ["z"] = { name = "+Fold" },
         ["]"] = { name = "+Next" },
         ["["] = { name = "+Prev" },
         ["<Leader><Tab>"] = { name = "+Tabs" },
