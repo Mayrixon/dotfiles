@@ -1,0 +1,2 @@
+[filetype]
+rules = [{ name = "*/", fg = "blue", bold = true }]

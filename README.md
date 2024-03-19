@@ -20,3 +20,14 @@ configures with `stow`.
 - For macOS, `neovim` is disabled now. `homebrew` would install `neovim` with
   `luv` which is not compatible with `treesitter`, which means the advantage to
   use `neovim` does not exist.
+
+## Notes
+
+- `tmux` requires `tpm` to install plugins, which should be completed by
+
+  ```bash
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ```
+
+- `hyprland` requires `wofi` as the menu provider, `dolphin` as the file manager,
+  and `swaylock` to lock screens.
