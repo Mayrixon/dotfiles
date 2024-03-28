@@ -1,5 +1,3 @@
-local Util = require("util")
-
 return {
   -- Better `vim.notify()`
   {
@@ -10,10 +8,11 @@ return {
         function()
           require("notify").dismiss({ silent = true, pending = true })
         end,
-        desc = "Dismiss all Notifications",
+        desc = "Dismiss All Notifications",
       },
     },
     opts = {
+      stages = "static",
       timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.75)
@@ -27,8 +26,8 @@ return {
     },
     init = function()
       -- when noice is not enabled, install notify on VeryLazy
-      if not Util.has("noice.nvim") then
-        Util.on_very_lazy(function()
+      if not MyVim.has("noice.nvim") then
+        MyVim.on_very_lazy(function()
           vim.notify = require("notify")
         end)
       end
@@ -104,7 +103,7 @@ return {
               function() return "[noeol]" end,
               cond = function() return not vim.bo.eol end,
             },
-            Util.lualine.root_dir(),
+            MyVim.lualine.root_dir(),
             {
               "diagnostics",
               symbols = {
@@ -115,7 +114,7 @@ return {
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { Util.lualine.pretty_path() },
+            { MyVim.lualine.pretty_path() },
           },
           lualine_x = {
             -- stylua: ignore
@@ -135,25 +134,25 @@ return {
               -- Display keystrokes such as `gcc`
               function() return require("noice").api.status.command.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-              color = Util.ui.fg("Statement"),
+              color = MyVim.ui.fg("Statement"),
             },
             -- stylua: ignore
             {
               -- Display mode such as `recording @q`
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-              color = Util.ui.fg("Constant"),
+              color = MyVim.ui.fg("Constant"),
             },
             -- stylua: ignore
             {
               function() return "  " .. require("dap").status() end,
               cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-              color = Util.ui.fg("Debug"),
+              color = MyVim.ui.fg("Debug"),
             },
             {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
-              color = Util.ui.fg("Special"),
+              color = MyVim.ui.fg("Special"),
             },
             {
               "diff",
@@ -309,7 +308,7 @@ return {
   {
     "folke/which-key.nvim",
     opts = function(_, opts)
-      if Util.has("noice.nvim") then
+      if MyVim.has("noice.nvim") then
         opts.defaults["<Leader>sn"] = { name = "+Noice" }
       end
     end,
@@ -354,8 +353,8 @@ return {
       { "<Leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
       { "<Leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
       { "<Leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-      { "<C-F>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll forward", mode = { "i", "n", "s" } },
-      { "<C-B>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll backward", mode = { "i", "n", "s" } },
+      { "<C-F>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = { "i", "n", "s" } },
+      { "<C-B>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = { "i", "n", "s" } },
     },
   },
 
@@ -379,11 +378,11 @@ return {
         config = {
         -- stylua: ignore
         center = {
-            { action = Util.telescope("files"),                                    desc = " Find file",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
-            { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
-            { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "g" },
-            { action = [[lua require("util").telescope.config_files()()]],         desc = " Config",          icon = " ", key = "c" },
+            { action = MyVim.telescope("files"),                                    desc = " Find File",       icon = " ", key = "f" },
+            { action = "ene | startinsert",                                        desc = " New File",        icon = " ", key = "n" },
+            { action = "Telescope oldfiles",                                       desc = " Recent Files",    icon = " ", key = "r" },
+            { action = "Telescope live_grep",                                      desc = " Find Text",       icon = " ", key = "g" },
+            { action = [[lua MyVim.telescope.config_files()()]],         desc = " Config",          icon = " ", key = "c" },
             { action = 'lua require("persistence").load()',                        desc = " Restore Session", icon = " ", key = "s" },
             { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
@@ -424,7 +423,7 @@ return {
     lazy = true,
     init = function()
       vim.g.navic_silence = true
-      Util.lsp.on_attach(function(client, buffer)
+      MyVim.lsp.on_attach(function(client, buffer)
         if client.supports_method("textDocument/documentSymbol") then
           require("nvim-navic").attach(client, buffer)
         end

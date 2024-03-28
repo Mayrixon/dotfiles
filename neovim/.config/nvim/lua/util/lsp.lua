@@ -1,5 +1,3 @@
-local Util = require("util")
-
 ---@class util.lsp
 local M = {}
 
@@ -87,10 +85,10 @@ function M.formatter(opts)
     primary = true,
     priority = 1,
     format = function(buf)
-      M.format(Util.merge(filter, { bufnr = buf }))
+      M.format(MyVim.merge({}, filter, { bufnr = buf }))
     end,
     sources = function(buf)
-      local clients = M.get_clients(Util.merge(filter, { bufnr = buf }))
+      local clients = M.get_clients(MyVim.merge({}, filter, { bufnr = buf }))
       ---@param client lsp.Client
       local ret = vim.tbl_filter(function(client)
         return client.supports_method("textDocument/formatting")
@@ -102,7 +100,7 @@ function M.formatter(opts)
       end, ret)
     end,
   }
-  return Util.merge(ret, opts) --[[@as Formatter]]
+  return MyVim.merge(ret, opts) --[[@as Formatter]]
 end
 
 ---@alias lsp.Client.format {timeout_ms?: number, format_options?: table} | lsp.Client.filter
@@ -113,8 +111,8 @@ function M.format(opts)
     "force",
     {},
     opts or {},
-    require("util").opts("nvim-lspconfig").format or {},
-    require("util").opts("conform.nvim").format or {}
+    MyVim.opts("nvim-lspconfig").format or {},
+    MyVim.opts("conform.nvim").format or {}
   )
   local ok, conform = pcall(require, "conform")
   -- use conform for formatting with LSP when available,

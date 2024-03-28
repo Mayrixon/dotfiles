@@ -1,4 +1,4 @@
-local Util = require("util")
+_G.MyVim = require("util")
 
 ---@class Config: Options
 local M = {}
@@ -140,7 +140,7 @@ function M.json.load()
     if ok then
       M.json.data = vim.tbl_deep_extend("force", M.json.data, json or {})
       if M.json.data.version ~= M.json.version then
-        Util.json.migrate()
+        MyVim.json.migrate()
       end
     end
   end
@@ -169,13 +169,13 @@ function M.setup(opts)
       end
       M.load("keymaps")
 
-      Util.format.setup()
-      Util.root.setup()
+      MyVim.format.setup()
+      MyVim.root.setup()
     end,
   })
 
-  Util.track("colorscheme")
-  Util.try(function()
+  MyVim.track("colorscheme")
+  MyVim.try(function()
     if type(M.colorscheme) == "function" then
       M.colorscheme()
     else
@@ -184,11 +184,11 @@ function M.setup(opts)
   end, {
     msg = "Could not load your colorscheme",
     on_error = function(msg)
-      Util.error(msg)
+      MyVim.error(msg)
       vim.cmd.colorscheme("habamax")
     end,
   })
-  Util.track()
+  MyVim.track()
 end
 
 ---@param buf? number
@@ -210,7 +210,7 @@ end
 function M.load(name)
   local function _load(mod)
     if require("lazy.core.cache").find(mod)[1] then
-      Util.try(function()
+      MyVim.try(function()
         require(mod)
       end, { msg = "Failed loading " .. mod })
     end
@@ -232,19 +232,19 @@ function M.init()
   M.did_init = true
 
   package.preload["plugins.lsp.format"] = function()
-    Util.deprecate([[require("plugins.lsp.format")]], [[require("util").format]])
-    return Util.format
+    MyVim.deprecate([[require("plugins.lsp.format")]], [[MyVim.format]])
+    return MyVim.format
   end
 
   -- delay notifications till vim.notify was replaced or after 500ms
-  require("util").lazy_notify()
+  MyVim.lazy_notify()
 
   -- load options here, before lazy init while sourcing plugin modules
   -- this is needed to make sure options will be correctly applied
   -- after installing missing plugins
   M.load("options")
 
-  Util.plugin.setup()
+  MyVim.plugin.setup()
   M.json.load()
 
   require("config/plugins")

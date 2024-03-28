@@ -94,7 +94,7 @@ return {
     { "<Leader>dc", function() require("dap").continue() end, desc = "Continue" },
     { "<Leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
     { "<Leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-    { "<Leader>dg", function() require("dap").goto_() end, desc = "Go to line (no execute)" },
+    { "<Leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
     { "<Leader>di", function() require("dap").step_into() end, desc = "Step Into" },
     { "<Leader>dj", function() require("dap").down() end, desc = "Down" },
     { "<Leader>dk", function() require("dap").up() end, desc = "Up" },

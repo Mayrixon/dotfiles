@@ -45,8 +45,8 @@ return {
     },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
-      { "<C-Space>", desc = "Increment selection" },
-      { "<BS>", desc = "Decrement selection", mode = "x" },
+      { "<C-Space>", desc = "Increment Selection" },
+      { "<BS>", desc = "Decrement Selection", mode = "x" },
     },
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
@@ -130,13 +130,12 @@ return {
       {
         "<Leader>Tt",
         function()
-          local Util = require("util")
           local tsc = require("treesitter-context")
           tsc.toggle()
-          if Util.inject.get_upvalue(tsc.toggle, "enabled") then
-            Util.info("Enabled Treesitter Context", { title = "Option" })
+          if MyVim.inject.get_upvalue(tsc.toggle, "enabled") then
+            MyVim.info("Enabled Treesitter Context", { title = "Option" })
           else
-            Util.warn("Disabled Treesitter Context", { title = "Option" })
+            MyVim.warn("Disabled Treesitter Context", { title = "Option" })
           end
         end,
         desc = "Toggle Treesitter Context",

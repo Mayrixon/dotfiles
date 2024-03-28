@@ -1,4 +1,3 @@
-local Util = require("util")
 
 return {
   -- formatters
@@ -7,13 +6,13 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
     init = function()
-      Util.on_very_lazy(function()
-        Util.format.register({
+      MyVim.on_very_lazy(function()
+        MyVim.format.register({
           name = "none-ls.nvim",
           priority = 200, -- set higher than conform, the builtin formatter
           primary = true,
           format = function(buf)
-            return Util.lsp.format({
+            return MyVim.lsp.format({
               bufnr = buf,
               filter = function(client)
                 return client.name == "null-ls"

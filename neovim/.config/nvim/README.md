@@ -3,7 +3,7 @@
 ## About
 
 This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v10.13.0.
+[LazyVim](https://github.com/LazyVim/LazyVim) v10.19.0.
 
 This configuration is mainly considered for working on Linux and macOS. Working
 on Windows may meet minor problems.

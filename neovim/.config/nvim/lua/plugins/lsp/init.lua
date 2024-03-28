@@ -1,5 +1,3 @@
-local Util = require("util")
-
 return {
   -- lspconfig
   {
@@ -100,22 +98,22 @@ return {
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      if Util.has("neoconf.nvim") then
+      if MyVim.has("neoconf.nvim") then
         local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
         require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
       end
 
       -- setup autoformat
-      Util.format.register(Util.lsp.formatter())
+      MyVim.format.register(MyVim.lsp.formatter())
 
       -- deprectaed options
       if opts.autoformat ~= nil then
         vim.g.autoformat = opts.autoformat
-        Util.deprecate("nvim-lspconfig.opts.autoformat", "vim.g.autoformat")
+        MyVim.deprecate("nvim-lspconfig.opts.autoformat", "vim.g.autoformat")
       end
 
       -- setup keymaps
-      Util.lsp.on_attach(function(client, buffer)
+      MyVim.lsp.on_attach(function(client, buffer)
         require("plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
@@ -139,16 +137,16 @@ return {
 
       -- inlay hints
       if opts.inlay_hints.enabled then
-        Util.lsp.on_attach(function(client, buffer)
+        MyVim.lsp.on_attach(function(client, buffer)
           if client.supports_method("textDocument/inlayHint") then
-            Util.toggle.inlay_hints(buffer, true)
+            MyVim.toggle.inlay_hints(buffer, true)
           end
         end)
       end
 
       -- code lens
       if opts.codelens.enabled and vim.lsp.codelens then
-        Util.lsp.on_attach(function(client, buffer)
+        MyVim.lsp.on_attach(function(client, buffer)
           if client.supports_method("textDocument/codeLens") then
             vim.lsp.codelens.refresh()
             --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
@@ -215,7 +213,7 @@ return {
           -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
           if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
             setup(server)
-          else
+          elseif server_opts.enabled ~= false then
             ensure_installed[#ensure_installed + 1] = server
           end
         end
@@ -225,10 +223,10 @@ return {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
+      if MyVim.lsp.get_config("denols") and MyVim.lsp.get_config("tsserver") then
         local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-        Util.lsp.disable("tsserver", is_deno)
-        Util.lsp.disable("denols", function(root_dir)
+        MyVim.lsp.disable("tsserver", is_deno)
+        MyVim.lsp.disable("denols", function(root_dir)
           return not is_deno(root_dir)
         end)
       end

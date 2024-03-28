@@ -15,10 +15,10 @@ return {
       setup = {
         eslint = function()
           local function get_client(buf)
-            return require("util").lsp.get_clients({ name = "eslint", bufnr = buf })[1]
+            return MyVim.lsp.get_clients({ name = "eslint", bufnr = buf })[1]
           end
 
-          local formatter = require("util").lsp.formatter({
+          local formatter = MyVim.lsp.formatter({
             name = "eslint: lsp",
             primary = false,
             priority = 200,
@@ -44,7 +44,7 @@ return {
           end
 
           -- register the formatter
-          require("util").format.register(formatter)
+          MyVim.format.register(formatter)
         end,
       },
     },
