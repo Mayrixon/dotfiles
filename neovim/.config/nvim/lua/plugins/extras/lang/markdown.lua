@@ -25,6 +25,13 @@ return {
     end,
   },
   {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = { markdown = { "mdformat", "mdslw" } },
+    },
+  },
+  {
     "mfussenegger/nvim-lint",
     optional = true,
     opts = {

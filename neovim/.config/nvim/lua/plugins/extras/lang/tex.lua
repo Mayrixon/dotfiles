@@ -7,6 +7,16 @@ return {
       },
     },
   },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        bib = { "bibtex-tidy" },
+        tex = { "latexindent" },
+      },
+    },
+  },
 
   -- Add BibTeX/LaTeX to treesitter
   {
