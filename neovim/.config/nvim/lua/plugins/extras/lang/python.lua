@@ -1,3 +1,11 @@
+if myvim_docs then
+  -- LSP Server to use for Python.
+  -- Set to "basedpyright" to use basedpyright instead of pyright.
+  vim.g.myvim_python_lsp = "pyright"
+end
+
+local lsp = vim.g.myvim_python_lsp or "pyright"
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -7,11 +15,31 @@ return {
       end
     end,
   },
+  -- basedpyright support.
+  -- Remove when merged: https://github.com/williamboman/mason-lspconfig.nvim/pull/379
+  {
+    "williamboman/mason.nvim",
+    optional = true,
+    opts = function(_, opts)
+      if vim.g.myvim_python_lsp == "basedpyright" then
+        opts.ensure_installed = opts.ensure_installed or {}
+        table.insert(opts.ensure_installed, "basedpyright")
+      end
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        pyright = {},
+        pyright = {
+          enabled = lsp == "pyright",
+        },
+        basedpyright = {
+          enabled = lsp == "basedpyright",
+        },
+        [lsp] = {
+          enabled = true,
+        },
         ruff_lsp = {
           keys = {
             {
@@ -32,7 +60,7 @@ return {
       },
       setup = {
         ruff_lsp = function()
-          require("util").lsp.on_attach(function(client, _)
+          MyVim.lsp.on_attach(function(client, _)
             if client.name == "ruff_lsp" then
               -- Disable hover in favor of Pyright
               client.server_capabilities.hoverProvider = false
@@ -101,7 +129,7 @@ return {
       })
     end,
     opts = function(_, opts)
-      if require("util").has("nvim-dap-python") then
+      if MyVim.has("nvim-dap-python") then
         opts.dap_enabled = true
       end
       return vim.tbl_deep_extend("force", opts, {

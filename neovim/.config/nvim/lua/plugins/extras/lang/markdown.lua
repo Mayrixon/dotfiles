@@ -8,10 +8,15 @@ return {
     end,
   },
   {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = { formatters_by_ft = { markdown = { "mdformat", "mdslw" } } },
+  },
+  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman" })
+      vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman", "mdformat", "mdslw" })
     end,
   },
   {
@@ -23,6 +28,13 @@ return {
         nls.builtins.diagnostics.markdownlint,
       })
     end,
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = { markdown = { "mdformat", "mdslw" } },
+    },
   },
   {
     "mfussenegger/nvim-lint",

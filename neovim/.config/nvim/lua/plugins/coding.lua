@@ -77,7 +77,7 @@ return {
   -- snippets
   {
     "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
+    build = (not MyVim.is_win())
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
       or nil,
     dependencies = {
@@ -128,8 +128,7 @@ return {
     config = function(_, opts)
       require("nvim-autopairs").setup(opts)
 
-      local Util = require("util")
-      if Util.has("nvim-cmp") then
+      if MyVim.has("nvim-cmp") then
         local cmp = require("cmp")
         local cmp_autopairs = require("nvim-autopairs.completion.cmp")
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
@@ -182,13 +181,33 @@ return {
           f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
           c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
           t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
+          d = { "%f[%d]%d+" }, -- digits
+          e = { -- Word with case
+            {
+              "%u[%l%d]+%f[^%l%d]",
+              "%f[%S][%l%d]+%f[^%l%d]",
+              "%f[%P][%l%d]+%f[^%l%d]",
+              "^[%l%d]+%f[^%l%d]",
+            },
+            "^().*()$",
+          },
+          g = function() -- Whole buffer, similar to `gg` and 'G' motion
+            local from = { line = 1, col = 1 }
+            local to = {
+              line = vim.fn.line("$"),
+              col = math.max(vim.fn.getline("$"):len(), 1),
+            }
+            return { from = from, to = to }
+          end,
+          u = ai.gen_spec.function_call(), -- u for "Usage"
+          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
         },
       }
     end,
     config = function(_, opts)
       require("mini.ai").setup(opts)
       -- register all text objects with which-key
-      require("util").on_load("which-key.nvim", function()
+      MyVim.on_load("which-key.nvim", function()
         ---@type table<string, string|table>
         local i = {
           [" "] = "Whitespace",
@@ -208,10 +227,15 @@ return {
           a = "Argument",
           b = "Balanced ), ], }",
           c = "Class",
+          d = "Digit(s)",
+          e = "Word in CamelCase & snake_case",
           f = "Function",
+          g = "Entire file",
           o = "Block, conditional, loop",
           q = "Quote `, \", '",
           t = "Tag",
+          u = "Use/call function & method",
+          U = "Use/call without dot in name",
         }
         local a = vim.deepcopy(i)
         for k, v in pairs(a) do

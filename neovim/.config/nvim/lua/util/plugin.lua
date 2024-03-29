@@ -1,5 +1,4 @@
 local Plugin = require("lazy.core.plugin")
-local Util = require("util")
 
 ---@class util.plugin
 local M = {}

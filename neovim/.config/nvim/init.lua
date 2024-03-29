@@ -6,6 +6,9 @@
 --   -- vim.g.python3_host_prog = '/usr/bin/python3'
 -- end
 
+-- Global variables
+_G.myvim_docs = true
+
 -- Automatically install lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

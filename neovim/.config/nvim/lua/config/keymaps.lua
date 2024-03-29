@@ -1,8 +1,6 @@
-local Util = require("util")
-
 -- DO NOT USE THIS IN YOU OWN CONFIG!!
 -- use `vim.keymap.set` instead
-local map = Util.safe_keymap_set
+local map = MyVim.safe_keymap_set
 
 -- -- Unmap <F1>
 -- ["<F1>"] = "<ESC>",
@@ -10,20 +8,20 @@ local map = Util.safe_keymap_set
 -- ['w!!'] = 'execute \'silent! write !sudo tee % >/dev/null\' <bar> edit!'
 
 -- Move to window using the <Meta> hjkl keys
-map("n", "<M-h>", "<C-W>h", { desc = "Go to left window", remap = true })
-map("n", "<M-j>", "<C-W>j", { desc = "Go to lower window", remap = true })
-map("n", "<M-k>", "<C-W>k", { desc = "Go to upper window", remap = true })
-map("n", "<M-l>", "<C-W>l", { desc = "Go to right window", remap = true })
+map("n", "<M-h>", "<C-W>h", { desc = "Go to Left Window", remap = true })
+map("n", "<M-j>", "<C-W>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<M-k>", "<C-W>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<M-l>", "<C-W>l", { desc = "Go to Right Window", remap = true })
 
 -- Resize window using <ctrl> arrow keys
-map("n", "<M-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-map("n", "<M-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-map("n", "<M-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-map("n", "<M-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+map("n", "<M-Up>", "<Cmd>resize +2<CR>", { desc = "Increase Window Height" })
+map("n", "<M-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease Window Height" })
+map("n", "<M-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
+map("n", "<M-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
 
 -- buffers
-map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev buffer" })
-map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
+map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 
@@ -49,12 +47,12 @@ map("n", "<Leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 map("n", "<Leader>xl", "<Cmd>lopen<CR>", { desc = "Location List" })
 map("n", "<Leader>xq", "<Cmd>copen<CR>", { desc = "Quickfix List" })
 
-map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
+map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
+map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- formatting
 map({ "n", "v" }, "<leader>cf", function()
-  Util.format({ force = true })
+  MyVim.format({ force = true })
 end, { desc = "Format" })
 
 -- diagnostic
@@ -96,28 +94,28 @@ map("n", "<Leader>bc", "<Cmd>call DeleteHiddenBuffers()<CR>", { desc = "Clear al
 -- stylua: ignore start
 
 -- toggle options
-map("n", "<Leader>Tf", function() Util.format.toggle() end, { desc = "Toggle auto format (global)" })
-map("n", "<Leader>TF", function() Util.format.toggle(true) end, { desc = "Toggle auto format (buffer)" })
-map("n", "<Leader>Ts", function() Util.toggle.option("spell") end, { desc = "Toggle Spelling" })
-map("n", "<Leader>Tw", function() Util.toggle.option("wrap") end, { desc = "Toggle Word Wrap" })
-map("n", "<Leader>TL", function() Util.toggle.option("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
-map("n", "<Leader>Tl", function() Util.toggle.number() end, { desc = "Toggle Line Numbers" })
-map("n", "<Leader>Td", function()Util.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
+map("n", "<Leader>Tf", function() MyVim.format.toggle() end, { desc = "Toggle Auto Format (Global)" })
+map("n", "<Leader>TF", function() MyVim.format.toggle(true) end, { desc = "Toggle Auto Format (Buffer)" })
+map("n", "<Leader>Ts", function() MyVim.toggle.option("spell") end, { desc = "Toggle Spelling" })
+map("n", "<Leader>Tw", function() MyVim.toggle.option("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<Leader>TL", function() MyVim.toggle.option("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
+map("n", "<Leader>Tl", function() MyVim.toggle.number() end, { desc = "Toggle Line Numbers" })
+map("n", "<Leader>Td", function()MyVim.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
-map("n", "<Leader>Tc", function() Util.toggle.option("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
+map("n", "<Leader>Tc", function() MyVim.toggle.option("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
 if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
-  map("n", "<Leader>Th", function() Util.toggle.inlay_hints() end, { desc = "Toggle Inlay Hints" })
+  map("n", "<Leader>Th", function() MyVim.toggle.inlay_hints() end, { desc = "Toggle Inlay Hints" })
 end
 map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
 
 -- lazygit
-map("n", "<Leader>gg", function() Util.terminal({ "lazygit" }, { cwd = Util.root(), esc_esc = false, ctrl_hjkl = false }) end, { desc = "Lazygit (root dir)" })
-map("n", "<Leader>gG", function() Util.terminal({ "lazygit" }, {esc_esc = false, ctrl_hjkl = false}) end, { desc = "Lazygit (cwd)" })
+map("n", "<Leader>gg", function() MyVim.lazygit({ cwd = MyVim.root.git() }) end, { desc = "Lazygit (root dir)" })
+map("n", "<Leader>gG", function() MyVim.lazygit() end, { desc = "Lazygit (cwd)" })
 
 map("n", "<Leader>gf", function()
-  local git_path = vim.fn.system("git ls-files --full-name " .. vim.api.nvim_buf_get_name(0))
-  Util.terminal({ "lazygit", "-f", vim.trim(git_path) }, { esc_esc = false, ctrl_hjkl = false })
-end, { desc = "Lazygit current file history" })
+  local git_path = vim.api.nvim_buf_get_name(0)
+  MyVim.lazygit({ args={ "-f", vim.trim(git_path) }})
+end, { desc = "Lazygit Current File History" })
 
 -- quit
 map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
@@ -126,29 +124,29 @@ map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 
 -- floating terminal
-local lazyterm = function() Util.terminal(nil, { cwd = Util.root() }) end
-map("n", "<Leader>ft", lazyterm, { desc = "Terminal (root dir)" })
-map("n", "<Leader>fT", function() Util.terminal() end, { desc = "Terminal (cwd)" })
-map("n", "<C-/>", lazyterm, { desc = "Terminal (root dir)" })
+local lazyterm = function() MyVim.terminal(nil, { cwd = MyVim.root() }) end
+map("n", "<Leader>ft", lazyterm, { desc = "Terminal (Root Dir)" })
+map("n", "<Leader>fT", function() MyVim.terminal() end, { desc = "Terminal (cwd)" })
+map("n", "<C-/>", lazyterm, { desc = "Terminal (Root Dir)" })
 map("n", "<C-_>", lazyterm, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<Esc><Esc>", "<C-\\><C-N>", { desc = "Enter Normal Mode" })
-map("t", "<M-h>", "<Cmd>wincmd h<CR>", { desc = "Go to left window" })
-map("t", "<M-j>", "<Cmd>wincmd j<CR>", { desc = "Go to lower window" })
-map("t", "<M-k>", "<Cmd>wincmd k<CR>", { desc = "Go to upper window" })
-map("t", "<M-l>", "<Cmd>wincmd l<CR>", { desc = "Go to right window" })
+map("t", "<M-h>", "<Cmd>wincmd h<CR>", { desc = "Go to Left Window" })
+map("t", "<M-j>", "<Cmd>wincmd j<CR>", { desc = "Go to Lower Window" })
+map("t", "<M-k>", "<Cmd>wincmd k<CR>", { desc = "Go to Upper Window" })
+map("t", "<M-l>", "<Cmd>wincmd l<CR>", { desc = "Go to Right Window" })
 map("t", "<C-/>", "<Cmd>close<CR>", { desc = "Hide Terminal" })
 map("t", "<c-_>", "<Cmd>close<CR>", { desc = "which_key_ignore" })
 
 -- windows
-map("n", "<Leader>ww", "<C-W>p", { desc = "Other window", remap = true })
-map("n", "<Leader>wc", "<Cmd>close<CR>", { desc = "Close window", remap = true })
+map("n", "<Leader>ww", "<C-W>p", { desc = "Other Window", remap = true })
+map("n", "<Leader>wc", "<Cmd>close<CR>", { desc = "Close Window", remap = true })
 map("n", "<Leader>w=", "<C-W>=", { desc = "Equalise Height and Width", remap = true })
-map("n", "<Leader>ws", "<Cmd>split<CR>", { desc = "Split window below", remap = true })
-map("n", "<Leader>wv", "<Cmd>vsplit<CR>", { desc = "Split window right", remap = true })
-map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "Split window below", remap = true })
-map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "Split window right", remap = true })
+map("n", "<Leader>ws", "<Cmd>split<CR>", { desc = "Split Window Below", remap = true })
+map("n", "<Leader>wv", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
+map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "Split Window Below", remap = true })
+map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
 
 -- tabs
 map("n", "<Leader><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })
