@@ -15,6 +15,7 @@ return {
         bib = { "bibtex-tidy" },
         tex = { "latexindent" },
       },
+      formatters = { latexindent = { prepend_args = { "-m", "-l" } } },
     },
   },
 
