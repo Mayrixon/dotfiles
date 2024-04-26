@@ -1,8 +1,8 @@
 local im_package
 
-if vim.fn.has("mac") then
+if vim.fn.has("mac") == 1 then
   im_package = { "ybian/smartim" }
-else
+elseif vim.fn.has("linux") == 1 then
   im_package = { "keaising/im-select.nvim", opts = {} }
 end
 
