@@ -1,29 +1,41 @@
+-- This file is automatically loaded by config.init
+
 -- DO NOT USE THIS IN YOU OWN CONFIG!!
 -- use `vim.keymap.set` instead
 local map = MyVim.safe_keymap_set
 
--- -- Unmap <F1>
--- ["<F1>"] = "<ESC>",
--- TODO: config this command for variable OSs.
--- ['w!!'] = 'execute \'silent! write !sudo tee % >/dev/null\' <bar> edit!'
+-- Unmap <F1>
+map({ "n", "i", "v", "o" }, "<F1>", "<Esc>")
 
--- Move to window using the <Meta> hjkl keys
-map("n", "<M-h>", "<C-W>h", { desc = "Go to Left Window", remap = true })
-map("n", "<M-j>", "<C-W>j", { desc = "Go to Lower Window", remap = true })
-map("n", "<M-k>", "<C-W>k", { desc = "Go to Upper Window", remap = true })
-map("n", "<M-l>", "<C-W>l", { desc = "Go to Right Window", remap = true })
+-- Move to window using the <Ctrl> hjkl keys
+map("n", "<C-H>", "<C-W>h", { desc = "Go to Left Window", remap = true })
+map("n", "<C-J>", "<C-W>j", { desc = "Go to Lower Window", remap = true })
+map("n", "<C-K>", "<C-W>k", { desc = "Go to Upper Window", remap = true })
+map("n", "<C-L>", "<C-W>l", { desc = "Go to Right Window", remap = true })
 
--- Resize window using <ctrl> arrow keys
-map("n", "<M-Up>", "<Cmd>resize +2<CR>", { desc = "Increase Window Height" })
-map("n", "<M-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease Window Height" })
-map("n", "<M-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
-map("n", "<M-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
+-- Resize window using <Ctrl> arrow keys
+map("n", "<C-Up>", "<Cmd>resize +2<CR>", { desc = "Increase Window Height" })
+map("n", "<C-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease Window Height" })
+map("n", "<C-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease Window Width" })
+map("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase Window Width" })
 
 -- buffers
 map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
 map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
+
+-- Clear search with <esc>
+map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
+
+-- Clear search, diff update and redraw
+-- taken from runtime/lua/_editor.lua
+map(
+  "n",
+  "<Leader>ur",
+  "<Cmd>nohlsearch<Bar>diffupdate<Bar>normal! <C-L><CR>",
+  { desc = "Redraw / Clear hlsearch / Diff Update" }
+)
 
 -- Add undo break-points
 map("i", ",", ",<C-G>u")
@@ -100,21 +112,26 @@ map("n", "<Leader>Ts", function() MyVim.toggle.option("spell") end, { desc = "To
 map("n", "<Leader>Tw", function() MyVim.toggle.option("wrap") end, { desc = "Toggle Word Wrap" })
 map("n", "<Leader>TL", function() MyVim.toggle.option("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
 map("n", "<Leader>Tl", function() MyVim.toggle.number() end, { desc = "Toggle Line Numbers" })
-map("n", "<Leader>Td", function()MyVim.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
+map("n", "<Leader>Td", function() MyVim.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
-map("n", "<Leader>Tc", function() MyVim.toggle.option("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
+map("n", "<Leader>Tc", function() MyVim.toggle.option("conceallevel", false, { 0, conceallevel }) end,
+  { desc = "Toggle Conceal" })
 if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
   map("n", "<Leader>Th", function() MyVim.toggle.inlay_hints() end, { desc = "Toggle Inlay Hints" })
 end
-map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
+map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end,
+  { desc = "Toggle Treesitter Highlight" })
+map("n", "<Leader>Tb", function() MyyVim.toggle("background", false, { "light", "dark" }) end,
+  { desc = "Toggle Background" })
 
 -- lazygit
 map("n", "<Leader>gg", function() MyVim.lazygit({ cwd = MyVim.root.git() }) end, { desc = "Lazygit (root dir)" })
 map("n", "<Leader>gG", function() MyVim.lazygit() end, { desc = "Lazygit (cwd)" })
+map("n", "<Leader>gb", MyVim.lazygit.blame_line, { desc = "Git Blame Line" })
 
 map("n", "<Leader>gf", function()
   local git_path = vim.api.nvim_buf_get_name(0)
-  MyVim.lazygit({ args={ "-f", vim.trim(git_path) }})
+  MyVim.lazygit({ args = { "-f", vim.trim(git_path) } })
 end, { desc = "Lazygit Current File History" })
 
 -- quit

@@ -6,16 +6,16 @@ local M = setmetatable({}, {
   end,
 })
 
----@class Formatter
+---@class MyFormatter
 ---@field name string
 ---@field primary? boolean
 ---@field format fun(bufnr:number)
 ---@field sources fun(bufnr:number):string[]
 ---@field priority number
 
-M.formatters = {} ---@type Formatter[]
+M.formatters = {} ---@type MyFormatter[]
 
----@param formatter Formatter
+---@param formatter MyFormatter
 function M.register(formatter)
   M.formatters[#M.formatters + 1] = formatter
   table.sort(M.formatters, function(a, b)
@@ -31,11 +31,11 @@ function M.formatexpr()
 end
 
 ---@param buf? number
----@return (Formatter|{active:boolean,resolved:string[]})[]
+---@return (MyFormatter|{active:boolean,resolved:string[]})[]
 function M.resolve(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   local have_primary = false
-  ---@param formatter Formatter
+  ---@param formatter MyFormatter
   return vim.tbl_map(function(formatter)
     local sources = formatter.sources(buf)
     local active = #sources > 0 and (not formatter.primary or not have_primary)
@@ -76,7 +76,7 @@ function M.info(buf)
   end
   MyVim[enabled and "info" or "warn"](
     table.concat(lines, "\n"),
-    { title = "Format (" .. (enabled and "enabled" or "disabled") .. ")" }
+    { title = "MyFormat (" .. (enabled and "enabled" or "disabled") .. ")" }
   )
 end
 
@@ -125,7 +125,7 @@ function M.format(opts)
   end
 
   if not done and opts and opts.force then
-    MyVim.warn("No formatter available", { title = "Formatter" })
+    MyVim.warn("No formatter available", { title = "MyVim" })
   end
 end
 
@@ -135,7 +135,7 @@ function M.health()
   local has_extra = vim.tbl_contains(Config.spec.modules, "plugins.extras.lsp.none-ls")
   if has_plugin and not has_extra then
     MyVim.warn({
-      "`conform.nvim` and `nvim-lint` are now the default formatters and linters.",
+      "`conform.nvim` and `nvim-lint` are now the default formatters and linters in MyVim.",
       "",
       "You can use those plugins together with `none-ls.nvim`,",
       "but you need to enable the `plugins.extras.lsp.none-ls` extra,",
@@ -151,19 +151,19 @@ function M.setup()
 
   -- Autoformat autocmd
   vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("Format", {}),
+    group = vim.api.nvim_create_augroup("MyFormat", {}),
     callback = function(event)
       M.format({ buf = event.buf })
     end,
   })
 
   -- Manual format
-  vim.api.nvim_create_user_command("Format", function()
+  vim.api.nvim_create_user_command("MyFormat", function()
     M.format({ force = true })
   end, { desc = "Format selection or buffer" })
 
   -- Format info
-  vim.api.nvim_create_user_command("FormatInfo", function()
+  vim.api.nvim_create_user_command("MyFormatInfo", function()
     M.info()
   end, { desc = "Show info about the formatters for the current buffer" })
 end

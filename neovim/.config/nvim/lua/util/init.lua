@@ -1,6 +1,7 @@
 local LazyUtil = require("lazy.core.util")
 
----@class util: UtilCore
+---@class util: MyUtilCore
+---@field config MyVimConfig
 ---@field ui util.ui
 ---@field lsp util.lsp
 ---@field root util.root
@@ -37,7 +38,7 @@ setmetatable(M, {
     if dep then
       local mod = type(dep) == "table" and dep[1] or dep
       local key = type(dep) == "table" and dep[2] or k
-      M.deprecate([[require("util").]] .. k, [[require("util").]] .. mod .. "." .. key)
+      M.deprecate([[MyVim.]] .. k, [[MyVim.]] .. mod .. "." .. key)
       ---@diagnostic disable-next-line: no-unknown
       t[mod] = require("util." .. mod) -- load here to prevent loops
       return t[mod][key]
@@ -79,7 +80,7 @@ end
 
 function M.deprecate(old, new)
   M.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), {
-    title = "Plugins",
+    title = "MyVim",
     once = true,
     stacktrace = true,
     stacklevel = 6,
@@ -147,7 +148,7 @@ end
 -- It will also set `silent` to true by default.
 function M.safe_keymap_set(mode, lhs, rhs, opts)
   local keys = require("lazy.core.handler").handlers.keys
-  ---@cast keys LazyKeysHandler
+  ---@cast keys MyKeysHandler
   local modes = type(mode) == "string" and { mode } or mode
 
   ---@param m string

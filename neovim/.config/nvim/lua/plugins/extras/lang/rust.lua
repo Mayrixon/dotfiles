@@ -16,10 +16,8 @@ return {
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      local cmp = require("cmp")
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
-        { name = "crates" },
-      }))
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, { name = "crates" })
     end,
   },
 
@@ -62,7 +60,9 @@ return {
             cargo = {
               allFeatures = true,
               loadOutDirsFromCheck = true,
-              runBuildScripts = true,
+              buildScripts = {
+                enable = true,
+              },
             },
             -- Add clippy lints for Rust.
             checkOnSave = {
@@ -83,7 +83,7 @@ return {
       },
     },
     config = function(_, opts)
-      vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts or {})
+      vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
     end,
   },
 
@@ -92,8 +92,9 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        -- Ensure mason installs the server
-        rust_analyzer = {},
+        rust_analyzer = {
+          mason = false,
+        },
         taplo = {
           keys = {
             {
@@ -121,9 +122,6 @@ return {
   {
     "nvim-neotest/neotest",
     optional = true,
-    dependencies = {
-      "rouge8/neotest-rust",
-    },
     opts = function(_, opts)
       opts.adapters = opts.adapters or {}
       vim.list_extend(opts.adapters, {

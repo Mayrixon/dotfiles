@@ -6,14 +6,38 @@ local M = {}
 M.use_lazy_file = true
 M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
 
+---@type table<string, string>
+M.deprecated_extras = {
+  ["plugins.extras.formatting.conform"] = "`conform.nvim` is now the default **MyVim** formatter.",
+  ["plugins.extras.linting.nvim-lint"] = "`nvim-lint` is now the default **MyVim** linter.",
+  ["plugins.extras.ui.dashboard"] = "`dashboard.nvim` is now the default **MyVim** starter.",
+}
+
+M.deprecated_modules = {
+  ["null-ls"] = "lsp.none-ls",
+  ["nvim-navic.lib"] = "editor.navic",
+  ["nvim-navic"] = "editor.navic",
+}
+
+---@type table<string, string>
+M.renames = {
+  ["windwp/nvim-spectre"] = "nvim-pack/nvim-spectre",
+  ["jose-elias-alvarez/null-ls.nvim"] = "nvimtools/none-ls.nvim",
+  ["null-ls.nvim"] = "none-ls.nvim",
+  ["romgrk/nvim-treesitter-context"] = "nvim-treesitter/nvim-treesitter-context",
+  ["glepnir/dashboard-nvim"] = "nvimdev/dashboard-nvim",
+}
+
 function M.setup()
+  M.fix_imports()
+  M.fix_renames()
   M.lazy_file()
 end
 
 function M.extra_idx(name)
   local Config = require("lazy.core.config")
   for i, extra in ipairs(Config.spec.modules) do
-    if extra == "lazyvim.plugins.extras." .. name then
+    if extra == "plugins.extras." .. name then
       return i
     end
   end
@@ -86,4 +110,34 @@ function M.lazy_file()
     end,
   })
 end
+
+function M.fix_imports()
+  Plugin.Spec.import = MyVim.inject.args(Plugin.Spec.import, function(_, spec)
+    local dep = M.deprecated_extras[spec and spec.import]
+    if dep then
+      dep = dep .. "\n" .. "Please remove the extra to hide this warning."
+      MyVim.warn(dep, { title = "MyVim", once = true, stacktrace = true, stacklevel = 6 })
+      return false
+    end
+  end)
+end
+
+function M.fix_renames()
+  Plugin.Spec.add = MyVim.inject.args(Plugin.Spec.add, function(self, plugin)
+    if type(plugin) == "table" then
+      if M.renames[plugin[1]] then
+        MyVim.warn(
+          ("Plugin `%s` was renamed to `%s`.\nPlease update your config for `%s`"):format(
+            plugin[1],
+            M.renames[plugin[1]],
+            self.importing or "MyVim"
+          ),
+          { title = "MyVim" }
+        )
+        plugin[1] = M.renames[plugin[1]]
+      end
+    end
+  end)
+end
+
 return M

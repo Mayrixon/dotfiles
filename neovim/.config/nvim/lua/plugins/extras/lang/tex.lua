@@ -1,9 +1,11 @@
 return {
+
   {
     "folke/which-key.nvim",
+    optional = true,
     opts = {
       defaults = {
-        ["<LocalLeader>l"] = { name = "+VimTeX" },
+        ["<LocalLeader>l"] = { name = "+vimtex" },
       },
     },
   },
@@ -36,7 +38,6 @@ return {
 
   {
     "lervag/vimtex",
-    version = "*",
     lazy = false, -- lazy-loading will disable inverse search
     config = function()
       vim.api.nvim_create_autocmd({ "FileType" }, {

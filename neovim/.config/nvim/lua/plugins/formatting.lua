@@ -19,7 +19,9 @@ function M.setup(_, opts)
   for _, key in ipairs({ "format_on_save", "format_after_save" }) do
     if opts[key] then
       MyVim.warn(
-        ("Don't set `opts.%s` for `conform.nvim`.\n**NeoVim** will use the conform formatter automatically"):format(key)
+        ("Don't set `opts.%s` for `conform.nvim`.\n**MyVim** will use the conform formatter automatically"):format(
+          key
+        )
       )
       ---@diagnostic disable-next-line: no-unknown
       opts[key] = nil
@@ -36,7 +38,7 @@ return {
     cmd = "ConformInfo",
     keys = {
       {
-        "<leader>cF",
+        "<Leader>cF",
         function()
           require("conform").format({ formatters = { "injected" }, timeout_ms = 3000 })
         end,
@@ -72,13 +74,13 @@ return {
       if plugin.config ~= M.setup then
         MyVim.error({
           "Don't set `plugin.config` for `conform.nvim`.\n",
-          "This will break **NeoVim** formatting.\n",
+          "This will break **MyVim** formatting.\n",
           "Please refer to the docs at https://www.lazyvim.org/plugins/formatting",
-        }, { title = "NeoVim" })
+        }, { title = "MyVim" })
       end
       ---@class ConformOpts
       local opts = {
-        -- NeoVim will use these options when formatting with the conform.nvim formatter
+        -- MyVim will use these options when formatting with the conform.nvim formatter
         format = {
           timeout_ms = 3000,
           async = false, -- not recommended to change

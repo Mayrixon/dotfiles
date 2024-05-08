@@ -1,48 +1,46 @@
 local M = {}
 
----@type LazyKeysLspSpec[]|nil
+---@type MyKeysLspSpec[]|nil
 M._keys = nil
 
----@alias LazyKeysLspSpec LazyKeysSpec|{has?:string}
----@alias LazyKeysLsp LazyKeys|{has?:string}
+---@alias MyKeysLspSpec MyKeysSpec|{has?:string}
+---@alias MyKeysLsp MyKeys|{has?:string}
 
----@return LazyKeysLspSpec[]
+---@return MyKeysLspSpec[]
 function M.get()
   if M._keys then
     return M._keys
   end
-  -- stylua: ignore
-  M._keys = {
-    { "<Leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
-    { "<Leader>cl", "<Cmd>LspInfo<CR>", desc = "Lsp Info" },
-    { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
-    { "gr", "<Cmd>Telescope lsp_references<CR>", desc = "References" },
-    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-    { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
-    { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
-    { "K", vim.lsp.buf.hover, desc = "Hover" },
-    { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
-    { "<C-K>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
-    { "<Leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-    { "<Leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
-    { "<Leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
-    {
-      "<Leader>cA",
-      function()
-        vim.lsp.buf.code_action({
-          context = {
-            only = {
-              "source",
+    -- stylua: ignore
+    M._keys = {
+      { "<Leader>cl", "<Cmd>LspInfo<CR>", desc = "Lsp Info" },
+      { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
+      { "gr", "<Cmd>Telescope lsp_references<CR>", desc = "References" },
+      { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
+      { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
+      { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
+      { "K", vim.lsp.buf.hover, desc = "Hover" },
+      { "gK", vim.lsp.buf.signature_help, desc = "Signature Help", has = "signatureHelp" },
+      { "<C-K>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help", has = "signatureHelp" },
+      { "<Leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+      { "<Leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
+      { "<Leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
+      {
+        "<Leader>cA",
+        function()
+          vim.lsp.buf.code_action({
+            context = {
+              only = {
+                "source",
+              },
+              diagnostics = {},
             },
-            diagnostics = {},
-          },
-        })
-      end,
-      desc = "Source Action",
-      has = "codeAction",
-    },
-  }
-
+          })
+        end,
+        desc = "Source Action",
+        has = "codeAction",
+      }
+    }
   if MyVim.has("inc-rename.nvim") then
     M._keys[#M._keys + 1] = {
       "<Leader>cr",

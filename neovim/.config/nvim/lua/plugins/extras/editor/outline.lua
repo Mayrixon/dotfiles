@@ -1,8 +1,6 @@
-
 return {
   {
     "hedyhli/outline.nvim",
-    event = "LazyFile",
     keys = {
       { "<F2>", "<Cmd>Outline<CR>", desc = "Toggle Outline" },
     },
@@ -43,9 +41,10 @@ return {
       local symbols_idx = MyVim.plugin.extra_idx("editor.outline")
 
       if edgy_idx and edgy_idx > symbols_idx then
-        MyVim.warn("The `edgy.nvim` extra must be **imported** before the `outline.nvim` extra to work properly.", {
-          title = "Plugin",
-        })
+        MyVim.warn(
+          "The `edgy.nvim` extra must be **imported** before the `outline.nvim` extra to work properly.",
+          { title = "MyVim" }
+        )
       end
 
       opts.right = opts.right or {}

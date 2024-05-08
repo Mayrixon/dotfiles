@@ -1,5 +1,7 @@
+-- This file is automatically loaded by config.init.
+
 local function augroup(name)
-  return vim.api.nvim_create_augroup("userdef_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("myvim" .. name, { clear = true })
 end
 
 -- Check if we need to reload the file when it changed
@@ -53,19 +55,19 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
-    "checkhealth",
     "help",
     "lspinfo",
-    "neotest-output",
-    "neotest-output-panel",
-    "neotest-summary",
     "notify",
-    "oil",
     "qf",
     "query",
     "spectre_panel",
     "startuptime",
     "tsplayground",
+    "neotest-output",
+    "checkhealth",
+    "neotest-summary",
+    "neotest-output-panel",
+    "oil",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -111,24 +113,4 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
-})
-
--- Terminal settings
-vim.api.nvim_create_autocmd("TermOpen", {
-  group = augroup("auto_terminal"),
-  pattern = "*",
-  desc = "Enter insert mode when switching to terminal",
-  callback = function()
-    vim.opt_local.listchars = ""
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.cursorline = false
-    vim.cmd.startinsert()
-  end,
-})
-vim.api.nvim_create_autocmd("BufLeave", {
-  group = augroup("auto_terminal"),
-  pattern = "term://*",
-  desc = "Close terminal buffer on process exit",
-  command = "stopinsert",
 })

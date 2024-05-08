@@ -6,15 +6,15 @@ local M = setmetatable({}, {
   end,
 })
 
----@class Root
+---@class MyRoot
 ---@field paths string[]
----@field spec RootSpec
+---@field spec MyRootSpec
 
 ---@alias RootFn fun(buf: number): (string|string[])
 
----@alias RootSpec string|string[]|RootFn
+---@alias MyRootSpec string|string[]|MyRootFn
 
----@type RootSpec[]
+---@type MyRootSpec[]
 M.spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 M.detectors = {}
@@ -67,8 +67,8 @@ function M.realpath(path)
   return MyVim.norm(path)
 end
 
----@param spec RootSpec
----@return RootFn
+---@param spec MyRootSpec
+---@return MyRootFn
 function M.resolve(spec)
   if M.detectors[spec] then
     return M.detectors[spec]
@@ -80,13 +80,13 @@ function M.resolve(spec)
   end
 end
 
----@param opts? { buf?: number, spec?: RootSpec[], all?: boolean }
+---@param opts? { buf?: number, spec?: MyRootSpec[], all?: boolean }
 function M.detect(opts)
   opts = opts or {}
   opts.spec = opts.spec or type(vim.g.root_spec) == "table" and vim.g.root_spec or M.spec
   opts.buf = (opts.buf == nil or opts.buf == 0) and vim.api.nvim_get_current_buf() or opts.buf
 
-  local ret = {} ---@type Root[]
+  local ret = {} ---@type MyRoot[]
   for _, spec in ipairs(opts.spec) do
     local paths = M.resolve(spec)(opts.buf)
     paths = paths or {}
@@ -130,7 +130,7 @@ function M.info()
   lines[#lines + 1] = "```lua"
   lines[#lines + 1] = "vim.g.root_spec = " .. vim.inspect(spec)
   lines[#lines + 1] = "```"
-  require("util").info(lines, { title = "Roots" })
+  MyVim.info(lines, { title = "MyVim Roots" })
   return roots[1] and roots[1].paths[1] or vim.uv.cwd()
 end
 
@@ -140,10 +140,10 @@ M.cache = {}
 function M.setup()
   vim.api.nvim_create_user_command("Root", function()
     MyVim.root.info()
-  end, { desc = "Roots for the current buffer" })
+  end, { desc = "MyVim roots for the current buffer" })
 
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged" }, {
-    group = vim.api.nvim_create_augroup("root_cache", { clear = true }),
+    group = vim.api.nvim_create_augroup("myvim_root_cache", { clear = true }),
     callback = function(event)
       M.cache[event.buf] = nil
     end,
@@ -169,13 +169,6 @@ function M.get(opts)
     return ret
   end
   return MyVim.is_win() and ret:gsub("/", "\\") or ret
-end
-
-function M.git()
-  local root = M.get()
-  local git_root = vim.fs.find(".git", { path = root, upward = true })[1]
-  local ret = git_root and vim.fn.fnamemodify(git_root, ":h") or root
-  return ret
 end
 
 function M.git()

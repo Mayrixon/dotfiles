@@ -1,12 +1,12 @@
 ---@class util.terminal
----@overload fun(cmd: string|string[], opts: TermOpts): Float
+---@overload fun(cmd: string|string[], opts: MyTermOpts): MyFloat
 local M = setmetatable({}, {
   __call = function(m, ...)
     return m.open(...)
   end,
 })
 
----@type table<string,Float>
+---@type table<string,MyFloat>
 local terminals = {}
 
 ---@param shell? string
@@ -26,7 +26,7 @@ function M.setup(shell)
 
     -- Setting shell command flags
     vim.o.shellcmdflag =
-      "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
+    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
 
     -- Setting shell redirection
     vim.o.shellredir = '2>&1 | %{ "$_" } | Out-File %s; exit $LastExitCode'
@@ -40,20 +40,20 @@ function M.setup(shell)
   end
 end
 
----@class TermOpts: CmdOptions
+---@class MyTermOpts: MyCmdOptions
 ---@field interactive? boolean
 ---@field esc_esc? boolean
 ---@field ctrl_hjkl? boolean
 
 -- Opens a floating terminal (interactive by default)
 ---@param cmd? string[]|string
----@param opts? TermOpts
+---@param opts? MyTermOpts
 function M.open(cmd, opts)
   opts = vim.tbl_deep_extend("force", {
     ft = "lazyterm",
     size = { width = 0.9, height = 0.9 },
     backdrop = MyVim.has("edgy.nvim") and not cmd and 100 or nil,
-  }, opts or {}, { persistent = true }) --[[@as TermOpts]]
+  }, opts or {}, { persistent = true }) --[[@as MyTermOpts]]
 
   local termkey = vim.inspect({ cmd = cmd or "shell", cwd = opts.cwd, env = opts.env, count = vim.v.count1 })
 
