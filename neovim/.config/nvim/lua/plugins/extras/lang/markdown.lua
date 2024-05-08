@@ -8,11 +8,6 @@ return {
     end,
   },
   {
-    "stevearc/conform.nvim",
-    optional = true,
-    opts = { formatters_by_ft = { markdown = { "mdformat", "mdslw" } } },
-  },
-  {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
@@ -30,13 +25,6 @@ return {
     end,
   },
   {
-    "stevearc/conform.nvim",
-    optional = true,
-    opts = {
-      formatters_by_ft = { markdown = { "mdformat", "mdslw" } },
-    },
-  },
-  {
     "mfussenegger/nvim-lint",
     optional = true,
     opts = {
@@ -51,6 +39,13 @@ return {
       servers = {
         marksman = {},
       },
+    },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = { markdown = { "mdformat", "mdslw" } },
     },
   },
 

@@ -16,22 +16,29 @@ return {
     opts = {
       servers = {
         sourcekit = {
-          filetypes = { "swift", "objective-c", "objective-cpp" },
+          filetypes = { "swift", "objc", "objcpp" },
         },
       },
     },
   },
 
   {
-    "nvimtools/none-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      opts.sources = opts.sources or {}
-      vim.list_extend(opts.sources, {
-        nls.builtins.diagnostics.swiftlint,
-        nls.builtins.formatting.swift_format,
-        nls.builtins.formatting.swiftformat,
-      })
-    end,
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        objc = { "swiftlint" },
+        objcpp = { "swiftlint" },
+        swift = { "swiftlint" },
+      },
+    },
+  },
+
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = { swift = { { "swiftformat", "swift_format" } } },
+    },
   },
 }

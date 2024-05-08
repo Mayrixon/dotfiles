@@ -1,3 +1,5 @@
+local icons = require("config").icons
+
 return {
 
   -- File explorer
@@ -5,11 +7,6 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     cmd = "Neotree",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
     keys = {
       {
         "<Leader>fe",
@@ -32,7 +29,7 @@ return {
         function()
           require("neo-tree.command").execute({ source = "git_status", toggle = true })
         end,
-        desc = "Git explorer",
+        desc = "Git Explorer",
       },
       {
         "<leader>be",
@@ -53,73 +50,70 @@ return {
         end
       end
     end,
-    opts = function()
-      local icons = require("config").icons
-      return {
-        sources = { "filesystem", "buffers", "git_status" },
-        open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "Outline" },
-        filesystem = {
-          bind_to_cwd = false,
-          follow_current_file = { enabled = true },
-          use_libuv_file_watcher = true,
-        },
-        window = {
-          mappings = {
-            ["<space>"] = "none",
-            ["Y"] = {
-              function(state)
-                local node = state.tree:get_node()
-                local path = node:get_id()
-                vim.fn.setreg("+", path, "c")
-              end,
-              desc = "Copy Path to Clipboard",
-            },
-            ["O"] = {
-              function(state)
-                require("lazy.util").open(state.tree:get_node().path, { system = true })
-              end,
-              desc = "Open with System Application",
-            },
-            ["<tab>"] = "toggle_node",
-            ["s"] = "open_split",
-            ["v"] = "open_vsplit",
-            ["w"] = "none",
-          },
-        },
-        source_selector = {
-          winbar = true,
-          sources = {
-            { source = "filesystem" },
-            { source = "git_status" },
-            { source = "buffers" },
-          },
-        },
-        event_handlers = {
-          {
-            event = "file_open_requested",
-            handler = function(args)
-              if args.open_cmd == "tabnew" then
-                vim.cmd("Neotree close")
-                vim.cmd("tabnew")
-                vim.cmd("edit " .. args.path)
-                return { handled = true }
-              else
-                return { handled = false }
-              end
+    opts = {
+      sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+      open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+      filesystem = {
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
+        use_libuv_file_watcher = true,
+      },
+      window = {
+        mappings = {
+          ["<space>"] = "none",
+          ["Y"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              vim.fn.setreg("+", path, "c")
             end,
+            desc = "Copy Path to Clipboard",
           },
-        },
-        default_component_configs = {
-          diagnostics = { symbols = icons.diagnostics },
-          indent = {
-            with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-            expander_collapsed = "",
-            expander_expanded = "",
-            expander_highlight = "NeoTreeExpander",
+          ["O"] = {
+            function(state)
+              require("lazy.util").open(state.tree:get_node().path, { system = true })
+            end,
+            desc = "Open with System Application",
           },
+          ["<tab>"] = "toggle_node",
+          ["s"] = "open_split",
+          ["v"] = "open_vsplit",
+          ["w"] = "none",
         },
-      }
-    end,
+      },
+      source_selector = {
+        winbar = true,
+        sources = {
+          { source = "filesystem" },
+          { source = "git_status" },
+          { source = "buffers" },
+        },
+      },
+      event_handlers = {
+        {
+          event = "file_open_requested",
+          handler = function(args)
+            if args.open_cmd == "tabnew" then
+              vim.cmd("Neotree close")
+              vim.cmd("tabnew")
+              vim.cmd("edit " .. args.path)
+              return { handled = true }
+            else
+              return { handled = false }
+            end
+          end,
+        },
+      },
+      default_component_configs = {
+        diagnostics = { symbols = icons.diagnostics },
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
+      },
+    },
     config = function(_, opts)
       local function on_move(data)
         MyVim.lsp.on_rename(data.source, data.destination)
@@ -146,6 +140,7 @@ return {
   -- Search/replace in multiple files
   {
     "nvim-pack/nvim-spectre",
+    build = false,
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
     -- stylua: ignore
@@ -163,7 +158,6 @@ return {
     cmd = "Telescope",
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
-      "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = vim.fn.executable("make") == 1 and "make"
@@ -212,7 +206,7 @@ return {
       { "<Leader>sC", "<Cmd>Telescope commands<CR>", desc = "Commands" },
       { "<Leader>sd", "<Cmd>Telescope diagnostics bufnr=0<CR>", desc = "Document Diagnostics" },
       { "<Leader>sD", "<Cmd>Telescope diagnostics<CR>", desc = "Workspace Diagnostics" },
-      { "<Leader>sg", MyVim.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<Leader>sg", MyVim.telescope("live_grep"), desc = "Grep (root Dir)" },
       { "<Leader>sG", MyVim.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<Leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Help Pages" },
       { "<Leader>sH", "<Cmd>Telescope highlights<CR>", desc = "Search Highlight Groups" },
@@ -315,6 +309,7 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
+    vscode = true,
     ---@type Flash.Config
     opts = {
       modes = { search = { enabled = false } },
@@ -402,6 +397,12 @@ return {
     "lewis6991/gitsigns.nvim",
     event = "LazyFile",
     opts = {
+      signs = {
+        add = { text = "▎" },
+        change = { text = "▎" },
+        delete = { text = "" },
+        topdelete = { text = "" },
+      },
       on_attach = function(buffer)
         local gs = package.loaded.gitsigns
 
@@ -508,7 +509,6 @@ return {
   -- Better diagnostics list and others
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "TroubleToggle", "Trouble" },
     opts = { use_diagnostic_signs = true },
     keys = {
@@ -551,7 +551,6 @@ return {
   -- in your project and loads them into a browsable list.
   {
     "folke/todo-comments.nvim",
-    dependencies = "nvim-lua/plenary.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = "LazyFile",
     config = true,

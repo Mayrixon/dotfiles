@@ -1,81 +1,85 @@
 _G.MyVim = require("util")
 
----@class Config: Options
+---@class MyVimConfig: MyVimOptions
 local M = {}
 
----@class Options
+M.version = "10.23.0" -- x-release-please-version
+MyVim.config = M
+
+---@class MyVimOptions
 local defaults = {
   -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
   ---@type string|fun()
   colorscheme = "gruvbox",
   -- icons used by other plugins
+  -- stylua: ignore
   icons = {
     misc = {
       dots = "󰇘",
     },
     dap = {
-      Stopped = { "", "DiagnosticWarn", "DapStoppedLine" },
-      Breakpoint = "",
+      Stopped             = { "", "DiagnosticWarn", "DapStoppedLine" },
+      Breakpoint          = "",
       BreakpointCondition = "",
-      BreakpointRejected = { "", "DiagnosticError" },
-      LogPoint = ".>",
+      BreakpointRejected  = { "", "DiagnosticError" },
+      LogPoint            = ".>",
     },
     diagnostics = {
       Error = " ",
-      Warn = " ",
-      Hint = " ",
-      Info = " ",
+      Warn  = " ",
+      Hint  = " ",
+      Info  = " ",
     },
     git = {
-      added = " ",
-      deleted = " ",
+      added    = " ",
+      deleted  = " ",
       modified = " ",
-      renamed = " ",
+      renamed  = " ",
       unstaged = "󰄱 ",
-      ignored = " ",
-      staged = "󰱒 ",
+      ignored  = " ",
+      staged   = "󰱒 ",
       conflict = " ",
     },
     kinds = {
-      Array = " ",
-      Boolean = "󰨙 ",
-      Class = " ",
-      Codeium = "󰘦 ",
-      Color = " ",
-      Control = " ",
-      Collapsed = " ",
-      Constant = "󰏿 ",
-      Constructor = " ",
-      Copilot = " ",
-      Enum = " ",
-      EnumMember = " ",
-      Event = " ",
-      Field = " ",
-      File = " ",
-      Folder = " ",
-      Function = "󰊕 ",
-      Interface = " ",
-      Key = " ",
-      Keyword = " ",
-      Method = "󰊕 ",
-      Module = " ",
-      Namespace = "󰦮 ",
-      Null = " ",
-      Number = "󰎠 ",
-      Object = " ",
-      Operator = " ",
-      Package = " ",
-      Property = " ",
-      Reference = " ",
-      Snippet = " ",
-      String = " ",
-      Struct = "󰆼 ",
-      TabNine = "󰏚 ",
-      Text = " ",
+      Array         = " ",
+      Boolean       = "󰨙 ",
+      Class         = " ",
+      Codeium       = "󰘦 ",
+      Color         = " ",
+      Control       = " ",
+      Collapsed     = " ",
+      Constant      = "󰏿 ",
+      Constructor   = " ",
+      Copilot       = " ",
+      Enum          = " ",
+      EnumMember    = " ",
+      Event         = " ",
+      Field         = " ",
+      File          = " ",
+      Folder        = " ",
+      Function      = "󰊕 ",
+      Interface     = " ",
+      Key           = " ",
+      Keyword       = " ",
+      Method        = "󰊕 ",
+      Module        = " ",
+      Namespace     = "󰦮 ",
+      Null          = " ",
+      Number        = "󰎠 ",
+      Object        = " ",
+      Operator      = " ",
+      Package       = " ",
+      Property      = " ",
+      Reference     = " ",
+      Snippet       = " ",
+      String        = " ",
+      Struct        = "󰆼 ",
+      TabNine       = "󰏚 ",
+      Text          = " ",
       TypeParameter = " ",
-      Unit = " ",
-      Value = " ",
-      Variable = "󰀫 ",
+      Unit          = " ",
+      Value         = " ",
+      Variable      = "󰀫 ",
     },
   },
   ---@type table<string, string[]|boolean>?
@@ -116,8 +120,9 @@ local defaults = {
   },
   workspaces = {
     ["dotfiles"] = vim.env.HOME .. "/" .. "dotfiles",
-    ["notes"] = vim.env.HOME .. "/" .. "notes",
-    ["workspace"] = vim.env.HOME .. "/" .. "workspace",
+    ["documents"] = vim.env.HOME .. "/" .. "Documents",
+    ["notes"] = vim.env.HOME .. "/" .. "Sync/notes",
+    ["workspace"] = vim.env.HOME .. "/" .. "Workspace",
   },
 }
 
@@ -146,10 +151,10 @@ function M.json.load()
   end
 end
 
----@type Options
+---@type MyVimOptions
 local options
 
----@param opts? Options
+---@param opts? MyVimOptions
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {}) or {}
 
@@ -202,6 +207,9 @@ function M.get_kind_filter(buf)
   if M.kind_filter[ft] == false then
     return
   end
+  if type(M.kind_filter[ft]) == "table" then
+    return M.kind_filter[ft]
+  end
   ---@diagnostic disable-next-line: return-type-mismatch
   return type(M.kind_filter) == "table" and type(M.kind_filter.default) == "table" and M.kind_filter.default or nil
 end
@@ -217,10 +225,10 @@ function M.load(name)
   end
   _load("config." .. name)
   if vim.bo.filetype == "lazy" then
-    -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
+    -- HACK: MyVim may have overwritten options of the Lazy ui, so reset this here
     vim.cmd([[do VimResized]])
   end
-  local pattern = "Config" .. name:sub(1, 1):upper() .. name:sub(2)
+  local pattern = "MyVim" .. name:sub(1, 1):upper() .. name:sub(2)
   vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
 end
 
@@ -245,9 +253,9 @@ function M.init()
   M.load("options")
 
   MyVim.plugin.setup()
-  M.json.load()
-
   require("config/plugins")
+
+  M.json.load()
 end
 
 setmetatable(M, {
@@ -255,7 +263,7 @@ setmetatable(M, {
     if options == nil then
       return vim.deepcopy(defaults)[key]
     end
-    ---@cast options Config
+    ---@cast options MyVimConfig
     return options[key]
   end,
 })

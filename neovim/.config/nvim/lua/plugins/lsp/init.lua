@@ -6,14 +6,13 @@ return {
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
       { "folke/neodev.nvim", opts = {} },
-      {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = { "williamboman/mason.nvim" },
-      },
+      "mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
     },
     ---@class PluginLspOpts
     opts = {
       -- options for vim.diagnostic.config()
+      ---@type vim.diagnostic.Opts
       diagnostics = {
         underline = true,
         update_in_insert = false,
@@ -28,10 +27,10 @@ return {
         severity_sort = true,
         signs = {
           text = {
-            [vim.diagnostic.severity.ERROR] = require("config").icons.diagnostics.Error,
-            [vim.diagnostic.severity.WARN] = require("config").icons.diagnostics.Warn,
-            [vim.diagnostic.severity.HINT] = require("config").icons.diagnostics.Hint,
-            [vim.diagnostic.severity.INFO] = require("config").icons.diagnostics.Info,
+            [vim.diagnostic.severity.ERROR] = MyVim.config.icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = MyVim.config.icons.diagnostics.Warn,
+            [vim.diagnostic.severity.HINT] = MyVim.config.icons.diagnostics.Hint,
+            [vim.diagnostic.severity.INFO] = MyVim.config.icons.diagnostics.Info,
           },
         },
       },
@@ -106,12 +105,6 @@ return {
       -- setup autoformat
       MyVim.format.register(MyVim.lsp.formatter())
 
-      -- deprectaed options
-      if opts.autoformat ~= nil then
-        vim.g.autoformat = opts.autoformat
-        MyVim.deprecate("nvim-lspconfig.opts.autoformat", "vim.g.autoformat")
-      end
-
       -- setup keymaps
       MyVim.lsp.on_attach(function(client, buffer)
         require("plugins.lsp.keymaps").on_attach(client, buffer)
@@ -120,19 +113,21 @@ return {
       local register_capability = vim.lsp.handlers["client/registerCapability"]
 
       vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
+        ---@diagnostic disable-next-line: no-unknown
         local ret = register_capability(err, res, ctx)
-        local client_id = ctx.client_id
-        ---@type lsp.Client
-        local client = vim.lsp.get_client_by_id(client_id)
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
         local buffer = vim.api.nvim_get_current_buf()
         require("plugins.lsp.keymaps").on_attach(client, buffer)
         return ret
       end
 
-      -- diagnostics
-      for name, icon in pairs(require("config").icons.diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      -- diagnostics signs
+      if vim.fn.has("nvim-0.10.0") == 0 then
+        for severity, icon in pairs(opts.diagnostics.signs.text) do
+          local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+          name = "DiagnosticSign" .. name
+          vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+        end
       end
 
       -- inlay hints
@@ -243,13 +238,9 @@ return {
     opts = {
       PATH = "append",
       ensure_installed = {
-        -- LSP servers
-        -- "lua-language-server",
-        -- "vim-language-server",
-        -- "marksman",
-        -- Formatters
         "stylua",
         "shfmt",
+        -- "flake8",
       },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}

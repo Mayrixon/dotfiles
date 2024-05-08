@@ -1,17 +1,18 @@
+-- This file is automatically loaded by plugins.core
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Enable LazyVim auto format
 vim.g.autoformat = true
 
--- Root dir detection
+-- MyVim root dir detection
 -- Each entry can be:
 -- * the name of a detector function like `lsp` or `cwd`
 -- * a pattern or array of patterns like `.git` or `lua`.
 -- * a function with signature `function(buf) -> string|string[]`
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
--- LazyVim automatically configures lazygit:
+-- MyVim automatically configures lazygit:
 --  * theme, based on the active colorscheme.
 --  * editorPreset to nvim-remote
 --  * enables nerd font icons
@@ -29,10 +30,10 @@ local opt = vim.opt
 opt.autowrite = true -- Enable auto write
 opt.breakindent = true -- Wrapped lines continue visually indented
 opt.completeopt = "menu,menuone,noselect"
-opt.conceallevel = 2 -- Hide * markup for bold and italic
+opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
-opt.diffopt = { "internal", "filler", "closeoff", "linematch:60" }
+opt.diffopt = opt.diffopt + { "indent-heuristic", "algorithm:histogram" }
 opt.expandtab = true -- Use spaces instead of tabs
 opt.formatoptions = opt.formatoptions + "ronl" -- Default "tcqj"
 opt.grepformat = "%f:%l:%c:%m"
@@ -42,7 +43,6 @@ opt.inccommand = "nosplit" -- preview incremental substitute
 opt.laststatus = 3 -- global statusline
 opt.linebreak = true -- Wrap long lines as breakable characters
 opt.list = true -- Show some invisible characters (tabs...
-opt.listchars = "tab:>-,trail:-,extends:>,precedes:<,nbsp:+"
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
 opt.pumblend = 10 -- Popup blend
@@ -59,7 +59,9 @@ opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift t
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
 opt.spelllang = { "en_us", "cjk" }
+opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = "screen"
+opt.splitright = true -- Put new windows right of current
 opt.tabstop = 4 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
 if not vim.g.vscode then
@@ -75,9 +77,10 @@ opt.wrap = false -- Disable line wrap
 opt.fillchars = {
   foldopen = "",
   foldclose = "",
-  -- fold = "⸱",
   fold = " ",
   foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 
 if vim.fn.has("nvim-0.10") == 1 then
@@ -86,7 +89,6 @@ end
 
 -- Folding
 vim.opt.foldlevel = 99
-vim.opt.foldtext = "v:lua.require'util'.ui.foldtext()"
 
 if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.statuscolumn = [[%!v:lua.require'util'.ui.statuscolumn()]]

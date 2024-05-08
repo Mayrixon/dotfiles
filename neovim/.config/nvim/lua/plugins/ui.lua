@@ -4,7 +4,7 @@ return {
     "rcarriga/nvim-notify",
     keys = {
       {
-        "<leader>un",
+        "<Leader>un",
         function()
           require("notify").dismiss({ silent = true, pending = true })
         end,
@@ -52,7 +52,7 @@ return {
     end,
   },
 
-  -- Statusline
+  -- statusline
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -83,8 +83,6 @@ return {
 
       local icons = require("config").icons
 
-      local navic = require("nvim-navic")
-
       vim.o.laststatus = vim.g.lualine_laststatus
 
       local file_symbols = { modified = " 󰷈 ", readonly = " 󰌾 ", unnamed = " 󰡯 " }
@@ -97,6 +95,7 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = { "branch" },
+
           lualine_c = {
             -- stylua: ignore
             {
@@ -131,14 +130,12 @@ return {
             },
             -- stylua: ignore
             {
-              -- Display keystrokes such as `gcc`
               function() return require("noice").api.status.command.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
               color = MyVim.ui.fg("Statement"),
             },
             -- stylua: ignore
             {
-              -- Display mode such as `recording @q`
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
               color = MyVim.ui.fg("Constant"),
@@ -183,43 +180,23 @@ return {
             end,
           },
         },
+        extensions = { "lazy", "neo-tree", "nvim-dap-ui", "toggleterm", "trouble" },
         tabline = {
           lualine_a = { { "tabs", max_length = vim.o.columns, mode = 2 } },
           lualine_z = { { "filename", file_status = false, path = 4, shorting_target = 80 } },
         },
         winbar = {
-          lualine_c = {
-            {
-              function()
-                return navic.get_location()
-              end,
-              padding = { right = 0 },
-              color_correction = "dynamic",
-              cond = function()
-                return navic.is_available()
-              end,
-            },
-          },
+          lualine_c = {},
           lualine_y = {
-            { "filename", symbols = file_symbols },
+            { MyVim.lualine.pretty_path() },
           },
         },
         inactive_winbar = {
-          lualine_c = {
-            {
-              function()
-                return navic.get_location()
-              end,
-              padding = { right = 0 },
-              color_correction = "static",
-              cond = function()
-                return navic.is_available()
-              end,
-            },
+          lualine_c = {},
+          lualine_y = {
+            { MyVim.lualine.pretty_path() },
           },
-          lualine_y = { { "filename", symbols = file_symbols } },
         },
-        extensions = { "lazy", "neo-tree", "nvim-dap-ui", "toggleterm", "trouble" },
       }
     end,
     config = function(_, opts)
@@ -244,7 +221,6 @@ return {
   -- Indent guides for Neovim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "LazyFile",
     opts = {
       indent = { char = "|" },
       exclude = {
@@ -384,6 +360,7 @@ return {
             { action = "Telescope live_grep",                                      desc = " Find Text",       icon = " ", key = "g" },
             { action = [[lua MyVim.telescope.config_files()()]],         desc = " Config",          icon = " ", key = "c" },
             { action = 'lua require("persistence").load()',                        desc = " Restore Session", icon = " ", key = "s" },
+            { action = "LazyExtras",                                               desc = " Lazy Extras",     icon = " ", key = "x" },
             { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
             { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
         },
@@ -412,31 +389,6 @@ return {
       end
 
       return opts
-    end,
-  },
-
-  -- lsp symbol navigation for lualine. This shows where
-  -- in the code structure you are - within functions, classes,
-  -- etc - in the statusline.
-  {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    init = function()
-      vim.g.navic_silence = true
-      MyVim.lsp.on_attach(function(client, buffer)
-        if client.supports_method("textDocument/documentSymbol") then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = function()
-      return {
-        -- separator = " ",
-        highlight = true,
-        depth_limit = 5,
-        icons = require("config").icons.kinds,
-        lazy_update_context = true,
-      }
     end,
   },
 }

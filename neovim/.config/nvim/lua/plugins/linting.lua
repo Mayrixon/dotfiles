@@ -11,14 +11,15 @@ return {
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
         -- ['_'] = { 'fallback linter' },
+        -- ["*"] = { "typos" },
       },
-      -- Extension to easily override linter options
+      -- MyVim extension to easily override linter options
       -- or add custom linters.
       ---@type table<string,table>
       linters = {
         -- -- Example of using selene only when a selene.toml file is present
         -- selene = {
-        --   -- `condition` is another extension that allows you to
+        --   -- `condition` is another MyVim extension that allows you to
         --   -- dynamically enable/disable linters based on the context.
         --   condition = function(ctx)
         --     return vim.fs.find({ "selene.toml" }, { path = ctx.filename, upward = true })[1]
@@ -56,6 +57,9 @@ return {
         -- * otherwise will split filetype by "." and add all those linters
         -- * this differs from conform.nvim which only uses the first filetype that has a formatter
         local names = lint._resolve_linter_by_ft(vim.bo.filetype)
+
+        -- Create a copy of the names table to avoid modifying the original.
+        names = vim.list_extend({}, names)
 
         -- Add fallback linters.
         if #names == 0 then
