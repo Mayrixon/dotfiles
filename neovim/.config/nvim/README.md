@@ -3,16 +3,18 @@
 ## About
 
 This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v10.23.0.
+[LazyVim](https://github.com/LazyVim/LazyVim) v10.24.0.
 
-This configuration is mainly considered for working on Linux and macOS. Working
-on Windows may meet minor problems.
+This configuration is mainly considered for working on Linux and macOS.
+Working on Windows may meet minor problems.
 
-This configuration requires Neovim v0.9.0. A lower version Neovim may meet
-problems, such as missing plugin `Telescope.nvim`. Besides, this configuration
-requires external command/program `git`, `rg`, `fd`, and `lazygit`. For a
-better/non-undefined UI, a font patched with [Nerd
-Fonts](https://www.nerdfonts.com) v3 is required.
+This configuration requires Neovim v0.9.0.
+A lower version Neovim may meet problems, such as missing plugin
+`Telescope.nvim`.
+Besides, this configuration requires external command/program `git`, `rg`, `fd`,
+and `lazygit`.
+For a better/non-undefined UI, a font patched with
+[Nerd Fonts](https://www.nerdfonts.com) v3 is required.
 
 ## File structure
 
@@ -45,8 +47,8 @@ nvim/
 
 ### Plugins
 
-Plugins are configured in folder lua/plugins. All fundamental plugins are
-outside of lua/plugins/extra folder.
+Plugins are configured in folder lua/plugins.
+All fundamental plugins are outside of lua/plugins/extra folder.
 
 #### Basic configurations
 
@@ -68,9 +70,13 @@ Extra configurations are placed in folder lua/plugins/extras.
 - Add more keymaps for clangd
 
   - ClangdAST
+
   - ClangdSymbolInfo
+
   - ClangdTypeHierarchy
+
   - ClangdMemoryUsage
+
   - Clangd auto complete score
 
     - Example
