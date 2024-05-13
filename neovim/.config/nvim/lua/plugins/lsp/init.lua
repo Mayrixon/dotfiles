@@ -44,7 +44,7 @@ return {
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the code lenses.
       codelens = {
-        enabled = true,
+        enabled = false,
       },
       -- add any global capabilities here
       capabilities = {},
@@ -215,7 +215,14 @@ return {
       end
 
       if have_mason then
-        mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
+        mlsp.setup({
+          ensure_installed = vim.tbl_deep_extend(
+            "force",
+            ensure_installed,
+            MyVim.opts("mason-lspconfig.nvim").ensure_installed or {}
+          ),
+          handlers = { setup },
+        })
       end
 
       if MyVim.lsp.get_config("denols") and MyVim.lsp.get_config("tsserver") then
