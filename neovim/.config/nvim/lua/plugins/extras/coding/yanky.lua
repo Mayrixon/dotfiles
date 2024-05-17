@@ -2,9 +2,10 @@ return {
   -- better yank/paste
   {
     "gbprod/yanky.nvim",
+    enabled = false,
     dependencies = not MyVim.is_win() and { "kkharji/sqlite.lua" } or {},
     opts = {
-      highlight = { timer = 250 },
+      highlight = { timer = 150 },
       ring = { storage = MyVim.is_win() and "shada" or "sqlite" },
     },
     keys = {

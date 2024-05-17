@@ -139,6 +139,7 @@ map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
 
 -- highlights under cursor
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+map("n", "<Leader>uI", "<Cmd>InspectTree<CR>", { desc = "Inspect Tree" })
 
 -- floating terminal
 local lazyterm = function() MyVim.terminal(nil, { cwd = MyVim.root() }) end

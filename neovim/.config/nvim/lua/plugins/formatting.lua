@@ -19,9 +19,7 @@ function M.setup(_, opts)
   for _, key in ipairs({ "format_on_save", "format_after_save" }) do
     if opts[key] then
       MyVim.warn(
-        ("Don't set `opts.%s` for `conform.nvim`.\n**MyVim** will use the conform formatter automatically"):format(
-          key
-        )
+        ("Don't set `opts.%s` for `conform.nvim`.\n**MyVim** will use the conform formatter automatically"):format(key)
       )
       ---@diagnostic disable-next-line: no-unknown
       opts[key] = nil
@@ -54,9 +52,7 @@ return {
           priority = 100,
           primary = true,
           format = function(buf)
-            local plugin = require("lazy.core.config").plugins["conform.nvim"]
-            local Plugin = require("lazy.core.plugin")
-            local opts = Plugin.values(plugin, "opts", false)
+            local opts = MyVim.opts("conform.nvim")
             require("conform").format(MyVim.merge({}, opts.format, { bufnr = buf }))
           end,
           sources = function(buf)

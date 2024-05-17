@@ -76,6 +76,17 @@ return {
               completion = {
                 callSnippet = "Replace",
               },
+              doc = {
+                privateName = { "^_" },
+              },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = "Disable",
+                semicolon = "Disable",
+                arrayIndex = "Disable",
+              },
             },
           },
         },
@@ -98,8 +109,7 @@ return {
     ---@param opts PluginLspOpts
     config = function(_, opts)
       if MyVim.has("neoconf.nvim") then
-        local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
-        require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+        require("neoconf").setup(MyVim.opts("neoconf.nvim"))
       end
 
       -- setup autoformat
@@ -123,34 +133,38 @@ return {
 
       -- diagnostics signs
       if vim.fn.has("nvim-0.10.0") == 0 then
-        for severity, icon in pairs(opts.diagnostics.signs.text) do
-          local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
-          name = "DiagnosticSign" .. name
-          vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+        if type(opts.diagnostics.signs) ~= "boolean" then
+          for severity, icon in pairs(opts.diagnostics.signs.text) do
+            local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+            name = "DiagnosticSign" .. name
+            vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+          end
         end
       end
 
-      -- inlay hints
-      if opts.inlay_hints.enabled then
-        MyVim.lsp.on_attach(function(client, buffer)
-          if client.supports_method("textDocument/inlayHint") then
-            MyVim.toggle.inlay_hints(buffer, true)
-          end
-        end)
-      end
+      if vim.fn.has("nvim-0.10") == 1 then
+        -- inlay hints
+        if opts.inlay_hints.enabled then
+          MyVim.lsp.on_attach(function(client, buffer)
+            if client.supports_method("textDocument/inlayHint") then
+              MyVim.toggle.inlay_hints(buffer, true)
+            end
+          end)
+        end
 
-      -- code lens
-      if opts.codelens.enabled and vim.lsp.codelens then
-        MyVim.lsp.on_attach(function(client, buffer)
-          if client.supports_method("textDocument/codeLens") then
-            vim.lsp.codelens.refresh()
-            --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-              buffer = buffer,
-              callback = vim.lsp.codelens.refresh,
-            })
-          end
-        end)
+        -- code lens
+        if opts.codelens.enabled and vim.lsp.codelens then
+          MyVim.lsp.on_attach(function(client, buffer)
+            if client.supports_method("textDocument/codeLens") then
+              vim.lsp.codelens.refresh()
+              --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+              vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                buffer = buffer,
+                callback = vim.lsp.codelens.refresh,
+              })
+            end
+          end)
+        end
       end
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
