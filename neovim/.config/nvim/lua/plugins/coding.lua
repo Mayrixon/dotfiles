@@ -83,59 +83,78 @@ return {
         end
         local entry = event.entry
         local item = entry:get_completion_item()
-        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
-          local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
-          vim.api.nvim_feedkeys(keys, "i", true)
+        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) and item.insertTextFormat ~= 2 then
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          local prev_char = vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2], cursor[1] - 1, cursor[2] + 1, {})[1]
+          if prev_char ~= "(" and prev_char ~= ")" then
+            local keys = vim.api.nvim_replace_termcodes("()<Left>", false, false, true)
+            vim.api.nvim_feedkeys(keys, "i", true)
+          end
         end
       end)
     end,
   },
 
   -- snippets
-  {
-    "L3MON4D3/LuaSnip",
-    build = (not MyVim.is_win())
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
-    dependencies = {
-      {
-        "rafamadriz/friendly-snippets",
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
-      {
+  vim.snippets
+      and {
         "nvim-cmp",
         dependencies = {
-          "saadparwaiz1/cmp_luasnip",
+          { "rafamadriz/friendly-snippets" },
+          { "garymjr/nvim-snippets", opts = { friendly_snippets = true } },
         },
         opts = function(_, opts)
           opts.snippet = {
             expand = function(args)
-              require("luasnip").lsp_expand(args.body)
+              vim.snippets.expand(args.body)
             end,
           }
-          table.insert(opts.sources, { name = "luasnip" })
+          table.insert(opts.sources, { name = "snippets" })
         end,
-      },
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-    -- stylua: ignore
-    keys = {
-      {
-        "<Tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<Tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<S-Tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
-  },
+        keys = {
+          {
+            "<Tab>",
+            function()
+              if vim.snippet.active({ direction = 1 }) then
+                vim.schedule(function()
+                  vim.snippet.jump(1)
+                end)
+                return
+              end
+              return "<Tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = "i",
+          },
+          {
+            "<Tab>",
+            function()
+              vim.schedule(function()
+                vim.snippet.jump(1)
+              end)
+            end,
+            silent = true,
+            mode = "s",
+          },
+          {
+            "<S-Tab>",
+            function()
+              if vim.snippet.active({ direction = -1 }) then
+                vim.schedule(function()
+                  vim.snippet.jump(-1)
+                end)
+                return
+              end
+              return "<S-Tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = { "i", "s" },
+          },
+        },
+      }
+    or { import = "plugins.extras.coding.luasnip", enabled = vim.fn.has("nvim-0.10") == 0 },
 
   -- auto pairs
   {
@@ -152,10 +171,8 @@ return {
       end
     end,
   },
-  -- Fast and feature-rich surround actions. For text that includes
-  -- surrounding characters like brackets or quotes, this allows you
-  -- to select the text inside, change or modify the surrounding characters,
-  -- and more.
+
+  -- surround
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
@@ -178,101 +195,5 @@ return {
         require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
       end,
     },
-  },
-
-  -- Better text-objects
-  {
-    "echasnovski/mini.ai",
-    -- keys = {
-    --   { "a", mode = { "x", "o" } },
-    --   { "i", mode = { "x", "o" } },
-    -- },
-    event = "VeryLazy",
-    opts = function()
-      local ai = require("mini.ai")
-      return {
-        n_lines = 500,
-        custom_textobjects = {
-          o = ai.gen_spec.treesitter({
-            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-          }, {}),
-          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
-          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
-          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
-          d = { "%f[%d]%d+" }, -- digits
-          e = { -- Word with case
-            {
-              "%u[%l%d]+%f[^%l%d]",
-              "%f[%S][%l%d]+%f[^%l%d]",
-              "%f[%P][%l%d]+%f[^%l%d]",
-              "^[%l%d]+%f[^%l%d]",
-            },
-            "^().*()$",
-          },
-          g = function() -- Whole buffer, similar to `gg` and 'G' motion
-            local from = { line = 1, col = 1 }
-            local to = {
-              line = vim.fn.line("$"),
-              col = math.max(vim.fn.getline("$"):len(), 1),
-            }
-            return { from = from, to = to }
-          end,
-          u = ai.gen_spec.function_call(), -- u for "Usage"
-          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
-        },
-      }
-    end,
-    config = function(_, opts)
-      require("mini.ai").setup(opts)
-      -- register all text objects with which-key
-      MyVim.on_load("which-key.nvim", function()
-        ---@type table<string, string|table>
-        local i = {
-          [" "] = "Whitespace",
-          ['"'] = 'Balanced "',
-          ["'"] = "Balanced '",
-          ["`"] = "Balanced `",
-          ["("] = "Balanced (",
-          [")"] = "Balanced ) including white-space",
-          [">"] = "Balanced > including white-space",
-          ["<lt>"] = "Balanced <",
-          ["]"] = "Balanced ] including white-space",
-          ["["] = "Balanced [",
-          ["}"] = "Balanced } including white-space",
-          ["{"] = "Balanced {",
-          ["?"] = "User Prompt",
-          _ = "Underscore",
-          a = "Argument",
-          b = "Balanced ), ], }",
-          c = "Class",
-          d = "Digit(s)",
-          e = "Word in CamelCase & snake_case",
-          f = "Function",
-          g = "Entire file",
-          o = "Block, conditional, loop",
-          q = "Quote `, \", '",
-          t = "Tag",
-          u = "Use/call function & method",
-          U = "Use/call without dot in name",
-        }
-        local a = vim.deepcopy(i)
-        for k, v in pairs(a) do
-          a[k] = v:gsub(" including.*", "")
-        end
-
-        local ic = vim.deepcopy(i)
-        local ac = vim.deepcopy(a)
-        for key, name in pairs({ n = "Next", l = "Last" }) do
-          i[key] = vim.tbl_extend("force", { name = "Inside " .. name .. " textobject" }, ic)
-          a[key] = vim.tbl_extend("force", { name = "Around " .. name .. " textobject" }, ac)
-        end
-        require("which-key").register({
-          mode = { "o", "x" },
-          i = i,
-          a = a,
-        })
-      end)
-    end,
   },
 }

@@ -35,7 +35,6 @@ return {
       vim.filetype.add({
         extension = { rasi = "rasi", rofi = "rasi", wofi = "rasi" },
         filename = {
-          [".env"] = "dotenv",
           ["vifmrc"] = "vim",
         },
         pattern = {
@@ -43,7 +42,7 @@ return {
           [".*/mako/config"] = "dosini",
           [".*/kitty/.+%.conf"] = "bash",
           [".*/hypr/.+%.conf"] = "hyprlang",
-          ["%.env%.[%w_.-]+"] = "dotenv",
+          ["%.env%.[%w_.-]+"] = "sh",
         },
       })
 

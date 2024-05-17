@@ -1,4 +1,6 @@
 local icons = require("config").icons
+local have_make = vim.fn.executable("make") == 1
+local have_cmake = vim.fn.executable("cmake") == 1
 
 return {
 
@@ -171,12 +173,23 @@ return {
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = vim.fn.executable("make") == 1 and "make"
+        build = have_make == 1 and "make"
           or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-        enabled = vim.fn.executable("make") == 1 or vim.fn.executable("cmake") == 1,
-        config = function()
+        enabled = have_make == 1 or have_cmake == 1,
+        config = function(plugin)
           MyVim.on_load("telescope.nvim", function()
-            require("telescope").load_extension("fzf")
+            local ok, err = pcall(require("telescope").load_extension, "fzf")
+            if not ok then
+              local lib = plugin.dir .. "/build/libfzf." .. (MyVim.is_win() and "dll" or "so")
+              if not vim.uv.fs_stat(lib) then
+                MyVim.warn("`telescope-fzf-native.nvim` not built. Rebuilding...")
+                require("lazy").build({ plugins = { plugin }, show = false }):wait(function()
+                  MyVim.info("Rebuilding `telescope-fzf-native.nvim` done.\nPlease restart Neovim.")
+                end)
+              else
+                MyVim.error("Failed to load `telescope-fzf-native.nvim`:\n" .. err)
+              end
+            end
           end)
         end,
       },
@@ -423,8 +436,10 @@ return {
 
         -- stylua: ignore start
         -- Navigation
-        map("n", "]h", function() if vim.wo.diff then return "]c" end vim.schedule(function() gs.next_hunk() end) return "<Ignore>" end, "Next Hunk")
-        map("n", "[h", function() if vim.wo.diff then return "[c" end vim.schedule(function() gs.prev_hunk() end) return "<Ignore>" end, "Prev Hunk")
+        map("n", "]h", function() gs.nav_hunk("next") end, "Next Hunk")
+        map("n", "[h", function() gs.nav_hunk("prev") end, "Prev Hunk")
+        map("n", "]H", function() gs.nav_hunk("last") end, "Last Hunk")
+        map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
 
         -- Actions
         map({ "n", "v" }, "<Leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
@@ -492,7 +507,6 @@ return {
   -- Buffer remove
   {
     "echasnovski/mini.bufremove",
-
     keys = {
       {
         "<Leader>bd",
