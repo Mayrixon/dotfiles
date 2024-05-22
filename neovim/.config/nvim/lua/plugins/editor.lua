@@ -125,6 +125,12 @@ return {
           expander_expanded = "",
           expander_highlight = "NeoTreeExpander",
         },
+        git_status = {
+          symbols = {
+            unstaged = "󰄱",
+            staged = "󰱒",
+          },
+        },
       },
     },
     config = function(_, opts)
@@ -235,9 +241,11 @@ return {
       { "<Leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Help Pages" },
       { "<Leader>sH", "<Cmd>Telescope highlights<CR>", desc = "Search Highlight Groups" },
       { "<Leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Key Maps" },
+      { "<Leader>sl", "<Cmd>Telescope loclist<CR>", desc = "Location List" },
       { "<Leader>sM", "<Cmd>Telescope man_pages<CR>", desc = "Man Pages" },
       { "<Leader>sm", "<Cmd>Telescope marks<CR>", desc = "Jump to Mark" },
       { "<Leader>so", "<Cmd>Telescope vim_options<CR>", desc = "Options" },
+      { "<Leader>sq", "<Cmd>Telescope quickfix<CR>", desc = "Quickfix List" },
       { "<Leader>sR", "<Cmd>Telescope resume<CR>", desc = "Resume" },
       { "<Leader>sw", MyVim.telescope("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
       { "<Leader>sW", MyVim.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
@@ -460,74 +468,6 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
         -- stylua: ignore end
       end,
-    },
-  },
-
-  -- Automatically highlights other instances of the word under your cursor.
-  -- This works with LSP, Treesitter, and regexp matching to find the other
-  -- instances.
-  {
-    "RRethy/vim-illuminate",
-    event = "LazyFile",
-    opts = {
-      delay = 200,
-      filetypes_denylist = { "neotree", "terminal" },
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { "lsp", "treesitter" },
-      },
-    },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
-
-      local function map(key, dir, buffer)
-        vim.keymap.set("n", key, function()
-          require("illuminate")["goto_" .. dir .. "_reference"](false)
-        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-      end
-
-      map("]]", "next")
-      map("[[", "prev")
-
-      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          local buffer = vim.api.nvim_get_current_buf()
-          map("]]", "next", buffer)
-          map("[[", "prev", buffer)
-        end,
-      })
-    end,
-    keys = {
-      { "]]", desc = "Next Reference" },
-      { "[[", desc = "Prev Reference" },
-    },
-  },
-
-  -- Buffer remove
-  {
-    "echasnovski/mini.bufremove",
-    keys = {
-      {
-        "<Leader>bd",
-        function()
-          local bd = require("mini.bufremove").delete
-          if vim.bo.modified then
-            local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
-            if choice == 1 then -- Yes
-              vim.cmd.write()
-              bd(0)
-            elseif choice == 2 then -- No
-              bd(0, true)
-            end
-          else
-            bd(0)
-          end
-        end,
-        desc = "Delete Buffer",
-      },
-      -- stylua: ignore
-      { "<Leader>bD", function() require("mini.bufremove").delete(0, true) end, desc = "Delete Buffer (Force)" },
     },
   },
 

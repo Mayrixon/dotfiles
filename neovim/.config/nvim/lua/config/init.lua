@@ -127,7 +127,7 @@ local defaults = {
 }
 
 M.json = {
-  version = 3,
+  version = 4,
   data = {
     version = nil, ---@type string?
     news = {}, ---@type table<string, string>
@@ -164,7 +164,7 @@ function M.setup(opts)
     M.load("autocmds")
   end
 
-  local group = vim.api.nvim_create_augroup("LazyVim", { clear = true })
+  local group = vim.api.nvim_create_augroup("MyVim", { clear = true })
   vim.api.nvim_create_autocmd("User", {
     group = group,
     pattern = "VeryLazy",
@@ -251,6 +251,10 @@ function M.init()
   -- this is needed to make sure options will be correctly applied
   -- after installing missing plugins
   M.load("options")
+
+  if vim.g.deprecate_warnings == false then
+    vim.deprecate = function() end
+  end
 
   MyVim.plugin.setup()
   require("config/plugins")
