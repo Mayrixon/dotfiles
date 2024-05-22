@@ -46,10 +46,14 @@ return {
       codelens = {
         enabled = false,
       },
+      -- Enable lsp cursor word highlighting
+      document_highlight = {
+        enabled = true,
+      },
       -- add any global capabilities here
       capabilities = {},
       -- options for vim.lsp.buf.format
-      -- `bufnr` and `filter` is handled by the LazyVim formatter,
+      -- `bufnr` and `filter` is handled by the MyVim formatter,
       -- but can be also overridden when specified
       format = {
         formatting_options = nil,
@@ -120,16 +124,10 @@ return {
         require("plugins.lsp.keymaps").on_attach(client, buffer)
       end)
 
-      local register_capability = vim.lsp.handlers["client/registerCapability"]
+      MyVim.lsp.setup()
+      MyVim.lsp.on_dynamic_capability(require("plugins.lsp.keymaps").on_attach)
 
-      vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
-        ---@diagnostic disable-next-line: no-unknown
-        local ret = register_capability(err, res, ctx)
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        local buffer = vim.api.nvim_get_current_buf()
-        require("plugins.lsp.keymaps").on_attach(client, buffer)
-        return ret
-      end
+      MyVim.lsp.words.setup(opts.document_highlight)
 
       -- diagnostics signs
       if vim.fn.has("nvim-0.10.0") == 0 then
@@ -145,24 +143,19 @@ return {
       if vim.fn.has("nvim-0.10") == 1 then
         -- inlay hints
         if opts.inlay_hints.enabled then
-          MyVim.lsp.on_attach(function(client, buffer)
-            if client.supports_method("textDocument/inlayHint") then
-              MyVim.toggle.inlay_hints(buffer, true)
-            end
+          MyVim.lsp.on_supports_method("textDocument/inlayHint", function(client, buffer)
+            MyVim.toggle.inlay_hints(buffer, true)
           end)
         end
 
         -- code lens
         if opts.codelens.enabled and vim.lsp.codelens then
-          MyVim.lsp.on_attach(function(client, buffer)
-            if client.supports_method("textDocument/codeLens") then
-              vim.lsp.codelens.refresh()
-              --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-              vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-                buffer = buffer,
-                callback = vim.lsp.codelens.refresh,
-              })
-            end
+          MyVim.lsp.on_supports_method("textDocument/codeLens", function(client, buffer)
+            vim.lsp.codelens.refresh()
+            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+              buffer = buffer,
+              callback = vim.lsp.codelens.refresh,
+            })
           end)
         end
       end

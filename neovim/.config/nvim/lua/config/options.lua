@@ -23,7 +23,10 @@ vim.g.lazygit_config = true
 -- This sets `vim.o.shell` and does some additional configuration for:
 -- * pwsh
 -- * powershell
--- LazyVim.terminal.setup("pwsh")
+-- MyVim.terminal.setup("pwsh")
+
+-- Hide deprecation warnings
+vim.g.deprecation_warnings = false
 
 local opt = vim.opt
 

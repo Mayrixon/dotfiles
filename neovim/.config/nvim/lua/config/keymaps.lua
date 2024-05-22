@@ -22,11 +22,13 @@ map("n", "<C-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase Window W
 -- buffers
 map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
 map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
-map("n", "<leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
+map("n", "<Leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
+map("n", "<Leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
+map("n", "<Leader>bd", MyVim.ui.bufremove, { desc = "Delete Buffer" })
+map("n", "<Leader>bD", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
 
--- Clear search with <esc>
-map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
+-- Clear search with <Esc>
+map({ "i", "n" }, "<Esc>", "<Cmd>noh<CR><Esc>", { desc = "Escape and Clear hlsearch" })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua

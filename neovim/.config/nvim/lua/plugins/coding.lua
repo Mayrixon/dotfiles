@@ -36,11 +36,8 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<S-CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = MyVim.cmp.confirm(),
+          ["<S-CR>"] = MyVim.cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<C-CR>"] = function(fallback)
             cmp.abort()
             fallback()
@@ -74,39 +71,47 @@ return {
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
+
+      local parse = require("cmp.utils.snippet").parse
+      require("cmp.utils.snippet").parse = function(input)
+        local ok, ret = pcall(parse, input)
+        if ok then
+          return ret
+        end
+        return MyVim.cmp.snippet_preview(input)
+      end
+
       local cmp = require("cmp")
-      local Kind = cmp.lsp.CompletionItemKind
       cmp.setup(opts)
       cmp.event:on("confirm_done", function(event)
-        if not vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
-          return
+        if vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+          MyVim.cmp.auto_brackets(event.entry)
         end
-        local entry = event.entry
-        local item = entry:get_completion_item()
-        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) and item.insertTextFormat ~= 2 then
-          local cursor = vim.api.nvim_win_get_cursor(0)
-          local prev_char = vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2], cursor[1] - 1, cursor[2] + 1, {})[1]
-          if prev_char ~= "(" and prev_char ~= ")" then
-            local keys = vim.api.nvim_replace_termcodes("()<Left>", false, false, true)
-            vim.api.nvim_feedkeys(keys, "i", true)
-          end
-        end
+      end)
+      cmp.event:on("menu_opened", function(event)
+        MyVim.cmp.add_missing_snippet_docs(event.window)
       end)
     end,
   },
 
   -- snippets
-  vim.snippets
+  vim.fn.has("nvim-0.10") == 1
       and {
         "nvim-cmp",
         dependencies = {
-          { "rafamadriz/friendly-snippets" },
-          { "garymjr/nvim-snippets", opts = { friendly_snippets = true } },
+          {
+            "garymjr/nvim-snippets",
+            opts = {
+              friendly_snippets = true,
+              global_snippets = { "all", "global" },
+            },
+            dependencies = { "rafamadriz/friendly-snippets" },
+          },
         },
         opts = function(_, opts)
           opts.snippet = {
-            expand = function(args)
-              vim.snippets.expand(args.body)
+            expand = function(item)
+              return MyVim.cmp.expand(item.body)
             end,
           }
           table.insert(opts.sources, { name = "snippets" })
@@ -115,38 +120,16 @@ return {
           {
             "<Tab>",
             function()
-              if vim.snippet.active({ direction = 1 }) then
-                vim.schedule(function()
-                  vim.snippet.jump(1)
-                end)
-                return
-              end
-              return "<Tab>"
+              return vim.snippet.active({ direction = 1 }) and "<Cmd>lua vim.snippet.jump(1)<CR>" or "<Tab>"
             end,
             expr = true,
             silent = true,
-            mode = "i",
-          },
-          {
-            "<Tab>",
-            function()
-              vim.schedule(function()
-                vim.snippet.jump(1)
-              end)
-            end,
-            silent = true,
-            mode = "s",
+            mode = { "i", "s" },
           },
           {
             "<S-Tab>",
             function()
-              if vim.snippet.active({ direction = -1 }) then
-                vim.schedule(function()
-                  vim.snippet.jump(-1)
-                end)
-                return
-              end
-              return "<S-Tab>"
+              return vim.snippet.active({ direction = -1 }) and "<Cmd>lua vim.snippet.jump(-1)<CR>" or "<S-Tab>"
             end,
             expr = true,
             silent = true,
@@ -181,6 +164,12 @@ return {
 
   -- comments
   {
+    "folke/ts-comments.nvim",
+    event = "VeryLazy",
+    opts = {},
+    enabled = vim.fn.has("nvim-0.10") == 1,
+  },
+  {
     "JoosepAlviste/nvim-ts-context-commentstring",
     lazy = true,
     opts = {
@@ -195,5 +184,38 @@ return {
         require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
       end,
     },
+  },
+
+  -- Better text-objects
+  {
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    opts = function()
+      MyVim.on_load("which-key.nvim", function()
+        vim.schedule(MyVim.mini.ai_whichkey)
+      end)
+      local ai = require("mini.ai")
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({ -- code block
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }),
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
+          d = { "%f[%d]%d+" }, -- digits
+          e = { -- Word with case
+            { "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+            "^().*()$",
+          },
+          i = MyVim.mini.ai_indent, -- indent
+          g = MyVim.mini.ai_buffer, -- buffer
+          u = ai.gen_spec.function_call(), -- u for "Usage"
+          U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+        },
+      }
+    end,
   },
 }
