@@ -18,6 +18,17 @@ return {
     end,
   },
   {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        python = {
+          "isort",
+        },
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
@@ -114,7 +125,7 @@ return {
         },
       })
     end,
-    keys = { { "<LocalLeader>v", "<Cmd>VenvSelect<CR>", desc = "Select VirtualEnv" } },
+    keys = { { "<LocalLeader>v", "<Cmd>VenvSelect<CR>", desc = "Select VirtualEnv", ft = "python" } },
   },
   {
     "hrsh7th/nvim-cmp",
