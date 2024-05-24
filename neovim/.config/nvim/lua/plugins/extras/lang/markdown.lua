@@ -47,7 +47,14 @@ return {
     opts = {
       formatters_by_ft = {
         markdown = {
-          "prettier",
+          { "prettierd", "prettier" },
+          "markdownlint",
+          "mdslw",
+          "mdformat",
+        },
+        ["markdown.mdx"] = {
+          { "prettierd", "prettier" },
+          "markdownlint",
           "mdslw",
           "mdformat",
         },

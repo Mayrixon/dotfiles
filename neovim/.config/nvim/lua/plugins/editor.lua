@@ -240,6 +240,7 @@ return {
       { "<Leader>sG", MyVim.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<Leader>sh", "<Cmd>Telescope help_tags<CR>", desc = "Help Pages" },
       { "<Leader>sH", "<Cmd>Telescope highlights<CR>", desc = "Search Highlight Groups" },
+      { "<Leader>sj", "<Cmd>Telescope jumplist<CR>", desc = "Jumplist" },
       { "<Leader>sk", "<Cmd>Telescope keymaps<CR>", desc = "Key Maps" },
       { "<Leader>sl", "<Cmd>Telescope loclist<CR>", desc = "Location List" },
       { "<Leader>sM", "<Cmd>Telescope man_pages<CR>", desc = "Man Pages" },
