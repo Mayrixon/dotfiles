@@ -3,12 +3,12 @@
 ## About
 
 This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v11.6.1.
+[LazyVim](https://github.com/LazyVim/LazyVim) v11.7.0.
 
 This configuration is mainly considered for working on Linux and macOS.
 Working on Windows may meet minor problems.
 
-This configuration requires Neovim v0.9.0.
+This configuration requires Neovim v0.10.0.
 A lower version Neovim may meet problems, such as missing plugin
 `Telescope.nvim`.
 Besides, this configuration requires external command/program `git`, `rg`, `fd`,
