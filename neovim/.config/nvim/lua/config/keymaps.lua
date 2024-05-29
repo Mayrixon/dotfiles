@@ -136,6 +136,10 @@ map("n", "<Leader>gf", function()
   MyVim.lazygit({ args = { "-f", vim.trim(git_path) } })
 end, { desc = "Lazygit Current File History" })
 
+map("n", "<Leader>gl", function()
+  MyVim.lazygit({ args = { "log" } })
+end, { desc = "Lazygit Log" })
+
 -- quit
 map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
 
