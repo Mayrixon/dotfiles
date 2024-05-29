@@ -26,7 +26,7 @@ function M.setup(shell)
 
     -- Setting shell command flags
     vim.o.shellcmdflag =
-    "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
+      "-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
 
     -- Setting shell redirection
     vim.o.shellredir = '2>&1 | %{ "$_" } | Out-File %s; exit $LastExitCode'
@@ -72,6 +72,14 @@ function M.open(cmd, opts)
       vim.keymap.set("t", "<C-k>", "<C-k>", { buffer = buf, nowait = true })
       vim.keymap.set("t", "<C-l>", "<C-l>", { buffer = buf, nowait = true })
     end
+
+    vim.keymap.set("n", "gf", function()
+      local f = vim.fn.findfile(vim.fn.expand("<cfile>"))
+      if f ~= "" then
+        vim.cmd("close")
+        vim.cmd("e " .. f)
+      end
+    end, { buffer = buf })
 
     vim.api.nvim_create_autocmd("BufEnter", {
       buffer = buf,
