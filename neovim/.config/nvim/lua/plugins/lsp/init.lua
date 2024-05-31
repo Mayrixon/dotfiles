@@ -53,7 +53,14 @@ return {
           enabled = true,
         },
         -- add any global capabilities here
-        capabilities = {},
+        capabilities = {
+          workspace = {
+            fileOperations = {
+              didRename = true,
+              willRename = true,
+            },
+          },
+        },
         -- options for vim.lsp.buf.format
         -- `bufnr` and `filter` is handled by the MyVim formatter,
         -- but can be also overridden when specified
@@ -221,11 +228,13 @@ return {
       for server, server_opts in pairs(servers) do
         if server_opts then
           server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-            setup(server)
-          elseif server_opts.enabled ~= false then
-            ensure_installed[#ensure_installed + 1] = server
+          if server_opts.enabled ~= false then
+            -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
+            if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
+              setup(server)
+            else
+              ensure_installed[#ensure_installed + 1] = server
+            end
           end
         end
       end
@@ -241,9 +250,9 @@ return {
         })
       end
 
-      if MyVim.lsp.get_config("denols") and MyVim.lsp.get_config("tsserver") then
+      if MyVim.lsp.is_enabled("denols") and MyVim.lsp.is_enabled("tsserver") then
         local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-        MyVim.lsp.disable("tsserver", is_deno)
+        MyVim.lsp.disable("vtsls", is_deno)
         MyVim.lsp.disable("denols", function(root_dir)
           return not is_deno(root_dir)
         end)

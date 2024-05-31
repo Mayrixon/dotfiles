@@ -275,12 +275,7 @@ return {
     opts = function()
       local actions = require("telescope.actions")
 
-      local open_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_with_trouble(...)
-      end
-      local open_selected_with_trouble = function(...)
-        return require("trouble.providers.telescope").open_selected_with_trouble(...)
-      end
+      local open_with_trouble = require("trouble.sources.telescope").open
       local find_files_no_ignore = function()
         local action_state = require("telescope.actions.state")
         local line = action_state.get_current_line()
@@ -312,7 +307,6 @@ return {
           mappings = {
             i = {
               ["<M-t>"] = open_with_trouble,
-              ["<M-T>"] = open_selected_with_trouble,
               ["<M-i>"] = find_files_no_ignore,
               ["<M-h>"] = find_files_with_hidden,
               ["<C-Down>"] = actions.cycle_history_next,
@@ -322,7 +316,6 @@ return {
             },
             n = {
               ["<M-t>"] = open_with_trouble,
-              ["<M-T>"] = open_selected_with_trouble,
               ["q"] = actions.close,
             },
           },
@@ -478,15 +471,25 @@ return {
     cmd = { "TroubleToggle", "Trouble" },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { "<Leader>xx", "<Cmd>TroubleToggle document_diagnostics<CR>", desc = "Document Diagnostics (Trouble)" },
-      { "<Leader>xX", "<Cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Workspace Diagnostics (Trouble)" },
-      { "<Leader>xL", "<Cmd>TroubleToggle loclist<CR>", desc = "Location List (Trouble)" },
-      { "<Leader>xQ", "<Cmd>TroubleToggle quickfix<CR>", desc = "Quickfix List (Trouble)" },
+      { "<Leader>xx", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Diagnostics (Trouble)" },
+      {
+        "<Leader>xX",
+        "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      { "<Leader>cs", "<Cmd>Trouble symbols toggle focus=false<CR>", desc = "Symbols (Trouble)" },
+      {
+        "<Leader>cS",
+        "<Cmd>Trouble lsp toggle focus=false win.position=right<CR>",
+        desc = "LSP references/definitions/... (Trouble)",
+      },
+      { "<Leader>xL", "<Cmd>Trouble loclist toggle<CR>", desc = "Location List (Trouble)" },
+      { "<Leader>xQ", "<Cmd>Trouble qflist toggle<CR>", desc = "Quickfix List (Trouble)" },
       {
         "[q",
         function()
           if require("trouble").is_open() then
-            require("trouble").previous({ skip_groups = true, jump = true })
+            require("trouble").prev({ skip_groups = true, jump = true })
           else
             local ok, err = pcall(vim.cmd.cprev)
             if not ok then

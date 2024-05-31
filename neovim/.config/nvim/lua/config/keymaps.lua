@@ -123,7 +123,7 @@ if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
 end
 map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end,
   { desc = "Toggle Treesitter Highlight" })
-map("n", "<Leader>Tb", function() MyyVim.toggle("background", false, { "light", "dark" }) end,
+map("n", "<Leader>Tb", function() MyVim.toggle("background", false, { "light", "dark" }) end,
   { desc = "Toggle Background" })
 
 -- lazygit
@@ -171,6 +171,8 @@ map("n", "<Leader>ws", "<Cmd>split<CR>", { desc = "Split Window Below", remap = 
 map("n", "<Leader>wv", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
 map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "Split Window Below", remap = true })
 map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
+map("n", "<Leader>wm", function() MyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
+map("n", "<Leader>m", function() MyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
 
 -- tabs
 map("n", "<Leader><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })

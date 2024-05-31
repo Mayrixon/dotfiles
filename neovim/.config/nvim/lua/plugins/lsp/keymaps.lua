@@ -3,8 +3,8 @@ local M = {}
 ---@type MyKeysLspSpec[]|nil
 M._keys = nil
 
----@alias MyKeysLspSpec MyKeysSpec|{has?:string, cond?:fun():boolean}
----@alias MyKeysLsp MyKeys|{has?:string, cond?:fun():boolean}
+---@alias MyKeysLspSpec MyKeysSpec|{has?:string|string[], cond?:fun():boolean}
+---@alias MyKeysLsp MyKeys|{has?:string|string[], cond?:fun():boolean}
 
 ---@return MyKeysLspSpec[]
 function M.get()
@@ -15,7 +15,7 @@ function M.get()
     M._keys = {
       { "<Leader>cl", "<Cmd>LspInfo<CR>", desc = "Lsp Info" },
       { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
-      { "gr", "<Cmd>Telescope lsp_references<CR>", desc = "References" },
+      { "gr", "<Cmd>Telescope lsp_references<CR>", desc = "References", nowait = true },
       { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
       { "gI", function() require("telescope.builtin").lsp_implementations({ reuse_win = true }) end, desc = "Goto Implementation" },
       { "gy", function() require("telescope.builtin").lsp_type_definitions({ reuse_win = true }) end, desc = "Goto T[y]pe Definition" },
@@ -25,6 +25,7 @@ function M.get()
       { "<Leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
       { "<Leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
       { "<Leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
+      { "<Leader>cR", MyVim.lsp.rename_file, desc = "Rename File", mode ={"n"}, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
       {
         "<Leader>cA",
         function()
@@ -66,8 +67,16 @@ function M.get()
   return M._keys
 end
 
----@param method string
+---@param method string|string[]
 function M.has(buffer, method)
+  if type(method) == "table" then
+    for _, m in ipairs(method) do
+      if M.has(buffer, m) then
+        return true
+      end
+    end
+    return false
+  end
   method = method:find("/") and method or "textDocument/" .. method
   local clients = MyVim.lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
