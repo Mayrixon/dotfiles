@@ -11,6 +11,7 @@ M.deprecated_extras = {
   ["plugins.extras.linting.nvim-lint"] = "`nvim-lint` is now the default **MyVim** linter.",
   ["plugins.extras.ui.dashboard"] = "`dashboard.nvim` is now the default **MyVim** starter.",
   ["plugins.extras.coding.native_snippets"] = "Native snippets are now the default for **Neovim >= 0.10**",
+  ["plugins.extras.editor.trouble-v3"] = "Trouble v3 has been merged in main",
 }
 
 M.deprecated_modules = {
