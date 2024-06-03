@@ -30,10 +30,21 @@ return {
           enabled = false,
         },
         vtsls = {
+          -- explicitly add default filetypes, so that we can extend
+          -- them in related extras
+          filetypes = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+          },
           settings = {
             complete_function_calls = true,
             vtsls = {
               enableMoveToFileCodeAction = true,
+              autoUseWorkspaceTsdk = true,
               experimental = {
                 completion = {
                   enableServerSideFuzzyMatch = true,
@@ -71,28 +82,35 @@ return {
               desc = "File References",
             },
             {
-              "<Leader>co",
+              "<LocalLeader>o",
               function()
                 require("vtsls").commands.organize_imports(0)
               end,
               desc = "Organize Imports",
             },
             {
-              "<Leader>cM",
+              "<LocalLeader>M",
               function()
                 require("vtsls").commands.add_missing_imports(0)
               end,
               desc = "Add missing imports",
             },
             {
-              "<Leader>cD",
+              "<LocalLeader>u",
+              function()
+                require("vtsls").commands.remove_unused_imports(0)
+              end,
+              desc = "Remove unused imports",
+            },
+            {
+              "<LocalLeader>D",
               function()
                 require("vtsls").commands.fix_all(0)
               end,
               desc = "Fix all diagnostics",
             },
             {
-              "<Leader>cV",
+              "<LocalLeader>V",
               function()
                 require("vtsls").commands.select_ts_version(0)
               end,
@@ -144,9 +162,7 @@ return {
             command = "node",
             -- 💀 Make sure to update this path to point to your installation
             args = {
-              require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-                .. "/js-debug/src/dapDebugServer.js",
-              "${port}",
+              MyVim.get_pkg_path("js-debug-adapter", "/js-debug/src/dapDebugServer.js"),
             },
           },
         }

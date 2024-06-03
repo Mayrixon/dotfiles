@@ -1,4 +1,12 @@
 return {
+  -- Disable `<Leader>cs` keymap so it doesn't conflict with `outline.nvim`
+  {
+    "folke/trouble.nvim",
+    optional = true,
+    keys = {
+      { "<Leader>cs", false },
+    },
+  },
   {
     "hedyhli/outline.nvim",
     keys = {

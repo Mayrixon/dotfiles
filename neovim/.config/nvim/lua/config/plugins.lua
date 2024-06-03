@@ -5,6 +5,7 @@ require("lazy").setup({
     { import = "plugins.extras.dap" },
     { import = "plugins.extras.editor" },
     { import = "plugins.extras.lang" },
+    { import = "plugins.extras.lsp" },
     { import = "plugins.extras.test" },
     { import = "plugins.extras.testing" },
     { import = "plugins.extras.ui" },
