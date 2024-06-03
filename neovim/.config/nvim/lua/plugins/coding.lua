@@ -95,48 +95,46 @@ return {
   },
 
   -- snippets
-  vim.fn.has("nvim-0.10") == 1
-      and {
-        "nvim-cmp",
-        dependencies = {
-          {
-            "garymjr/nvim-snippets",
-            opts = {
-              friendly_snippets = true,
-            },
-            dependencies = { "rafamadriz/friendly-snippets" },
-          },
+  {
+    "nvim-cmp",
+    dependencies = {
+      {
+        "garymjr/nvim-snippets",
+        opts = {
+          friendly_snippets = true,
         },
-        opts = function(_, opts)
-          opts.snippet = {
-            expand = function(item)
-              return MyVim.cmp.expand(item.body)
-            end,
-          }
-          table.insert(opts.sources, { name = "snippets" })
+        dependencies = { "rafamadriz/friendly-snippets" },
+      },
+    },
+    opts = function(_, opts)
+      opts.snippet = {
+        expand = function(item)
+          return MyVim.cmp.expand(item.body)
         end,
-        keys = {
-          {
-            "<Tab>",
-            function()
-              return vim.snippet.active({ direction = 1 }) and "<Cmd>lua vim.snippet.jump(1)<CR>" or "<Tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = { "i", "s" },
-          },
-          {
-            "<S-Tab>",
-            function()
-              return vim.snippet.active({ direction = -1 }) and "<Cmd>lua vim.snippet.jump(-1)<CR>" or "<S-Tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = { "i", "s" },
-          },
-        },
       }
-    or { import = "plugins.extras.coding.luasnip", enabled = vim.fn.has("nvim-0.10") == 0 },
+      table.insert(opts.sources, { name = "snippets" })
+    end,
+    keys = {
+      {
+        "<Tab>",
+        function()
+          return vim.snippet.active({ direction = 1 }) and "<Cmd>lua vim.snippet.jump(1)<CR>" or "<Tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = { "i", "s" },
+      },
+      {
+        "<S-Tab>",
+        function()
+          return vim.snippet.active({ direction = -1 }) and "<Cmd>lua vim.snippet.jump(-1)<CR>" or "<S-Tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = { "i", "s" },
+      },
+    },
+  },
 
   -- auto pairs
   {
@@ -166,14 +164,6 @@ return {
     "folke/ts-comments.nvim",
     event = "VeryLazy",
     opts = {},
-    enabled = vim.fn.has("nvim-0.10") == 1,
-  },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    lazy = true,
-    opts = {
-      enable_autocmd = false,
-    },
   },
   {
     "numToStr/Comment.nvim",
@@ -215,6 +205,28 @@ return {
           U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
         },
       }
+    end,
+  },
+
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = function()
+      return {
+        library = {
+          uv = MyVim.get_plugin_path("luvit-meta", "library"),
+          -- lazyvim = MyVim.get_plugin_path("LazyVim"),
+        },
+      }
+    end,
+  },
+  -- Manage libuv types with lazy. Plugin will never be loaded
+  { "Bilal2453/luvit-meta", lazy = true },
+  -- Add lazydev source to cmp
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "lazydev", group_index = 0 })
     end,
   },
 }
