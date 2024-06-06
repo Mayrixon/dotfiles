@@ -99,20 +99,17 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
+    branch = "regexp",
     cmd = "VenvSelect",
-    opts = function(_, opts)
-      if MyVim.has("nvim-dap-python") then
-        opts.dap_enabled = true
-      end
-      return vim.tbl_deep_extend("force", opts, {
-        name = {
-          "venv",
-          ".venv",
-          "env",
-          ".env",
+    opts = {
+      settings = {
+        options = {
+          notify_user_on_venv_activation = true,
         },
-      })
-    end,
+      },
+    },
+    --  Call config for python files and load the cached venv automatically
+    ft = "python",
     keys = { { "<LocalLeader>v", "<Cmd>VenvSelect<CR>", desc = "Select VirtualEnv", ft = "python" } },
   },
   {

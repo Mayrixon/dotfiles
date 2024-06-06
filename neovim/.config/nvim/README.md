@@ -3,7 +3,7 @@
 ## About
 
 This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v12.3.0.
+[LazyVim](https://github.com/LazyVim/LazyVim) v12.5.0.
 
 This configuration is mainly considered for working on Linux and macOS.
 Working on Windows may meet minor problems.
@@ -64,40 +64,3 @@ Basic LSP, Treesitter, and linter/formatter configured for are listed here.
 #### Extra configurations
 
 Extra configurations are placed in folder lua/plugins/extras.
-
-## Todo lists
-
-- Add more keymaps for clangd
-
-  - ClangdAST
-
-  - ClangdSymbolInfo
-
-  - ClangdTypeHierarchy
-
-  - ClangdMemoryUsage
-
-  - Clangd auto complete score
-
-    - Example
-
-    ```lua
-    local cmp = require "cmp"
-    cmp.setup {
-    -- ... rest of your cmp setup ...
-
-        sorting = {
-            comparators = {
-                cmp.config.compare.offset,
-                cmp.config.compare.exact,
-                cmp.config.compare.recently_used,
-                require("clangd_extensions.cmp_scores"),
-                cmp.config.compare.kind,
-                cmp.config.compare.sort_text,
-                cmp.config.compare.length,
-                cmp.config.compare.order,
-            },
-        },
-
-    }
-    ```
