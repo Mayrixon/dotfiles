@@ -137,8 +137,11 @@ map("n", "<Leader>gf", function()
 end, { desc = "Lazygit Current File History" })
 
 map("n", "<Leader>gl", function()
-  MyVim.lazygit({ args = { "log" } })
+  MyVim.lazygit({ args = { "log" }, cwd=MyVim.root.git() })
 end, { desc = "Lazygit Log" })
+map("n", "<Leader>gL", function()
+  MyVim.lazygit({ args = { "log" } })
+end, { desc = "Lazygit Log (cwd)" })
 
 -- quit
 map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
@@ -176,6 +179,7 @@ map("n", "<Leader>m", function() MyVim.toggle.maximize() end, { desc = "Maximize
 
 -- tabs
 map("n", "<Leader><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })
+map("n", "<Leader><Tab>o", "<Cmd>tabonly<CR>", { desc = "Close Other Tabs" })
 map("n", "<Leader><Tab>f", "<Cmd>tabfirst<CR>", { desc = "First Tab" })
 map("n", "<Leader><Tab><Tab>", "<Cmd>tabnew<CR>", { desc = "New Tab" })
 map("n", "<Leader><Tab>n", "<Cmd>tabnext<CR>", { desc = "Next Tab" })

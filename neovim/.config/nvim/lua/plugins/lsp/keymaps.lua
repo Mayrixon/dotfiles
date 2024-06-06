@@ -26,6 +26,7 @@ function M.get()
       { "<Leader>cc", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, has = "codeLens" },
       { "<Leader>cC", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, has = "codeLens" },
       { "<Leader>cR", MyVim.lsp.rename_file, desc = "Rename File", mode ={"n"}, has = { "workspace/didRenameFiles", "workspace/willRenameFiles" } },
+      { "<Leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
       {
         "<Leader>cA",
         function()
@@ -50,20 +51,7 @@ function M.get()
       { "<M-p>", function() MyVim.lsp.words.jump(-vim.v.count1, true) end, has = "documentHighlight",
         desc = "Prev Reference", cond = function() return MyVim.lsp.words.enabled end },
     }
-  if MyVim.has("inc-rename.nvim") then
-    M._keys[#M._keys + 1] = {
-      "<Leader>cr",
-      function()
-        local inc_rename = require("inc_rename")
-        return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-      end,
-      expr = true,
-      desc = "Rename",
-      has = "rename",
-    }
-  else
-    M._keys[#M._keys + 1] = { "<Leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
-  end
+
   return M._keys
 end
 

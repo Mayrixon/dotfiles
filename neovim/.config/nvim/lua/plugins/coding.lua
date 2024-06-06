@@ -207,14 +207,14 @@ return {
   {
     "folke/lazydev.nvim",
     ft = "lua",
-    opts = function()
-      return {
-        library = {
-          uv = MyVim.get_plugin_path("luvit-meta", "library"),
-          -- lazyvim = MyVim.get_plugin_path("LazyVim"),
-        },
-      }
-    end,
+    cmd = "LazyDev",
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        -- { path = "LazyVim", words = { "LazyVim" } },
+        { path = "lazy.nvim", words = { "MyVim" } },
+      },
+    },
   },
   -- Manage libuv types with lazy. Plugin will never be loaded
   { "Bilal2453/luvit-meta", lazy = true },

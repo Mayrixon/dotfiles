@@ -133,24 +133,25 @@ return {
             {
               function() return require("noice").api.status.command.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-              color = MyVim.ui.fg("Statement"),
+              color = function() return MyVim.ui.fg("Statement") end,
             },
             -- stylua: ignore
             {
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-              color = MyVim.ui.fg("Constant"),
+              color = function() return MyVim.ui.fg("Constant") end,
             },
             -- stylua: ignore
             {
               function() return "  " .. require("dap").status() end,
               cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-              color = MyVim.ui.fg("Debug"),
+              color = function() return MyVim.ui.fg("Debug") end,
             },
+            -- stylua: ignore
             {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
-              color = MyVim.ui.fg("Special"),
+              color = function() return MyVim.ui.fg("Special") end,
             },
             {
               "diff",
@@ -307,7 +308,6 @@ return {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
-        inc_rename = true,
       },
     },
     -- stylua: ignore
@@ -343,15 +343,15 @@ return {
         config = {
         -- stylua: ignore
         center = {
-            { action = MyVim.telescope("files"),                                    desc = " Find File",       icon = " ", key = "f" },
-            { action = "ene | startinsert",                                        desc = " New File",        icon = " ", key = "n" },
-            { action = "Telescope oldfiles",                                       desc = " Recent Files",    icon = " ", key = "r" },
-            { action = "Telescope live_grep",                                      desc = " Find Text",       icon = " ", key = "g" },
+            { action = MyVim.telescope("files"),                         desc = " Find File",       icon = " ", key = "f" },
+            { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
+            { action = "Telescope oldfiles",                             desc = " Recent Files",    icon = " ", key = "r" },
+            { action = "Telescope live_grep",                            desc = " Find Text",       icon = " ", key = "g" },
             { action = [[lua MyVim.telescope.config_files()()]],         desc = " Config",          icon = " ", key = "c" },
-            { action = 'lua require("persistence").load()',                        desc = " Restore Session", icon = " ", key = "s" },
-            { action = "LazyExtras",                                               desc = " Lazy Extras",     icon = " ", key = "x" },
-            { action = "Lazy",                                                     desc = " Lazy",            icon = "󰒲 ", key = "l" },
-            { action = "qa",                                                       desc = " Quit",            icon = " ", key = "q" },
+            { action = 'lua require("persistence").load()',              desc = " Restore Session", icon = " ", key = "s" },
+            { action = "LazyExtras",                                     desc = " Lazy Extras",     icon = " ", key = "x" },
+            { action = "Lazy",                                           desc = " Lazy",            icon = "󰒲 ", key = "l" },
+            { action = function() vim.api.nvim_input("<Cmd>qa<CR>") end, desc = " Quit",            icon = " ", key = "q" },
         },
           footer = function()
             local stats = require("lazy").stats()
