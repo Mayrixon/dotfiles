@@ -2,8 +2,8 @@
 
 ## About
 
-This configuration is heavily inspired by
-[LazyVim](https://github.com/LazyVim/LazyVim) v12.5.0.
+This configuration is heavily based on
+[LazyVim](https://github.com/LazyVim/LazyVim).
 
 This configuration is mainly considered for working on Linux and macOS.
 Working on Windows may meet minor problems.
@@ -64,3 +64,8 @@ Basic LSP, Treesitter, and linter/formatter configured for are listed here.
 #### Extra configurations
 
 Extra configurations are placed in folder lua/plugins/extras.
+
+## TODO lists
+
+- Fix all whick-key hints' format.
+  For example, `+noice` -> `+Noice`.

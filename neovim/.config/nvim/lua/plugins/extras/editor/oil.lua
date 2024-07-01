@@ -3,14 +3,6 @@ return {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     event = { "BufReadPost", "BufNewFile" },
-    init = function()
-      -- if vim.fn.argc() == 1 then
-      --   local stat = vim.loop.fs_stat(vim.fn.argv(0))
-      --   if stat and stat.type == "directory" then
-      --     require("oil")
-      --   end
-      -- end
-    end,
     keys = {
       {
         "<Leader>fo",

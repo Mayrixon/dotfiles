@@ -1,12 +1,13 @@
--- This file is automatically loaded by config.init
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
 
--- DO NOT USE THIS IN YOU OWN CONFIG!!
--- use `vim.keymap.set` instead
-local map = MyVim.safe_keymap_set
+local map = vim.keymap.set
 
--- Unmap <F1>
-map({ "n", "i", "v", "o" }, "<F1>", "<Esc>")
+-------------------------- Modified LazyVim's keymaps --------------------------
+------------------------------- End modification -------------------------------
 
+---------------------------- Copy LazyVim's keymaps ----------------------------
 -- Move to window using the <Ctrl> hjkl keys
 map("n", "<C-H>", "<C-W>h", { desc = "Go to Left Window", remap = true })
 map("n", "<C-J>", "<C-W>j", { desc = "Go to Lower Window", remap = true })
@@ -24,7 +25,8 @@ map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
 map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<Leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 map("n", "<Leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
-map("n", "<Leader>bd", MyVim.ui.bufremove, { desc = "Delete Buffer" })
+-- TODO: check LazyVim avaibility.
+map("n", "<Leader>bd", LazyVim.ui.bufremove, { desc = "Delete Buffer" })
 map("n", "<Leader>bD", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
 
 -- Clear search with <Esc>
@@ -57,6 +59,9 @@ map("n", "<Leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 -- new file
 map("n", "<Leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 
+-- new file
+map("n", "<Leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
+
 -- Diagnostic/Quickfix
 map("n", "<Leader>xl", "<Cmd>lopen<CR>", { desc = "Location List" })
 map("n", "<Leader>xq", "<Cmd>copen<CR>", { desc = "Quickfix List" })
@@ -65,8 +70,8 @@ map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- formatting
-map({ "n", "v" }, "<leader>cf", function()
-  MyVim.format({ force = true })
+map({ "n", "v" }, "<Leader>cf", function()
+  LazyVim.format({ force = true })
 end, { desc = "Format" })
 
 -- diagnostic
@@ -85,75 +90,52 @@ map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
--- Fast copy/paste
-map("n", "<Leader>P", '"+P', { desc = "Paste Before" })
-map("n", "<Leader>Y", '"+Y', { desc = "Yank the Line" })
-map("n", "<Leader>p", '"+p', { desc = "Paste After" })
-map("v", "<Leader>p", '"+p', { desc = "Paste" })
-map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank" })
-
-vim.cmd([[
-  function! DeleteHiddenBuffers()
-    let tpbl=[]
-    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
-    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
-      if getbufvar(buf, '&mod') == 0
-      silent execute 'bwipeout' buf
-      endif
-    endfor
-  endfunction
-]])
-map("n", "<Leader>bc", "<Cmd>call DeleteHiddenBuffers()<CR>", { desc = "Clear all saved buffers" })
-
 -- stylua: ignore start
 
 -- toggle options
-map("n", "<Leader>Tf", function() MyVim.format.toggle() end, { desc = "Toggle Auto Format (Global)" })
-map("n", "<Leader>TF", function() MyVim.format.toggle(true) end, { desc = "Toggle Auto Format (Buffer)" })
-map("n", "<Leader>Ts", function() MyVim.toggle.option("spell") end, { desc = "Toggle Spelling" })
-map("n", "<Leader>Tw", function() MyVim.toggle.option("wrap") end, { desc = "Toggle Word Wrap" })
-map("n", "<Leader>TL", function() MyVim.toggle.option("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
-map("n", "<Leader>Tl", function() MyVim.toggle.number() end, { desc = "Toggle Line Numbers" })
-map("n", "<Leader>Td", function() MyVim.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
+map("n", "<Leader>Tf", function() LazyVim.format.toggle() end, { desc = "Toggle Auto Format (Global)" })
+map("n", "<Leader>TF", function() LazyVim.format.toggle(true) end, { desc = "Toggle Auto Format (Buffer)" })
+map("n", "<Leader>Ts", function() LazyVim.toggle("spell") end, { desc = "Toggle Spelling" })
+map("n", "<Leader>Tw", function() LazyVim.toggle("wrap") end, { desc = "Toggle Word Wrap" })
+map("n", "<Leader>TL", function() LazyVim.toggle("relativenumber") end, { desc = "Toggle Relative Line Numbers" })
+map("n", "<Leader>Tl", function() LazyVim.toggle.number() end, { desc = "Toggle Line Numbers" })
+map("n", "<Leader>Td", function() LazyVim.toggle.diagnostics() end, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
-map("n", "<Leader>Tc", function() MyVim.toggle.option("conceallevel", false, { 0, conceallevel }) end,
-  { desc = "Toggle Conceal" })
+map("n", "<Leader>Tc", function() LazyVim.toggle("conceallevel", false, {0, conceallevel}) end, { desc = "Toggle Conceal" })
 if vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint then
-  map("n", "<Leader>Th", function() MyVim.toggle.inlay_hints() end, { desc = "Toggle Inlay Hints" })
+  map( "n", "<Leader>Th", function() LazyVim.toggle.inlay_hints() end, { desc = "Toggle Inlay Hints" })
 end
-map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end,
-  { desc = "Toggle Treesitter Highlight" })
-map("n", "<Leader>Tb", function() MyVim.toggle("background", false, { "light", "dark" }) end,
-  { desc = "Toggle Background" })
+map("n", "<Leader>TT", function() if vim.b.ts_highlight then vim.treesitter.stop() else vim.treesitter.start() end end, { desc = "Toggle Treesitter Highlight" })
+map("n", "<Leader>Tb", function() LazyVim.toggle("background", false, {"light", "dark"}) end, { desc = "Toggle Background" })
 
 -- lazygit
-map("n", "<Leader>gg", function() MyVim.lazygit({ cwd = MyVim.root.git() }) end, { desc = "Lazygit (root dir)" })
-map("n", "<Leader>gG", function() MyVim.lazygit() end, { desc = "Lazygit (cwd)" })
-map("n", "<Leader>gb", MyVim.lazygit.blame_line, { desc = "Git Blame Line" })
+map("n", "<Leader>gg", function() LazyVim.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (Root Dir)" })
+map("n", "<Leader>gG", function() LazyVim.lazygit() end, { desc = "Lazygit (cwd)" })
+map("n", "<Leader>gb", LazyVim.lazygit.blame_line, { desc = "Git Blame Line" })
 
 map("n", "<Leader>gf", function()
   local git_path = vim.api.nvim_buf_get_name(0)
-  MyVim.lazygit({ args = { "-f", vim.trim(git_path) } })
+  LazyVim.lazygit({args = { "-f", vim.trim(git_path) }})
 end, { desc = "Lazygit Current File History" })
 
 map("n", "<Leader>gl", function()
-  MyVim.lazygit({ args = { "log" }, cwd=MyVim.root.git() })
+  LazyVim.lazygit({ args = { "log" }, cwd = LazyVim.root.git() })
 end, { desc = "Lazygit Log" })
 map("n", "<Leader>gL", function()
-  MyVim.lazygit({ args = { "log" } })
+  LazyVim.lazygit({ args = { "log" } })
 end, { desc = "Lazygit Log (cwd)" })
-
--- quit
-map("n", "<Leader>qq", "<Cmd>qa<CR>", { desc = "Quit All" })
 
 -- highlights under cursor
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<Leader>uI", "<Cmd>InspectTree<CR>", { desc = "Inspect Tree" })
 
+-- LazyVim Changelog
+map("n", "<Leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim Changelog" })
+
 -- floating terminal
-local lazyterm = function() MyVim.terminal(nil, { cwd = MyVim.root() }) end
+local lazyterm = function() LazyVim.terminal(nil, { cwd = LazyVim.root() }) end
 map("n", "<Leader>ft", lazyterm, { desc = "Terminal (Root Dir)" })
-map("n", "<Leader>fT", function() MyVim.terminal() end, { desc = "Terminal (cwd)" })
+map("n", "<Leader>fT", function() LazyVim.terminal() end, { desc = "Terminal (cwd)" })
 map("n", "<C-/>", lazyterm, { desc = "Terminal (Root Dir)" })
 map("n", "<C-_>", lazyterm, { desc = "which_key_ignore" })
 
@@ -174,8 +156,8 @@ map("n", "<Leader>ws", "<Cmd>split<CR>", { desc = "Split Window Below", remap = 
 map("n", "<Leader>wv", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
 map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "Split Window Below", remap = true })
 map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
-map("n", "<Leader>wm", function() MyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
-map("n", "<Leader>m", function() MyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
+map("n", "<Leader>wm", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
+map("n", "<Leader>m", function() LazyVim.toggle.maximize() end, { desc = "Maximize Toggle" })
 
 -- tabs
 map("n", "<Leader><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })
@@ -185,3 +167,30 @@ map("n", "<Leader><Tab><Tab>", "<Cmd>tabnew<CR>", { desc = "New Tab" })
 map("n", "<Leader><Tab>n", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
 map("n", "<Leader><Tab>c", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
 map("n", "<Leader><Tab>p", "<Cmd>tabprevious<CR>", { desc = "Previous Tab" })
+
+-- stylua: ignore end
+----------------------------------- End copy -----------------------------------
+
+-- Unmap <F1>
+map({ "n", "i", "v", "o" }, "<F1>", "<Esc>")
+
+-- Fast copy/paste
+map("n", "<Leader>P", '"+P', { desc = "Paste Before" })
+map("n", "<Leader>Y", '"+Y', { desc = "Yank the Line" })
+map("n", "<Leader>p", '"+p', { desc = "Paste After" })
+map("v", "<Leader>p", '"+p', { desc = "Paste" })
+map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank" })
+
+-- Close hidden buffers
+vim.cmd([[
+  function! DeleteHiddenBuffers()
+    let tpbl=[]
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+      if getbufvar(buf, '&mod') == 0
+      silent execute 'bwipeout' buf
+      endif
+    endfor
+  endfunction
+]])
+map("n", "<Leader>bc", "<Cmd>call DeleteHiddenBuffers()<CR>", { desc = "Clear all saved buffers" })
