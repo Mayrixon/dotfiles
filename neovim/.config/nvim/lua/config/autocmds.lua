@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter" }, {
 })
 
 vim.api.nvim_create_autocmd("Filetype", {
-  group = vim.aip.nvim_create_augroup("PlaintextFormats"),
+  group = vim.api.nvim_create_augroup("PlaintextFormats", { clear = true }),
   pattern = { "tex", "text", "markdown" },
   callback = function()
     vim.keymap.set({ "n", "v" }, "j", "gj", { silent = true, buffer = true })
