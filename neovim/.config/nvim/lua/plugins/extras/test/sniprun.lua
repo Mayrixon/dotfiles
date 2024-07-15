@@ -3,8 +3,8 @@ return {
     "folke/which-key.nvim",
     optional = true,
     opts = {
-      defaults = {
-        ["<Leader>r"] = { name = "+REPLs" },
+      spec = {
+        { "<Leader>r", group = "REPLs" },
       },
     },
   },

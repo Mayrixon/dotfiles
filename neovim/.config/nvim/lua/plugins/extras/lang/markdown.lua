@@ -51,8 +51,8 @@ return {
   {
     "folke/which-key.nvim",
     opts = {
-      defaults = {
-        ["<LocalLeader>l"] = { name = "+mkdx" },
+      spec = {
+        { "<LocalLeader>l", group = "mkdx" },
       },
     },
   },
