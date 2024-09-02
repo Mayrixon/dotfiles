@@ -12,18 +12,24 @@ return {
     optional = true,
     opts = {
       formatters_by_ft = {
-        markdown = {
-          { "prettierd", "prettier" },
-          "markdownlint",
-          "mdslw",
-          "mdformat",
-        },
-        ["markdown.mdx"] = {
-          { "prettierd", "prettier" },
-          "markdownlint",
-          "mdslw",
-          "mdformat",
-        },
+        markdown = function(bufnr)
+          local prettier = ""
+          if require("conform").get_formatter_info("prettierd", bufnr).available then
+            prettier = "prettierd"
+          else
+            prettier = "prettier"
+          end
+          return { prettier, "markdownlint", "mdslw" }
+        end,
+        ["markdown.mdx"] = function(bufnr)
+          local prettier = ""
+          if require("conform").get_formatter_info("prettierd", bufnr).available then
+            prettier = "prettierd"
+          else
+            prettier = "prettier"
+          end
+          return { prettier, "markdownlint", "mdslw" }
+        end,
       },
     },
   },
