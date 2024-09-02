@@ -66,9 +66,6 @@ map("n", "<Leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 map("n", "<Leader>xl", "<Cmd>lopen<CR>", { desc = "Location List" })
 map("n", "<Leader>xq", "<Cmd>copen<CR>", { desc = "Quickfix List" })
 
-map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
-
 -- formatting
 map({ "n", "v" }, "<Leader>cf", function()
   LazyVim.format({ force = true })
