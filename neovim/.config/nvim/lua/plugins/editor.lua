@@ -173,13 +173,4 @@ return {
     },
   },
   ------------------------------ End modification ------------------------------
-
-  {
-    "nvim-telescope/telescope-frecency.nvim",
-    config = function()
-      LazyVim.on_load("telescope.nvim", function()
-        require("telescope").load_extension("frecency")
-      end)
-    end,
-  },
 }
