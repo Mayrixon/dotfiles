@@ -1,0 +1,55 @@
+icons_format = "{icon}"
+
+[theme]
+theme = "gruvbox-dark"
+
+[icons]
+icons = "awesome4"
+
+[[block]]
+block = "packages"
+package_manager = ["pacman"]
+
+[[block]]
+block = "nvidia_gpu"
+gpu_id = 0
+format = " $icon 2080 Ti $utilization $memory $temperature "
+
+[[block]]
+block = "nvidia_gpu"
+gpu_id = 1
+format = " $icon A2000 $utilization $memory $temperature "
+
+[[block]]
+block = "cpu"
+format = " $icon $utilization $frequency "
+format_alt = " $icon $barchart $max_frequency "
+
+[[block]]
+block = "load"
+
+[[block]]
+block = "memory"
+format = " $icon $mem_total_used_percents.eng(w:2) "
+format_alt = " $icon_swap $zram_compressed.eng(w:3,u:B,p:Mi)/$zram_decompressed.eng(w:3,u:B,p:Mi) ($zram_comp_ratio.eng(w:2))"
+
+[[block]]
+block = "temperature"
+
+[[block]]
+block = "disk_space"
+path = "/"
+info_type = "available"
+alert_unit = "GB"
+interval = 20
+
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%m-%d %a %R') "
+
+[[block]]
+block = "sound"
+[[block.click]]
+button = "left"
+cmd = "pavucontrol"
