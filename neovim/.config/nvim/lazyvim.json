@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.coding.codeium",
+    "lazyvim.plugins.extras.coding.copilot",
+    "lazyvim.plugins.extras.coding.copilot-chat",
     "lazyvim.plugins.extras.coding.mini-comment",
     "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.coding.neogen",
@@ -12,7 +13,6 @@
     "lazyvim.plugins.extras.editor.mini-files",
     "lazyvim.plugins.extras.lang.clangd",
     "lazyvim.plugins.extras.lang.cmake",
-    "lazyvim.plugins.extras.lang.haskell",
     "lazyvim.plugins.extras.lang.json",
     "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.python",
@@ -26,6 +26,7 @@
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.ui.treesitter-context",
     "lazyvim.plugins.extras.util.dot",
+    "lazyvim.plugins.extras.util.mini-hipatterns",
     "lazyvim.plugins.extras.util.startuptime",
     "plugins.extras.coding.eazy-align",
     "plugins.extras.coding.neogen",
@@ -46,6 +47,7 @@
     "plugins.extras.lang.makefile",
     "plugins.extras.lang.markdown",
     "plugins.extras.lang.python",
+    "plugins.extras.lang.qml",
     "plugins.extras.lang.rust",
     "plugins.extras.lang.shader",
     "plugins.extras.lang.swift",
@@ -56,7 +58,7 @@
     "plugins.extras.ui.treesitter-context"
   ],
   "news": {
-    "NEWS.md": "6077"
+    "NEWS.md": "6520"
   },
   "version": 6
 }

@@ -1,9 +1,12 @@
 return {
   --------------------- Modified LazyVim's plugin settings ---------------------
   -- tokyonight
-  { "tokyonight.nvim", opts = {
-    transparent = true,
-  } },
+  {
+    "tokyonight.nvim",
+    opts = {
+      transparent = true,
+    },
+  },
 
   -- catppuccin
   {
