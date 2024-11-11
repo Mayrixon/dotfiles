@@ -1,6 +1,7 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
-    "mrcjkb/rustaceanvim",
+    "rustaceanvim",
     opts = {
       server = {
         on_attach = function(_, bufnr)
@@ -14,4 +15,5 @@ return {
       },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

@@ -26,7 +26,7 @@ return {
       local opts = {
         options = {
           theme = "auto",
-          globalstatus = true,
+          globalstatus = vim.o.laststatus == 3,
           disabled_filetypes = { statusline = { "alpha" }, winbar = { "alpha", "neo-tree" } },
         },
         sections = {
@@ -151,7 +151,9 @@ return {
           })
         table.insert(opts.sections.lualine_c, {
           symbols and symbols.get,
-          cond = symbols and symbols.has,
+          cond = function()
+            return vim.b.trouble_lualine ~= false and symbols.has()
+          end,
         })
       end
 

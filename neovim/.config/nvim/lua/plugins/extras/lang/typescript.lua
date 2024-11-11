@@ -1,4 +1,5 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -12,36 +13,28 @@ return {
             { "<Leader>cV", false },
             {
               "<LocalLeader>o",
-              function()
-                require("vtsls").commands.organize_imports(0)
-              end,
+              LazyVim.lsp.action["source.organizeImports"],
               desc = "Organize Imports",
             },
             {
               "<LocalLeader>M",
-              function()
-                require("vtsls").commands.add_missing_imports(0)
-              end,
+              LazyVim.lsp.action["source.addMissingImports.ts"],
               desc = "Add missing imports",
             },
             {
               "<LocalLeader>u",
-              function()
-                require("vtsls").commands.remove_unused_imports(0)
-              end,
+              LazyVim.lsp.action["source.removeUnused.ts"],
               desc = "Remove unused imports",
             },
             {
               "<LocalLeader>D",
-              function()
-                require("vtsls").commands.fix_all(0)
-              end,
+              LazyVim.lsp.action["source.fixAll.ts"],
               desc = "Fix all diagnostics",
             },
             {
               "<LocalLeader>V",
               function()
-                require("vtsls").commands.select_ts_version(0)
+                LazyVim.lsp.execute({ command = "typescript.selectTypeScriptVersion" })
               end,
               desc = "Select TS workspace version",
             },
@@ -50,4 +43,5 @@ return {
       },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

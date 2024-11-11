@@ -1,4 +1,5 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
     "gbprod/yanky.nvim",
     enabled = false,
@@ -8,4 +9,5 @@ return {
       { "<Leader>fp", function() require("telescope").extensions.yank_history.yank_history({ }) end, desc = "Open Yank History" },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

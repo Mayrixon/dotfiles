@@ -1,19 +1,22 @@
 return {
-  "nvim-treesitter/nvim-treesitter-context",
-  keys = {
-    { "<Leader>ut", false },
-    {
-      "<leader>Tt",
-      function()
-        local tsc = require("treesitter-context")
-        tsc.toggle()
-        if LazyVim.inject.get_upvalue(tsc.toggle, "enabled") then
-          LazyVim.info("Enabled Treesitter Context", { title = "Option" })
-        else
-          LazyVim.warn("Disabled Treesitter Context", { title = "Option" })
-        end
-      end,
-      desc = "Toggle Treesitter Context",
-    },
+  --------------------- Modified LazyVim's plugin settings ---------------------
+  {
+    "nvim-treesitter-context",
+    opts = function()
+      local tsc = require("treesitter-context")
+      Snacks.toggle({
+        name = "Treesitter Context",
+        get = tsc.enabled,
+        set = function(state)
+          if state then
+            tsc.enable()
+          else
+            tsc.disable()
+          end
+        end,
+      }):map("<Leader>Tt")
+      return { mode = "cursor", max_lines = 3 }
+    end,
   },
+  ------------------------------ End modification ------------------------------
 }

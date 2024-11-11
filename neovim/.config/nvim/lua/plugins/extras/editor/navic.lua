@@ -1,4 +1,5 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   -- lsp symbol navigation for lualine. This shows where
   -- in the code structure you are - within functions, classes,
   -- etc - in the statusline.
@@ -18,7 +19,7 @@ return {
         -- separator = " ",
         highlight = true,
         depth_limit = 5,
-        icons = require("lazyvim.config").icons.kinds,
+        icons = LazyVim.config.icons.kinds,
         lazy_update_context = true,
       }
     end,
@@ -51,4 +52,5 @@ return {
       })
     end,
   },
+  ------------------------------ End modification ------------------------------
 }

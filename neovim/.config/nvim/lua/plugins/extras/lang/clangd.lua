@@ -1,4 +1,5 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
     "p00f/clangd_extensions.nvim",
     opts = {
@@ -21,4 +22,5 @@ return {
       },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

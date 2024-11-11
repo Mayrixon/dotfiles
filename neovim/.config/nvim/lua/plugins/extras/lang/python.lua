@@ -1,32 +1,25 @@
-if lazyvim_docs then
-  -- LSP Server to use for Python.
-  -- Set to "basedpyright" to use basedpyright instead of pyright.
-  vim.g.lazyvim_python_lsp = "pyright"
-  vim.g.lazyvim_python_ruff = "ruff_lsp"
-end
-
-local lsp = vim.g.lazyvim_python_lsp or "pyright"
-local ruff = vim.g.lazyvim_python_ruff or "ruff_lsp"
-
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
-    "neovim/nvim-lspconfig",
+    "nvim-lspconfig",
     opts = {
       servers = {
-        [ruff] = {
+        ruff = {
           keys = {
             { "<Leader>co", false },
             {
               "<LocalLeader>o",
-              function()
-                vim.lsp.buf.code_action({
-                  apply = true,
-                  context = {
-                    only = { "source.organizeImports" },
-                    diagnostics = {},
-                  },
-                })
-              end,
+              LazyVim.lsp.action["source.organizeImports"],
+              desc = "Organize Imports",
+            },
+          },
+        },
+        ruff_lsp = {
+          keys = {
+            { "<Leader>co", false },
+            {
+              "<LocalLeader>o",
+              LazyVim.lsp.action["source.organizeImports"],
               desc = "Organize Imports",
             },
           },
@@ -35,10 +28,11 @@ return {
     },
   },
   {
-    "linux-cultist/venv-selector.nvim",
+    "venv-selector.nvim",
     keys = {
       { "<Leader>cv", false },
       { "<LocalLeader>v", "<Cmd>VenvSelect<CR>", desc = "Select VirtualEnv", ft = "python" },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

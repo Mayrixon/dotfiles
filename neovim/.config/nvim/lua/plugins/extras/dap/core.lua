@@ -1,4 +1,5 @@
 return {
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
     "folke/which-key.nvim",
     optional = true,
@@ -18,4 +19,5 @@ return {
       { "<F12>", function() require("dap").step_out() end, desc = "Step Out" },
     },
   },
+  ------------------------------ End modification ------------------------------
 }

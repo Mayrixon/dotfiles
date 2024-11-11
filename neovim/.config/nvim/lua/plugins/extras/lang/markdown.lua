@@ -1,12 +1,5 @@
 return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "markdown", "markdown_inline" })
-      end
-    end,
-  },
+  --------------------- Modified LazyVim's plugin settings ---------------------
   {
     "stevearc/conform.nvim",
     optional = true,
@@ -19,7 +12,7 @@ return {
           else
             prettier = "prettier"
           end
-          return { prettier, "markdownlint", "mdslw" }
+          return { prettier, "markdownlint-cli2", "markdown-toc", "mdslw" }
         end,
         ["markdown.mdx"] = function(bufnr)
           local prettier = ""
@@ -28,7 +21,7 @@ return {
           else
             prettier = "prettier"
           end
-          return { prettier, "markdownlint", "mdslw" }
+          return { prettier, "markdownlint-cli2", "markdown-toc", "mdslw" }
         end,
       },
     },
@@ -37,7 +30,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman", "mdformat", "mdslw" })
+      vim.list_extend(opts.ensure_installed, { "marksman", "mdformat", "mdslw" })
     end,
   },
 
@@ -52,6 +45,16 @@ return {
         desc = "Markdown Preview",
       },
     },
+  },
+  ------------------------------ End modification ------------------------------
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "markdown", "markdown_inline" })
+      end
+    end,
   },
 
   {
