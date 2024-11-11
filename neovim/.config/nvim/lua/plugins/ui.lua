@@ -25,6 +25,7 @@ return {
 
       local opts = {
         options = {
+          always_show_tabline = false,
           theme = "auto",
           globalstatus = vim.o.laststatus == 3,
           disabled_filetypes = { statusline = { "alpha" }, winbar = { "alpha", "neo-tree" } },
@@ -158,23 +159,6 @@ return {
       end
 
       return opts
-    end,
-    config = function(_, opts)
-      require("lualine").setup(opts)
-      -- HACK: This part is used to reset `showtabline = 1` instead of `showtabline = 2` as the hardcoded value now.
-      -- After the merge of PR #1013, this part could be replaced as `opts.always_show_tabs = false`.
-      require("lualine").hide({ place = { "tabline" } })
-      local lualine_tmp = vim.api.nvim_create_augroup("lualine_tmp", { clear = true })
-      vim.api.nvim_create_autocmd({ "TabNew", "TabClosed" }, {
-        group = lualine_tmp,
-        callback = function()
-          if vim.fn.tabpagenr("$") == 1 then
-            require("lualine").hide({ place = { "tabline" } })
-          else
-            require("lualine").hide({ place = { "tabline" }, unhide = true })
-          end
-        end,
-      })
     end,
   },
   ------------------------------ End modification ------------------------------
