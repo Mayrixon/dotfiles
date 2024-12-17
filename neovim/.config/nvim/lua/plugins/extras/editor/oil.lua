@@ -5,11 +5,11 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     keys = {
       {
-        "<Leader>fo",
+        "<Leader>f-",
         function()
           require("oil").open()
         end,
-        desc = "Open [O]il file manager",
+        desc = "Open Oil file manager",
       },
     },
     cmd = "Oil",
