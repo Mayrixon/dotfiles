@@ -5,6 +5,10 @@
 local opt = vim.opt
 
 -------------------------- Modified LazyVim's options --------------------------
+-- Snacks animations
+-- Set to `false` to globally disable all snacks animations
+vim.g.snacks_animate = false
+
 opt.clipboard = ""
 opt.formatoptions = opt.formatoptions + "ronl" -- Default "tcqj"
 opt.shiftwidth = 4 -- Size of an indent

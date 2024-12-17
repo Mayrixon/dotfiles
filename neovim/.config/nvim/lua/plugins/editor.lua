@@ -54,6 +54,8 @@ return {
         { "<Leader><Tab>", group = "Tabs" },
         { "<Leader>T", group = "Toggle Options", icon = { icon = "󰙵 ", color = "cyan" } },
         { "<Leader>c", group = "Code" },
+        { "<Leader>d", group = "Debug" },
+        { "<Leader>dp", group = "Profiler" },
         { "<Leader>f", group = "File/Find" },
         { "<Leader>g", group = "Git" },
         { "<Leader>gh", group = "Hunks" },

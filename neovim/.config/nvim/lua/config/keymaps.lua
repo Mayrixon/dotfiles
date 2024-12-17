@@ -35,7 +35,11 @@ end, { desc = "Delete Other Buffers" })
 map("n", "<Leader>bD", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
 
 -- Clear search with <Esc>
-map({ "i", "n" }, "<Esc>", "<Cmd>noh<CR><Esc>", { desc = "Escape and Clear hlsearch" })
+map({ "i", "n", "s" }, "<Esc>", function()
+  vim.cmd("noh")
+  LazyVim.cmp.actions.snippet_stop()
+  return "<Esc>"
+end, { expr = true, desc = "Escape and Clear hlsearch" })
 
 -- Clear search, diff update and redraw
 -- taken from runtime/lua/_editor.lua
@@ -98,14 +102,21 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 -- toggle options
 LazyVim.format.snacks_toggle():map("<Leader>Tf")
 LazyVim.format.snacks_toggle(true):map("<Leader>TF")
-Snacks.toggle.option("spell", { name = "Spelling"}):map("<Leader>Ts")
-Snacks.toggle.option("wrap", {name = "Wrap"}):map("<Leader>Tw")
-Snacks.toggle.option("relativenumber", { name = "Relative Number"}):map("<Leader>TL")
+Snacks.toggle.option("spell", { name = "Spelling" }):map("<Leader>Ts")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<Leader>Tw")
+Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<Leader>TL")
 Snacks.toggle.diagnostics():map("<Leader>Td")
 Snacks.toggle.line_number():map("<Leader>Tl")
-Snacks.toggle.option("conceallevel", {off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2}):map("<Leader>Tc")
+Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<Leader>Tc")
 Snacks.toggle.treesitter():map("<Leader>TT")
-Snacks.toggle.option("background", { off = "light", on = "dark" , name = "Dark Background"}):map("<Leader>Tb")
+Snacks.toggle.option("background", { off = "light", on = "dark" , name = "Dark Background" }):map("<Leader>Tb")
+Snacks.toggle.dim():map("<Leader>TD")
+Snacks.toggle.animate():map("<Leader>Ta")
+Snacks.toggle.indent():map("<Leader>Tg")
+Snacks.toggle.scroll():map("<Leader>TS")
+Snacks.toggle.profiler():map("<Leader>dpp")
+Snacks.toggle.profiler_highlights():map("<Leader>dph")
+
 if vim.lsp.inlay_hint then
   Snacks.toggle.inlay_hints():map("<Leader>Th")
 end
@@ -147,7 +158,8 @@ map("n", "<Leader>ws", "<Cmd>split<CR>", { desc = "Split Window Below", remap = 
 map("n", "<Leader>wv", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
 map("n", "<Leader>-", "<Cmd>split<CR>", { desc = "Split Window Below", remap = true })
 map("n", "<Leader>|", "<Cmd>vsplit<CR>", { desc = "Split Window Right", remap = true })
-LazyVim.ui.maximize():map("<Leader>wm")
+Snacks.toggle.zoom():map("<Leader>wm"):map("<Leader>uZ")
+Snacks.toggle.zen():map("<Leader>uz")
 
 -- tabs
 map("n", "<Leader><Tab>l", "<Cmd>tablast<CR>", { desc = "Last Tab" })
