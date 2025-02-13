@@ -8,6 +8,12 @@ local map = vim.keymap.set
 ------------------------------- End modification -------------------------------
 
 ---------------------------- Copy LazyVim's keymaps ----------------------------
+-- better up/down
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
 -- Move to window using the <Ctrl> hjkl keys
 map("n", "<C-H>", "<C-W>h", { desc = "Go to Left Window", remap = true })
 map("n", "<C-J>", "<C-W>j", { desc = "Go to Lower Window", remap = true })
@@ -25,7 +31,6 @@ map("n", "[b", "<Cmd>bprevious<CR>", { desc = "Prev Buffer" })
 map("n", "]b", "<Cmd>bnext<CR>", { desc = "Next Buffer" })
 map("n", "<Leader>bb", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
 map("n", "<Leader>`", "<Cmd>e #<CR>", { desc = "Switch to Other Buffer" })
--- TODO: check LazyVim avaibility.
 map("n", "<Leader>bd", function()
   Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
@@ -125,12 +130,16 @@ end
 if vim.fn.executable("lazygit") == 1 then
   map("n", "<Leader>gg", function() Snacks.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (Root Dir)" })
   map("n", "<Leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
-  map("n", "<Leader>gb", function() Snacks.git.blame_line() end, { desc = "Git Blame Line" })
-  map("n", "<Leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse" })
-  map("n", "<Leader>gf", function() Snacks.lazygit.log_file() end, { desc = "Lazygit Current File History" })
-  map("n", "<Leader>gl", function() Snacks.lazygit.log({ cwd = LazyVim.root.git() }) end, { desc = "Lazygit Log" })
-  map("n", "<Leader>gL", function() Snacks.lazygit.log() end, { desc = "Lazygit Log (cwd)" })
+  map("n", "<Leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
+  map("n", "<Leader>gl", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git Log" })
+  map("n", "<Leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
 end
+
+map("n", "<Leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
+map({ "n", "x" }, "<Leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
+map({"n", "x" }, "<Leader>gY", function()
+  Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
+end, { desc = "Git Browse (copy)" })
 
 -- highlights under cursor
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
@@ -170,6 +179,15 @@ map("n", "<Leader><Tab>n", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
 map("n", "<Leader><Tab>c", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
 map("n", "<Leader><Tab>p", "<Cmd>tabprevious<CR>", { desc = "Previous Tab" })
 
+-- native snippets. only needed on < 0.11, as 0.11 creates these by default
+if vim.fn.has("nvim-0.11") == 0 then
+  map("s", "<Tab>", function()
+    return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
+  end, { expr = true, desc = "Jump Next" })
+  map({ "i", "s" }, "<S-Tab>", function()
+    return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
+  end, { expr = true, desc = "Jump Previous" })
+end
 -- stylua: ignore end
 ----------------------------------- End copy -----------------------------------
 
