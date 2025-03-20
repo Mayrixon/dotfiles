@@ -18,3 +18,4 @@ opt.winminwidth = 0 -- Minimum window width
 ------------------------------- End modification -------------------------------
 
 opt.breakindent = true -- Wrapped lines continue visually indented
+opt.diffopt = "filler,internal,closeoff,indent-heuristic,linematch:60,algorithm:patience"
