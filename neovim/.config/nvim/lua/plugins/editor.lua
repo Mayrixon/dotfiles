@@ -36,13 +36,6 @@ return {
   {
     "flash.nvim",
     opts = { modes = { search = { enabled = false } } },
-    -- stylua: ignore
-    keys = {
-      { "s", false },
-      { "S", false },
-      { "gz", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "gZ", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    },
   },
 
   {
