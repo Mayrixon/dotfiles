@@ -1,7 +1,8 @@
 return {
   --------------------- Modified LazyVim's plugin settings ---------------------
   {
-    "p00f/clangd_extensions.nvim",
+    "clangd_extensions.nvim",
+    optional = true,
     opts = {
       inlay_hints = {
         inline = vim.fn.has("nvim-0.10") == 1,
@@ -10,7 +11,8 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
+    "nvim-lspconfig",
+    optional = true,
     opts = {
       servers = {
         clangd = {

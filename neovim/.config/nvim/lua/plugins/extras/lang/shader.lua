@@ -32,7 +32,7 @@ return {
     optional = true,
     opts = {
       servers = {
-        glslls = {},
+        glsl_analyzer = {},
         wgsl_analyzer = {},
       },
     },
