@@ -39,7 +39,7 @@ map("n", "<Leader>bo", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<Leader>bD", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
 
--- Clear search with <Esc>
+-- Clear search and stop snippet on escape
 map({ "i", "n", "s" }, "<Esc>", function()
   vim.cmd("noh")
   LazyVim.cmp.actions.snippet_stop()
@@ -77,9 +77,24 @@ map("n", "<Leader>l", "<Cmd>Lazy<CR>", { desc = "Lazy" })
 -- new file
 map("n", "<Leader>fn", "<Cmd>enew<CR>", { desc = "New File" })
 
--- Diagnostic/Quickfix
-map("n", "<Leader>xl", "<Cmd>lopen<CR>", { desc = "Location List" })
-map("n", "<Leader>xq", "<Cmd>copen<CR>", { desc = "Quickfix List" })
+-- location list
+map("n", "<Leader>xl", function()
+  local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
+  if not success and err then
+    vim.notify(err, vim.log.levels.ERROR)
+  end
+end, { desc = "Location List" })
+
+-- quickfix list
+map("n", "<Leader>xq", function()
+  local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
+  if not success and err then
+    vim.notify(err, vim.log.levels.ERROR)
+  end
+end, { desc = "Quickfix List" })
+
+map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
+map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- formatting
 map({ "n", "v" }, "<Leader>cf", function()
@@ -143,7 +158,7 @@ end, { desc = "Git Browse (copy)" })
 
 -- highlights under cursor
 map("n", "<Leader>ui", vim.show_pos, { desc = "Inspect Pos" })
-map("n", "<Leader>uI", "<Cmd>InspectTree<CR>", { desc = "Inspect Tree" })
+map("n", "<Leader>uI", function() vim.treesitter.inspect_tree() vim.api.nvim_input("I") end, { desc = "Inspect Tree" })
 
 -- LazyVim Changelog
 map("n", "<Leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim Changelog" })
@@ -178,16 +193,6 @@ map("n", "<Leader><Tab><Tab>", "<Cmd>tabnew<CR>", { desc = "New Tab" })
 map("n", "<Leader><Tab>n", "<Cmd>tabnext<CR>", { desc = "Next Tab" })
 map("n", "<Leader><Tab>c", "<Cmd>tabclose<CR>", { desc = "Close Tab" })
 map("n", "<Leader><Tab>p", "<Cmd>tabprevious<CR>", { desc = "Previous Tab" })
-
--- native snippets. only needed on < 0.11, as 0.11 creates these by default
-if vim.fn.has("nvim-0.11") == 0 then
-  map("s", "<Tab>", function()
-    return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
-  end, { expr = true, desc = "Jump Next" })
-  map({ "i", "s" }, "<S-Tab>", function()
-    return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
-  end, { expr = true, desc = "Jump Previous" })
-end
 -- stylua: ignore end
 ----------------------------------- End copy -----------------------------------
 
