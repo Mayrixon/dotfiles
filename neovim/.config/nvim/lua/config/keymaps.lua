@@ -145,12 +145,12 @@ end
 if vim.fn.executable("lazygit") == 1 then
   map("n", "<Leader>gg", function() Snacks.lazygit( { cwd = LazyVim.root.git() }) end, { desc = "Lazygit (Root Dir)" })
   map("n", "<Leader>gG", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
-  map("n", "<Leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
-  map("n", "<Leader>gl", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git Log" })
-  map("n", "<Leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
 end
 
+map("n", "<Leader>gL", function() Snacks.picker.git_log() end, { desc = "Git Log (cwd)" })
 map("n", "<Leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Blame Line" })
+map("n", "<Leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
+map("n", "<Leader>gl", function() Snacks.picker.git_log({ cwd = LazyVim.root.git() }) end, { desc = "Git Log" })
 map({ "n", "x" }, "<Leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse (open)" })
 map({"n", "x" }, "<Leader>gY", function()
   Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
