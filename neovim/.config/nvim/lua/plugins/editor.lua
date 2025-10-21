@@ -43,7 +43,7 @@ return {
     opts = {
       defaults = {},
       spec = {
-        mode = { "n", "v" },
+        mode = { "n", "x" },
         { "<Leader><Tab>", group = "Tabs" },
         { "<Leader>T", group = "Toggle Options", icon = { icon = "󰙵 ", color = "cyan" } },
         { "<Leader>c", group = "Code" },
@@ -110,8 +110,8 @@ return {
         map("n", "[H", function() gs.nav_hunk("first") end, "First Hunk")
 
         -- Actions
-        map({ "n", "v" }, "<Leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
-        map({ "n", "v" }, "<Leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+        map({ "n", "x" }, "<Leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+        map({ "n", "x" }, "<Leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
         map("n", "<Leader>ghS", gs.stage_buffer, "Stage Buffer")
         map("n", "<Leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<Leader>ghR", gs.reset_buffer, "Reset Buffer")

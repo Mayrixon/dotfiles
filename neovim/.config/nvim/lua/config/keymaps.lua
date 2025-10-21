@@ -64,8 +64,8 @@ map("i", ";", ";<C-G>u")
 map("n", "<Leader>K", "<Cmd>norm! K<CR>", { desc = "Keywordprg" })
 
 -- better indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+map("x", "<", "<gv")
+map("x", ">", ">gv")
 
 -- commenting
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
@@ -97,7 +97,7 @@ map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
 
 -- formatting
-map({ "n", "v" }, "<Leader>cf", function()
+map({ "n", "x" }, "<Leader>cf", function()
   LazyVim.format({ force = true })
 end, { desc = "Format" })
 
@@ -166,13 +166,11 @@ map("n", "<Leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim
 -- floating terminal
 map("n", "<Leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
 map("n", "<Leader>ft", function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-map("n", "<c-/>",      function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-map("n", "<c-_>",      function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "which_key_ignore" })
+map({"n","t"}, "<c-/>",function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+map({"n","t"}, "<c-_>",function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<Esc><Esc>", "<C-\\><C-N>", { desc = "Enter Normal Mode" })
-map("t", "<C-/>", "<Cmd>close<CR>", { desc = "Hide Terminal" })
-map("t", "<c-_>", "<Cmd>close<CR>", { desc = "which_key_ignore" })
 
 -- windows
 map("n", "<Leader>ww", "<C-W>p", { desc = "Other Window", remap = true })
