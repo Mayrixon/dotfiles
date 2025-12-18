@@ -28,6 +28,11 @@ require("lazy").setup({
     },
     -- import/override with your plugins
     { import = "plugins" },
+    {
+      "alexpasmantier/krust.nvim",
+      ft = "rust",
+      opts = { keymap = "<LocalLeader>k" },
+    },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
