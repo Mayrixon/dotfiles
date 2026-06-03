@@ -6,17 +6,6 @@ return {
       servers = {
         ruff = {
           keys = {
-            { "<Leader>co", false },
-            {
-              "<LocalLeader>o",
-              LazyVim.lsp.action["source.organizeImports"],
-              desc = "Organize Imports",
-            },
-          },
-        },
-        ruff_lsp = {
-          keys = {
-            { "<Leader>co", false },
             {
               "<LocalLeader>o",
               LazyVim.lsp.action["source.organizeImports"],

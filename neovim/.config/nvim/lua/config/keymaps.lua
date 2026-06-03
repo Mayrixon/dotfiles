@@ -37,6 +37,9 @@ end, { desc = "Delete Buffer" })
 map("n", "<Leader>bo", function()
   Snacks.bufdelete.other()
 end, { desc = "Delete Other Buffers" })
+map("n", "<leader>bi", function()
+  Snacks.bufdelete.invisible()
+end, { desc = "Delete Invisible Buffers" })
 map("n", "<Leader>bD", "<Cmd>:bd<CR>", { desc = "Delete Buffer and Window" })
 
 -- Clear search and stop snippet on escape
@@ -165,8 +168,8 @@ map("n", "<Leader>L", function() LazyVim.news.changelog() end, { desc = "LazyVim
 -- floating terminal
 map("n", "<Leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
 map("n", "<Leader>ft", function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-map({"n","t"}, "<c-/>",function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
-map({"n","t"}, "<c-_>",function() Snacks.terminal(nil, { cwd = LazyVim.root() }) end, { desc = "which_key_ignore" })
+map({"n","t"}, "<c-/>",function() Snacks.terminal.focus(nil, { cwd = LazyVim.root() }) end, { desc = "Terminal (Root Dir)" })
+map({"n","t"}, "<c-_>",function() Snacks.terminal.focus(nil, { cwd = LazyVim.root() }) end, { desc = "which_key_ignore" })
 
 -- Terminal Mappings
 map("t", "<Esc><Esc>", "<C-\\><C-N>", { desc = "Enter Normal Mode" })
