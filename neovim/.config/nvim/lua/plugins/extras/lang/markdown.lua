@@ -6,22 +6,15 @@ return {
     opts = {
       formatters_by_ft = {
         markdown = function(bufnr)
-          local prettier = ""
-          if require("conform").get_formatter_info("prettierd", bufnr).available then
-            prettier = "prettierd"
-          else
-            prettier = "prettier"
-          end
-          return { prettier, "markdownlint-cli2", "markdown-toc", "mdslw" }
+          local conform = require("conform")
+          local prettier = conform.get_formatter_info("prettierd", bufnr).available and "prettierd" or "prettier"
+
+          return { "markdown-toc", prettier }
         end,
         ["markdown.mdx"] = function(bufnr)
-          local prettier = ""
-          if require("conform").get_formatter_info("prettierd", bufnr).available then
-            prettier = "prettierd"
-          else
-            prettier = "prettier"
-          end
-          return { prettier, "markdownlint-cli2", "markdown-toc", "mdslw" }
+          local conform = require("conform")
+          local prettier = conform.get_formatter_info("prettierd", bufnr).available and "prettierd" or "prettier"
+          return { "markdown-toc", prettier }
         end,
       },
     },
@@ -30,7 +23,7 @@ return {
     "mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "marksman", "mdslw" })
+      vim.list_extend(opts.ensure_installed, { "marksman" })
     end,
   },
 
