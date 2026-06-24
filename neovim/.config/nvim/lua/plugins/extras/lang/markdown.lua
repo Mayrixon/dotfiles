@@ -1,3 +1,6 @@
+local function is_markdown()
+  return vim.bo.filetype == "markdown"
+end
 return {
   --------------------- Modified LazyVim's plugin settings ---------------------
   {
@@ -55,6 +58,33 @@ return {
     opts = {
       spec = {
         { "<LocalLeader>l", group = "mkdx" },
+        {
+          "<LocalLeader>t",
+          function()
+            local cmd = "typora"
+
+            if vim.fn.executable(cmd) == 0 then
+              vim.notify("Typora executable not found: " .. cmd, vim.log.levels.ERROR)
+              return
+            end
+
+            local file = vim.fn.expand("%:p")
+            if file == "" then
+              vim.notify("No file to open in Typora", vim.log.levels.WARN)
+              return
+            end
+
+            vim.cmd("write")
+
+            local job_id = vim.fn.jobstart({ cmd, file }, { detach = true })
+
+            if job_id <= 0 then
+              vim.notify("Failed to start Typora", vim.log.levels.ERROR)
+            end
+          end,
+          desc = "Open in Typora",
+          mode = "n",
+        },
       },
     },
   },

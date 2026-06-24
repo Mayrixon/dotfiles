@@ -4,6 +4,7 @@ return {
     "nvim-lspconfig",
     opts = {
       servers = {
+        pyright = { enabled = false },
         ruff = {
           keys = {
             {

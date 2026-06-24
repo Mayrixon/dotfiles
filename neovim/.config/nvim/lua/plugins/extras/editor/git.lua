@@ -19,9 +19,30 @@ return {
       keys = {
         { "<Leader>gdc", "<Cmd>DiffviewClose<CR>", desc = "Close Diffview" },
         { "<Leader>gdd", "<Cmd>DiffviewOpen<CR>", desc = "Open [D]iffview" },
+        { "<Leader>gdD", "<Cmd>DiffviewOpenDft<CR>", desc = "Open [D]iffview (Difftastic)" },
         { "<Leader>gdf", "<Cmd>DiffviewFocusFiles<CR>", desc = "Focus Current File" },
         { "<Leader>gdh", "<Cmd>DiffviewFileHistory<CR>", desc = "Open Currnet File [H]istory" },
       },
+      opts = {
+        enhanced_diff_hl = true,
+        view = {
+          default = {
+            disable_diagnostics = true,
+          },
+        },
+      },
+      config = function(_, opts)
+        require("diffview").setup(opts)
+
+        vim.api.nvim_create_user_command("DiffviewOpenDft", function(cb_opts)
+          local args = cb_opts.args
+          if args ~= "" then
+            vim.cmd("DiffviewOpen " .. args .. " -- --ext-diff")
+          else
+            vim.cmd("DiffviewOpen -- --ext-diff")
+          end
+        end, { nargs = "*" })
+      end,
     },
   },
 
