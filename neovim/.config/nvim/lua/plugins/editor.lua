@@ -1,38 +1,5 @@
-local icons = require("lazyvim.config").icons
-
 return {
   --------------------- Modified LazyVim's plugin settings ---------------------
-  {
-    "neo-tree.nvim",
-    opts = {
-      window = {
-        mappings = {
-          ["s"] = "open_split",
-          ["v"] = "open_vsplit",
-          ["w"] = "none",
-        },
-      },
-      event_handlers = {
-        {
-          event = "file_open_requested",
-          handler = function(args)
-            if args.open_cmd == "tabnew" then
-              vim.cmd("Neotree close")
-              vim.cmd("tabnew")
-              vim.cmd("edit " .. args.path)
-              return { handled = true }
-            else
-              return { handled = false }
-            end
-          end,
-        },
-      },
-      default_component_configs = {
-        diagnostics = { symbols = icons.diagnostics },
-      },
-    },
-  },
-
   {
     "flash.nvim",
     opts = { modes = { search = { enabled = false } } },

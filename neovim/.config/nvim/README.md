@@ -8,9 +8,7 @@ This configuration is heavily based on
 This configuration is mainly considered for working on Linux and macOS.
 Working on Windows may meet minor problems.
 
-This configuration requires Neovim v0.10.0.
-A lower version Neovim may meet problems, such as missing plugin
-`Telescope.nvim`.
+This configuration requires Neovim v0.11.0.
 Besides, this configuration requires external command/program `git`, `rg`, `fd`,
 and `lazygit`.
 For a better/non-undefined UI, a font patched with

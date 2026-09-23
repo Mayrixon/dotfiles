@@ -46,18 +46,5 @@ return {
     },
   },
 
-  {
-    "TimUntersberger/neogit",
-    dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
-    event = "VeryLazy",
-    keys = {
-      { "<Leader>gn", "<Cmd>Neogit<CR>", desc = "Open NeoGit" },
-    },
-    cmd = "Neogit",
-    config = function()
-      require("neogit").setup({ integrations = { telescope = true, diffview = true } })
-    end,
-  },
-
   { "akinsho/git-conflict.nvim", version = "*", config = true },
 }

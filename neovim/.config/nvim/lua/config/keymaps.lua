@@ -203,11 +203,10 @@ map("n", "<Leader><Tab>p", "<Cmd>tabprevious<CR>", { desc = "Previous Tab" })
 map({ "n", "i", "v", "o" }, "<F1>", "<Esc>")
 
 -- Fast copy/paste
-map("n", "<Leader>P", '"+P', { desc = "Paste Before" })
-map("n", "<Leader>Y", '"+Y', { desc = "Yank the Line" })
-map("n", "<Leader>p", '"+p', { desc = "Paste After" })
-map("v", "<Leader>p", '"+p', { desc = "Paste" })
-map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank" })
+map("n", "<Leader>Y", '"+Y', { desc = "Yank Line to System Clipboard" })
+map("n", "<Leader>p", '"+p', { desc = "Paste from System Clipboard" })
+map("v", "<Leader>p", '"+p', { desc = "Paste from System Clipboard" })
+map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to System Clipboard" })
 
 -- Close hidden buffers
 vim.cmd([[

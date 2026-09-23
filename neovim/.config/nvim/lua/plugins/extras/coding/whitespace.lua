@@ -7,14 +7,12 @@ return {
     },
     config = function()
       vim.g.better_whitespace_filetypes_blacklist = {
-        "TelescopePrompt",
         "Trouble",
         "diff",
         "git",
         "gitcommit",
         "help",
         "markdown",
-        "neo-tree",
         "qf",
         "terminal",
       }

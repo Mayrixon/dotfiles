@@ -28,7 +28,10 @@ return {
           always_show_tabline = false,
           theme = "auto",
           globalstatus = vim.o.laststatus == 3,
-          disabled_filetypes = { statusline = { "alpha" }, winbar = { "alpha", "neo-tree" } },
+          disabled_filetypes = {
+            statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" },
+            winbar = { "alpha" },
+          },
         },
         sections = {
           lualine_a = { "mode" },
@@ -120,7 +123,7 @@ return {
             end,
           },
         },
-        extensions = { "lazy", "neo-tree", "nvim-dap-ui", "toggleterm", "trouble" },
+        extensions = { "fzf", "lazy", "nvim-dap-ui", "toggleterm", "trouble" },
         tabline = {
           lualine_a = { { "tabs", max_length = vim.o.columns, mode = 2 } },
           lualine_z = { { "filename", file_status = false, path = 4, shorting_target = 80 } },
@@ -140,17 +143,17 @@ return {
       }
 
       -- do not add trouble symbols if aerial is enabled
-      if vim.g.trouble_lualine then
+      -- And allow it to be overriden for some buffer types (see autocmds)
+      if vim.g.trouble_lualine and LazyVim.has("trouble.nvim") then
         local trouble = require("trouble")
-        local symbols = trouble.statusline
-          and trouble.statusline({
-            mode = "symbols",
-            groups = {},
-            title = false,
-            filter = { range = true },
-            format = "{kind_icon}{symbol.name:Normal}",
-            hl_group = "lualine_c_normal",
-          })
+        local symbols = trouble.statusline({
+          mode = "symbols",
+          groups = {},
+          title = false,
+          filter = { range = true },
+          format = "{kind_icon}{symbol.name:Normal}",
+          hl_group = "lualine_c_normal",
+        })
         table.insert(opts.sections.lualine_c, {
           symbols and symbols.get,
           cond = function()
